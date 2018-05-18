@@ -1,0 +1,211 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+@font-face {
+  font-family: 'enigmaticregular';
+  src: url('Enigma__2-webfont.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'sansation_lightlight';
+  src : url('Sansation-Light-webfont.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'circulat';
+  src: url('./circulat.woff') format('woff')
+}
+
+.welcoeg {
+  font-family: 'sansation_lightlight';
+  font-size: 15px;
+  text-align: left;
+  color: #d1d1d1;
+}
+
+.buttonw:hover {
+  border-color: white;
+  background-color: #9e5ffc;
+}
+
+
+.bgform {
+  border-radius: 35px;
+  height: 680px;
+  width: 500px;
+  background: rgb(141,2,240);
+  background: linear-gradient(167deg, rgba(141,2,240,1) 0%, rgba(191,191,191,1) 50%, rgba(141,2,240,1) 100%);
+  margin-left: 933px;
+  margin-top: -475px;
+  box-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: #cccccc;
+}
+
+.logform {
+  border-radius: 35px;
+  height: 380px;
+  width: 500px;
+  background: rgb(141,2,240);
+  background: linear-gradient(167deg, rgba(141,2,240,1) 0%, rgba(191,191,191,1) 50%, rgba(141,2,240,1) 100%);
+  margin-left: 933px;
+  margin-top: -475px;
+  box-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: #cccccc;
+}
+
+.test {
+  border-radius: 35px;
+  height: 680px;
+  width: 500px;
+  margin-left: 933px;
+  margin-top: -500px;
+}
+
+.form-control {
+  width: 450px;
+  margin-left: 23px;
+  font-size: 15px;
+  font-family: 'sansation_lightlight'
+}
+
+.labelf {
+  margin-left: 23px;
+  font-size: 20px;
+  color: white;
+  font-family: 'sansation_lightlight'
+}
+
+.buttonw {
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin-left: 200px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: #a027f7;
+  font-family: 'enigmaticregular';
+}
+
+.dft {
+  font-family: 'enigmaticregular';
+  background-color: #ad0fff;
+  border: none;
+  color: white;
+  padding: 10px 102px;
+  font-size: 25px;
+  margin-left: 115px;
+  margin-top: 30px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: white;
+}
+
+.dft:hover {
+  box-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
+  background-color: #d69bff;
+}
+
+.regb:hover {
+  box-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
+  background-color: #d69bff;
+}
+
+.regb {
+  font-family: 'enigmaticregular';
+  background-color: #9800ff;
+  border: none;
+  color: white;
+  padding: 15px 62px;
+  width: 290px;
+  font-size: 25px;
+  margin-left: 100px;
+  margin-top: -40px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: white
+}
+
+.kwel {
+  /* background-color: black;
+  opacity: 0.3; */
+  width: 50%;
+}
+
+.spacer {
+  height: 300px;
+  width: 50%;
+  opacity: 0.2;
+  display: block;
+}
+
+.bigw {
+  font-family: 'enigmaticregular';
+  font-size: 40px;
+  color: white;
+  text-align: center;
+}
+
+.sider {
+  display: block;
+  height: 100%;
+  width: 300px;
+  float: right;
+}
+
+.sidel {
+  display: block;
+  height: 100%;
+  width: 300px;
+  float: left;
+}
+
+.brand {
+  font-family: 'circulat';
+  font-size: 40px;
+  color: white;
+  float: left;
+  padding: 10px 10px 10px 10px;
+}
+
+.topnavlist:hover {
+  text-shadow: 5px 5px 5px black;
+}
+
+.topnavlist {
+  font-family: 'enigmaticregular';
+  font-size: 20px;
+  color: white;
+  float: right;
+
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.kepala {
+  height: auto;
+  width: 100%;
+}
+
+.bg {
+  position: fixed;
+  z-index: -2;
+  height: 900px;
+  width: 100%;
+  background-image: linear-gradient(to right, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
+}
