@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import Home from './Containers/Home'
-import './Header.css';
+import Home from './Components/Home'
+import './Header.css'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import Profile from './Components/Profile'
 
 class App extends Component {
   render() {
     return (
         <div>
-          <Home />
+          <BrowserRouter>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/profile' component={Profile} />
+            </Switch>
+          </BrowserRouter>
         </div>
     );
   }

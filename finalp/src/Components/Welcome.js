@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import Multiform from './Multiform'
+import Register from './Register'
+import {Link} from 'react-router-dom'
 
 export default class Welcome extends Component {
   render(){
@@ -12,8 +13,8 @@ export default class Welcome extends Component {
       menyediakan fitur beri nilai untuk memudahkan <br/> anda dalam memilih masakan yang populer dan disukai oleh
       banyak orang. <br/> Untuk informasi lebih lengkap silahkan klik tombol dibawah ini!!"
       </i><br/><br/><br/>
-      <button className='buttonw'>Lihat Fitur</button>
-      <Multiform/>
+      <Link to='/profile' className='buttonw'>Lihat Fitur</Link>
+      <Register/>
       </div>
     )
   }

@@ -34,12 +34,12 @@ body {
 
 .bgform {
   border-radius: 35px;
-  height: 680px;
+  height: 635px;
   width: 500px;
   background: rgb(141,2,240);
   background: linear-gradient(167deg, rgba(141,2,240,1) 0%, rgba(191,191,191,1) 50%, rgba(141,2,240,1) 100%);
   margin-left: 933px;
-  margin-top: -475px;
+  margin-top: -445px;
   box-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
   border-radius: 15px;
   border-style: solid;
@@ -53,7 +53,7 @@ body {
   background: rgb(141,2,240);
   background: linear-gradient(167deg, rgba(141,2,240,1) 0%, rgba(191,191,191,1) 50%, rgba(141,2,240,1) 100%);
   margin-left: 933px;
-  margin-top: -475px;
+  margin-top: -445px;
   box-shadow: 1px 1px 2px black, 0 0 25px black, 0 0 5px black;
   border-radius: 15px;
   border-style: solid;
@@ -105,7 +105,7 @@ body {
   color: white;
   padding: 10px 102px;
   font-size: 25px;
-  margin-left: 115px;
+  margin-left: 105px;
   margin-top: 30px;
   border-radius: 15px;
   border-style: solid;
@@ -172,6 +172,9 @@ body {
 }
 
 .brand {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
   font-family: 'circulat';
   font-size: 40px;
   color: white;
@@ -179,17 +182,40 @@ body {
   padding: 10px 10px 10px 10px;
 }
 
+.landingpro {
+  position: relative;
+  z-index: -1;
+  margin-left: 305px;
+  margin-top: 70px;
+  height: 100%;
+  width: 65%;
+  background-color: white;
+}
+
+.darkbar {
+  display: block;
+  position: fixed;
+  z-index: -1;
+  height: 70px;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
 .topnavlist:hover {
-  text-shadow: 5px 5px 5px black;
+  text-shadow: 5px 5px 5px white;
 }
 
 .topnavlist {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
   font-family: 'enigmaticregular';
   font-size: 20px;
   color: white;
   float: right;
 
-  padding: 10px 22px;
+  padding: 17px 22px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

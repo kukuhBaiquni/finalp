@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Multiform from './Multiform'
+import Register from './Register'
 
 export default class Login extends Component {
   constructor(props){
@@ -36,7 +36,7 @@ export default class Login extends Component {
         </div>
       )
     }else{
-      return <Multiform />
+      return <Register />
     }
   }
 }

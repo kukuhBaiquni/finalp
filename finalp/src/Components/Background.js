@@ -8,6 +8,7 @@ export default class Background extends Component {
       <div className='bg'>
         <div className='sider'></div>
         <div className='sidel'></div>
+        <div className='darkbar'></div>
         <Navbar />
         <div className='spacer'></div>
         <Welcome />

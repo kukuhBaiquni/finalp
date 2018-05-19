@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Login from './Login'
 
-export default class Multiform extends Component {
+export default class Register extends Component {
   constructor(props){
     super(props)
     this.state = {
