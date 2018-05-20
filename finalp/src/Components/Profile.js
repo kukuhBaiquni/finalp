@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ProfilNav from './ProfilNav'
-import Headshot from './Headshot'
+import ProfileCard from './ProfileCard'
+import TableProfile from './TableProfile'
 
 export default class Profile extends Component {
   render(){
@@ -11,7 +12,14 @@ export default class Profile extends Component {
         <ProfilNav />
         <div className='darkbar'></div>
         <div className='landingpro'>
-        <Headshot />
+          <div className='spacer2'></div>
+          <div className='statistic'>
+            <ProfileCard />
+            <p className='pn'>Ucil Tuyul</p>
+          </div>
+          <div className='divider'>
+          <TableProfile/>
+          </div>
         </div>
       </div>
     )
