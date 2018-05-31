@@ -38,6 +38,107 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+.form-control.cidug {
+  width: 475px;
+  height: 115px;
+  font-size: 17px;
+  position: absolute;
+  margin-left: 400px;
+}
+
+.editlangkah {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 45px;
+  text-align: center;
+  background: #4d2e9b;
+  margin-left: 883px;
+  margin-top: -100px;
+  cursor: pointer;
+  border-radius: 50%;
+  opacity: 0.85;
+  position: absolute;
+}
+
+.hapuslangkah {
+  opacity: 0.85;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 45px;
+  text-align: center;
+  background: #ff4f4f;
+  margin-left: 883px;
+  margin-top: -55px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.simpanlangkah {
+  opacity: 0.85;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 45px;
+  text-align: center;
+  background: #4d2e9b;
+  margin-left: 505px;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.langkahbatal {
+  width: 40px;
+  opacity: 0.85;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 45px;
+  text-align: center;
+  background: #ff4f4f;
+  margin-left: 505px;
+  margin-top: 60px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.lala {
+  word-wrap: break-word;
+  line-height: 1.42857143;
+  padding: 10px 10px;
+  cursor: context-menu;
+  width: 475px;
+  height: 115px;
+  font-size: 21px;
+  font-family: 'enigmaticregular';
+  color: #4d2e9b;
+  background: white;
+  margin-left: 400px;
+  margin-top: 5px;
+  border: 1px solid #cecece;
+  border-radius: 4px;
+}
+
+#bahanbahanform{
+  margin-left: 0px;
+}
+
+#prosesform {
+  margin-left: 0px;
+}
+
 #ampasin{
   width: 400px;
   height: 60px;
@@ -46,15 +147,35 @@ body {
   margin-top: -19px;
 }
 
-.tambahlangkah {
-  background-color: black;
-  height: 100px;
-  width: 100px;
+#formwidth3 {
+  width: 475px;
+  height: 115px;
+  font-size: 17px;
   position: absolute;
+}
+
+.tambahlangkah {
+  cursor: pointer;
+  background-color: black;
+  height: 115px;
+  width: 525px;
+  position: absolute;
+  text-align: center;
+  line-height: 115px;
+  color: white;
+  z-index: 0;
+  font-size: 30px;
+  margin-left: 23px;
+  border: 1px solid white;
+  font-family: 'enigmaticregular';
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
+
 }
 
 .deletebahan{
   width: 40px;
+  opacity: 0.85;
   height: 40px;
   font-size: 20px;
   font-family: 'enigmaticregular';
@@ -71,13 +192,14 @@ body {
 
 .editbahan{
   width: 40px;
+  opacity: 0.85;
   height: 40px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
   line-height: 45px;
   text-align: center;
-  background: #4fa1ff;
+  background: #4d2e9b;
   margin-left: 395px;
   margin-top: -43px;
   cursor: pointer;
@@ -162,7 +284,7 @@ body {
 .penjalin{
   margin-top: -20px;
   z-index: -1;
-  height: 300px;
+  height: auto;
   width: 800px;
   margin-left: 535px;
   position: absolute;
@@ -178,9 +300,6 @@ abbr[title] {
 }
 
 .lili{
-  /* font-family: 'enigmaticregular';
-  color: #4d2e9b;
-  font-size: 16px;*/
 
   cursor: context-menu;
   width: 430px;
@@ -207,7 +326,14 @@ abbr[title] {
   width: 280px;
   height: auto;
   margin-left: 24px;
-  margin-top: 80px;
+  margin-top: 100px;
+}
+
+.formdivider2 {
+  width: 280px;
+  height: auto;
+  margin-left: -417px;
+  margin-top: 150px;
 }
 
 .listbahan {
@@ -295,10 +421,14 @@ abbr[title] {
 }
 
 .poto {
+  position: absolute;
+  z-index: 0;
   padding: 5px 10px;
   border-left: 1px solid #4d2e9b;
   font-family: 'enigmaticregular';
   font-size: 20px;
+  margin-top: 200px;
+  margin-left: 540px;
 }
 
 .rectangle {
@@ -331,7 +461,7 @@ abbr[title] {
 }
 
 textarea {
-  resize: vertical;
+  resize: none;
 }
 
 .bagikan {
@@ -375,20 +505,14 @@ textarea {
   color: #4d2e9b
 }
 
-#formwidth3 {
-  width: 750px;
-}
-
 #formwidth4 {
   width: 450px;
 }
 
 .resepformholder {
-  border-left: 2px solid white;
-  border-right: 2px solid white;
   height: 100%;
   width: 800px;
-  margin-left: 535px;
+  margin-left: 0px;
   margin-top: 100px;
 }
 
@@ -630,9 +754,16 @@ textarea {
 
 .labelf {
   margin-left: 23px;
-  font-size: 20px;
+  font-size: 25px;
+  font-family: 'sansation_lightlight';
+  color: white;
+}
+
+.labelg {
+  margin-left: 23px;
+  font-size: 30px;
+  font-family: 'enigmaticregular';
   color: #4d2e9b;
-  font-family: 'enigmaticregular'
 }
 
 .buttonw {

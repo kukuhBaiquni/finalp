@@ -239,7 +239,7 @@ export default class RegisterForm extends Component {
         </form>
         {
           this.state.formvalid
-          ? <FlashMessage duration={5000}><div id='noteinvalid' className='regsu'>Catatan: Mohon isi form dengan benar!!</div></FlashMessage>
+          ? <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Catatan: Mohon isi form dengan benar!!</div></FlashMessage>
           : ''
         }
         </div>
