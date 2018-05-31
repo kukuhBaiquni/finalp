@@ -2,8 +2,6 @@ let initialState = []
 
 export default function data(state = initialState, action){
   switch (action.type) {
-    case 'loadUserSuccess':
-      return action.data
 
     case 'loginAttemptSuccess':
       return action.data
@@ -12,10 +10,14 @@ export default function data(state = initialState, action){
       return state
 
     case 'tambahResepSukses':
-    return null
+    return state
+
+    case 'addUserSuccess':
+    return action.token
 
     case 'loadResepSukses':
-    return action.resep.data
+    let order = action.resep.resep
+    return order.reverse()
     default:
       return []
   }

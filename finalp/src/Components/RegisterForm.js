@@ -41,7 +41,7 @@ export default class RegisterForm extends Component {
       namadepan: e.target.value
     })
 
-    if (e.target.value.length >= 3) {
+    if (e.target.value.length > 0) {
       this.setState({
         namadepanvalid: false
       })
@@ -57,7 +57,7 @@ export default class RegisterForm extends Component {
       namabelakang: e.target.value
     })
 
-    if (e.target.value.length >= 3) {
+    if (e.target.value.length > 0) {
       this.setState({
         namabelakangvalid: false
       })
@@ -207,8 +207,8 @@ export default class RegisterForm extends Component {
     }
 
     render(){
-      if(this.state.redirect){
-        return <Redirect to='/profile'/>
+      if (this.state.redirect) {
+        return <Redirect to='/authentication' />
       }else{
         return(
         <div className='bgform'>

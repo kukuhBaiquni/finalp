@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 
+  background-color: #e5e5e5;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -27,47 +28,285 @@ body {
   0%   { opacity: 0.8; }
 }
 
-#plus:hover {
-  font-size: 120px;
-  margin-left: 42px;
-  margin-top: 210px;
-  cursor: pointer;
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
 
-#plus {
-  position: fixed;
-  font-size: 80px;
-  margin-left: 63px;
-  margin-top: 225px;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#ampasin{
+  width: 400px;
+  height: 60px;
+  font-size: 20px;
+  margin-left: -4px;
+  margin-top: -19px;
+}
+
+.tambahlangkah {
+  background-color: black;
+  height: 100px;
+  width: 100px;
+  position: absolute;
+}
+
+.deletebahan{
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 45px;
+  text-align: center;
+  background: #ff4f4f;
+  margin-left: 440px;
+  margin-top: -43px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.editbahan{
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 45px;
+  text-align: center;
+  background: #4fa1ff;
+  margin-left: 395px;
+  margin-top: -43px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.gantifoto {
+  width: 395px;
+  height: 66px;
+  font-size: 25px;
+  font-family: 'enigmaticregular';
+  color: white;
+  line-height: 68px;
+  text-align: center;
+  background: #11f7c5;
+  margin-left: -21px;
+  margin-top: -32px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.buangfoto {
+  cursor: pointer;
+  font-family: 'enigmaticregular';
+  width: 395px;
+  height: 66px;
+  font-size: 25px;
+  color: white;
+  line-height: 68px;
+  text-align: center;
+  background: #ff3d3d;
+  margin-left: 378px;
+  margin-top: -66px;
+  border-radius: 20px;
+}
+
+.advice {
+  color: #9e9e9e;
+  font-size: 16px;
+  font-family: 'sansation_lightlight';
+  margin-left: 165px;
+}
+
+.imgpos {
+  height: 500px;
+  width: 800px;
+}
+
+.thumbnailpreview {
+  border-radius: 20px;
+  height: 426px;
+  width: 796px;
+  margin-top: 72px;
+  margin-left: 2px;
+}
+
+.klikupload {
+  color: #c6c6c6;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  margin-left: 280px;
+}
+
+#camera {
+  cursor: pointer;
+  font-size: 130px;
+  color: #c6c6c6;
+  margin-top: 140px;
+  margin-left: 310px;
+}
+
+.thumbfoto{
+  border-radius: 20px;
+  height: 500px;
+  width: 800px;
+  background-color: white;
+  margin-left: 535px;
+  margin-top: 150px;
+}
+
+.penjalin{
+  margin-top: -20px;
+  z-index: -1;
+  height: 300px;
+  width: 800px;
+  margin-left: 535px;
+  position: absolute;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+
+}
+
+abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
+}
+
+.lili{
+  /* font-family: 'enigmaticregular';
+  color: #4d2e9b;
+  font-size: 16px;*/
+
+  cursor: context-menu;
+  width: 430px;
+  height: 46px;
+  font-size: 17px;
+  font-family: 'enigmaticregular';
+  color: #4d2e9b;
+  line-height: 48px;
+  text-align: center;
+  background: white;
+  margin-left: -40px;
+  margin-top: 5px;
+  border: 1px solid #cecece;
+  border-radius: 4px;
+}
+
+.dummykotak {
+  height: 60px;
+  width: 20px;
+  margin-top: -20px;
+}
+
+.formdivider {
+  width: 280px;
+  height: auto;
+  margin-left: 24px;
+  margin-top: 80px;
+}
+
+.listbahan {
+  font-size: 15px;
+  color: #4d2e9b;
+}
+
+.tisting {
+  color: red;
+  font-size: 50px;
+  margin-top: 300px;
+  position: absolute;
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #303030;
+  width: 175px;
+  height: 175px;
+  opacity: 0.5;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+  margin-left: 850px;
+  margin-top: 300px;
+}
+
+.sekat {
+  height: 50px;
+  width: 100%;
+}
+
+.imgholder {
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent;
+  height: auto;
+  width: 100%;
+}
+
+.dudukan {
+  height: auto;
+  width: 1200px;
+  margin-left: 375px;
+  margin-top: 60px;
+}
+
+.dataholder {
+  display: inline;
+  height: auto;
+  width: 300px;
+  background-image: linear-gradient(to right, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
+  box-shadow: 1px 1px 2px black, 0 0 15px black, 0 0 5px black;
 }
 
 .previewimg {
-  height: 45%;
-  width: 45%;
-  margin-top: 40px;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 8px;
-  border-color: white;
+  border: 1px solid white;
+  height: 40%;
+  width: 40%;
+  margin-top: 120px;
+  margin-left: 52px;
+  box-shadow: 1px 1px 2px black, 5px 5px 10px black, 0 0 5px black;
 }
 
 .poto:hover {
-  opacity: 1;
+  color: #9e5ffc;
+}
+
+.dropzone {
+
 }
 
 .poto {
-  opacity: 0.7;
-  position: fixed;
+  padding: 5px 10px;
+  border-left: 1px solid #4d2e9b;
   font-family: 'enigmaticregular';
   font-size: 20px;
-  margin-left: 30px;
 }
 
 .rectangle {
-  position: fixed;
-  margin-left: 820px;
-  margin-top: -575px;
-  color: white;
+  position: absolute;
+  margin-left: 24px;
+  margin-top: 35px;
+  color: #4d2e9b;
+  width: 740px;
 }
 
 .formfoto {
@@ -89,22 +328,10 @@ body {
 .bagikan:hover {
   background-color: #9e5ffc;
   color: white;
-  font-size: 27px;
-  width: 185px;
-  margin-left: 308px;
-  margin-top: 28px;
 }
 
-.thex:hover {
-  color: white
-}
-
-.thex {
-  font-family: 'enigmaticregular';
-  color: white;
-  font-size: 20px;
-  margin-left: 1275px;
-  margin-top: 5px;
+textarea {
+  resize: vertical;
 }
 
 .bagikan {
@@ -115,12 +342,10 @@ body {
   padding: 10px 15px;
   font-size: 25px;
   width: 180px;
-  margin-left: 310px;
-  margin-top: 30px;
-  border-width: 2px;
-  border-radius: 15px;
-  border-style: solid;
-  border-color: white;
+  margin-left: 311px;
+  margin-top: 200px;
+  border-radius: 35px;
+  position: absolute;
 }
 
 .uploadbtn:hover {
@@ -143,11 +368,11 @@ body {
 }
 
 #formwidth1 {
+  font-family: 'enigmaticregular';
   width: 750px;
-}
-
-#formwidth2 {
-  width: 750px;
+  height: 60px;
+  font-size: 30px;
+  color: #4d2e9b
 }
 
 #formwidth3 {
@@ -159,44 +384,35 @@ body {
 }
 
 .resepformholder {
-  height: 800px;
-  width: 1300px;
-  background-image: linear-gradient(to left bottom, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
-  border-width: 2px;
-  border-style: solid;
-  border-color: white;
-  border-radius: 8px;
-  margin-left: 250px;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  height: 100%;
+  width: 800px;
+  margin-left: 535px;
   margin-top: 100px;
 }
 
 .tulisresepbutton:hover {
   color: white;
-  height: 59px;
-  width: 164px;
-  font-size: 22px;
-  margin-top: 327px;
-  margin-left: 877px;
+  text-decoration: none;
+  background-color: #9f81db;
 }
 
 .tulisresepbutton {
   position: absolute;
   z-index: 0;
   font-family: 'enigmaticregular';
-  background-color: #9800ff;
+  background-color: #4d2e9b;
   border: none;
   color: white;
-  padding: 10px;
+  padding: 11px;
   height: 50px;
   width: 155px;
   font-size: 20px;
   margin-left: 880px;
   margin-top: 330px;
   top: 0;
-  border-radius: 8px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: white
+  border-radius: 30px;
 }
 
 .formcari {
@@ -240,6 +456,10 @@ body {
   border-radius: 5px;
 }
 
+#forml:focus {
+  background-color: #e5e5e5
+}
+
 #forml {
   position: absolute;
   width: 520px;
@@ -253,7 +473,8 @@ body {
   z-index: -5;
   height: 450px;
   width: 100%;
-  background-image: linear-gradient(to right, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
+  background-color: white;
+  box-shadow: 1px 1px 2px black, 0 0 5px black, 0 0 5px black;
 }
 
 .boxtest {
@@ -265,7 +486,7 @@ body {
 #navb {
   position: fixed;
   background-image: linear-gradient(to right, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
-
+  top: 0;
   height: 70px;
   width: 102%;
   border-width: 0px;
@@ -410,8 +631,8 @@ body {
 .labelf {
   margin-left: 23px;
   font-size: 20px;
-  color: white;
-  font-family: 'sansation_lightlight'
+  color: #4d2e9b;
+  font-family: 'enigmaticregular'
 }
 
 .buttonw {
@@ -638,20 +859,26 @@ opacity: 0.5;
   color: white;
   margin-top: 10px;
   font-size: 23px;
+  text-decoration: none;
 }
 .topnavlist2:hover {
   color: white;
   margin-top: 10px;
   font-size: 23px;
+  text-decoration: none;
 }
 .topnavlist3:hover {
   color: white;
   margin-top: 10px;
   font-size: 23px;
+  text-decoration: none;
 }
 
 .topnavlist4:hover {
-  text-shadow: 5px 5px 5px white;
+  color: white;
+  margin-top: 10px;
+  font-size: 23px;
+  text-decoration: none;
 }
 
 .wrapper {
@@ -660,6 +887,7 @@ opacity: 0.5;
 
 .brand {
   z-index: 5;
+  top:0;
   text-align: center;
   position: fixed;
   position: -webkit-sticky;
@@ -673,18 +901,20 @@ opacity: 0.5;
 .topnavlist1 {
   border-left: 1px solid white;
   z-index: 5;
+  top:0;
   position: fixed;
   position: -webkit-sticky;
   font-family: 'enigmaticregular';
   font-size: 20px;
   color: white;
   margin-top: 12px;
-  padding: 10px 20px 10px;
-  margin-left: 1780px;
+  padding: 10px 25px 10px;
+  margin-left: 1375px;
   cursor: pointer;
 }
 
 .topnavlist2 {
+  top:0;
   z-index: 5;
   border-left: 1px solid white;
   position: fixed;
@@ -699,6 +929,7 @@ opacity: 0.5;
 }
 
 .topnavlist3 {
+  top:0;
   z-index: 5;
   border-left: 1px solid white;
   position: fixed;
@@ -713,19 +944,17 @@ opacity: 0.5;
 }
 
 .topnavlist4 {
-  border-right: 1px solid white;
-  margin-top: 10px;
+  top:0;
+  z-index: 5;
+  border-left: 1px solid white;
   position: fixed;
   position: -webkit-sticky;
-  top: 0;
   font-family: 'enigmaticregular';
   font-size: 20px;
   color: white;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin-left: 1165px;
+  margin-top: 12px;
+  padding: 10px 35px 10px;
+  margin-left: 1230px;
   cursor: pointer;
 }
 

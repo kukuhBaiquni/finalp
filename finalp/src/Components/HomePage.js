@@ -3,9 +3,12 @@ import Navbar from './Navbar'
 import {Link} from 'react-router-dom'
 import SearchFormHome from './SearchFormHome'
 import SearchFormNavbar from './SearchFormNavbar'
-import DataHolder from './DataHolder'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import * as AppActions from './actions'
+import DataContent from './DataContent'
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor(props){
     super(props)
 
@@ -15,8 +18,12 @@ export default class HomePage extends Component {
     this.handleScroll = this.handleScroll.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount(){
     window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadResep()
   }
 
   componentWillUnmount() {
@@ -39,17 +46,33 @@ export default class HomePage extends Component {
     return(
       <div className='wrapper'>
         <Navbar />
-          {
-            this.state.showme
-             ? <SearchFormNavbar />
-             : ''
-          }
+        {
+          this.state.showme
+          ? <SearchFormNavbar />
+        : ''
+      }
         <SearchFormHome />
         <div className='kotak'></div>
-        <div className='boxtest'></div>
         <Link to='/tulisresep' className='tulisresepbutton'>Tulis Resep <span className='glyphicon glyphicon-edit'></span></Link>
-        <DataHolder />
-    </div>
+        <DataContent data={this.props.data}/>
+      </div>
     )
   }
 }
+
+function mapStateToProps(state){
+  return{
+    data: state.data
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return{
+    actions: bindActionCreators(AppActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage)

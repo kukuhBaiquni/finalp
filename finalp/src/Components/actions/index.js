@@ -22,11 +22,45 @@ export function addUser(namadepan, namabelakang, email, password){
       }else{
         let token = res.body.token;
         localStorage.setItem('token', token)
-        dispatch(checkToken(token))
       }
     })
   }
 }
+
+export function loadUser(token){
+  return dispatch => {
+    return request
+    .get(`${TARGET}${token}`)
+    .set('Accept', 'application/json')
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(loadUserSuccess(res.body))
+      }
+    })
+  }
+}
+
+function loadUserSuccess(user){
+  return {type: 'loadUserSuccess', user}
+}
+
+// function checkToken(data){
+//   return dispatch => {
+//     return request
+//     .post(`${TARGET}checktoken`)
+//     .type('form')
+//     .send({data})
+//     .end((err, res)=>{
+//       if (err) {
+//         console.log(err);
+//       }else{
+//         console.log('dd');
+//       }
+//     })
+//   }
+// }
 
 export function loadResep(){
   return dispatch => {
@@ -47,7 +81,7 @@ function loadResepSukses(resep){
   return {type: 'loadResepSukses', resep}
 }
 
-export function tambahResep(namaresep, bahan, detail, penulis, foto){
+export function tambahResep(namaresep, bahan, detail, penulis, images){
   let resepid = Date.now()
   let created = moment(resepid).format('DD-MM-YYYY')
   return dispatch => {
@@ -64,7 +98,7 @@ export function tambahResep(namaresep, bahan, detail, penulis, foto){
       if (err) {
         dispatch(tambahResepGagal())
       }else{
-        dispatch(uploadFotoResep(res.body.data.resepid, foto))
+        dispatch(uploadFotoResep(res.body.data.resepid, images))
       }
     })
   }
@@ -74,69 +108,35 @@ function tambahResepGagal(){
   return {type: 'tambahResepGagal'}
 }
 
-function uploadFotoResep(resepid ,foto){
-  let filename = `${Date.now()}img`
-  const data = new FormData()
-  data.append('file', foto)
-  data.append('filename', filename)
+function uploadFotoResep(resepid ,images){
   return dispatch => {
-    return request
-    .put(`${TARGET}${resepid}`)
-    .send(data)
-    .end((err, res)=>{
-      if (err) {
-        console.error(err);
-      }else{
-        dispatch(tambahResepSukses(res.body))
-      }
+    images.map(file =>{
+      const data = new FormData()
+      data.append('file', file)
+      return request
+      .put(`${TARGET}${resepid}`)
+      .send(data)
+      .end((err, res)=>{
+        if (err) {
+          console.error(err);
+        }else{
+          dispatch(tambahResepSukses(res.body))
+        }
+      })
     })
   }
 }
 
-function tambahResepSukses(lol){
-  return {type: 'tambahResepSukses', lol}
+function tambahResepSukses(data){
+  return {type: 'tambahResepSukses', data}
 }
 
-function checkToken(data){
-  return dispatch => {
-    return request
-    .post(`${TARGET}checktoken`)
-    .type('form')
-    .send({data})
-    .end((err, res)=>{
-      if (err) {
-        console.log(err);
-      }else{
-        console.log('dd');
-      }
-    })
-  }
-}
 
 function addUserFailed(){
   return {type: 'addUserFailed'}
 }
 
-export function loadUser(getData){
-  console.log('xx',getData);
-  return dispatch => {
-    return request
-    .get(`${TARGET}getdata`)
-    .set('Accept', 'application/json')
-    .end((err, res)=>{
-      if (err) {
-        console.error(err);
-      }else{
-        console.log('loadUserSuccess', res.body);
-        // dispatch(loadUserSuccess(res.body))
-      }
-    })
-  }
-}
 
-// function loadUserSuccess(data){
-//   return {type: 'loadUserSuccess', data}
-// }
 
 export function loginAttempt(email, password){
   return dispatch =>{
@@ -165,4 +165,12 @@ function loginAttemptFail(){
 
 function loginAttemptSuccess(data){
   return {type: 'loginAttemptSuccess', data}
+}
+
+export function runAuth(){
+    return {type: 'runauth'}
+}
+
+export function stopAuth(){
+    return {type: 'stopauth'}
 }

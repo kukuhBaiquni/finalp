@@ -1,20 +1,25 @@
 import React, {Component} from 'react'
-import TableProfile from './TableProfile'
 import Navbar from './Navbar'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import * as AppActions from './actions'
 import {Redirect} from 'react-router'
+import ProfileContent from './ProfileContent'
 
-export default class Profile extends Component {
+class Profile extends Component {
   constructor(props){
     super(props)
+
     this.state = {
       redirect: false
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     let token = localStorage.getItem('token')
-    console.log('profile',token);
-    if (!token || token === undefined) {
+    if (token) {
+      this.props.actions.loadUser(token)
+    }else{
       this.setState({
         redirect: true
       })
@@ -26,27 +31,28 @@ export default class Profile extends Component {
       return <Redirect to='/' />
     }else{
       return(
-        <div className='bg'>
+        <div>
           <Navbar />
-          <div className='sider'></div>
-          <div className='sidel'></div>
-          <div className='darkbar'></div>
-          <div className='landingpro'>
-            <div className='spacer2'></div>
-            <div className='statistic'>
-              <div>
-                <div className='card'>
-                  <img src='http://ciuhct.org/Media/Default/Online/dummyprofile.png' alt='profilepicture' className='pp' />
-                </div>
-              </div>
-              <p className='pn'>Master Chef</p>
-            </div>
-            <div className='divider'>
-              <TableProfile/>
-            </div>
-          </div>
+          <ProfileContent user={this.props.user} />
         </div>
       )
     }
   }
 }
+
+function mapStateToProps(state){
+  return{
+    user: state.user
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return{
+    actions: bindActionCreators(AppActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile)

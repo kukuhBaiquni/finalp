@@ -18,11 +18,15 @@ class RegisterLoginPage extends Component {
     this.onClick = this.onClick.bind(this)
   }
 
-  componentWillMount(){
+  componentDidMount(){
     let token = localStorage.getItem('token')
     if (token) {
       this.setState({
         redirect: true
+      })
+    }else{
+      this.setState({
+        redirect: false
       })
     }
   }
@@ -34,7 +38,7 @@ class RegisterLoginPage extends Component {
   }
   render(){
     if (this.state.redirect) {
-      return <Redirect to='/profile' />
+      return <Redirect to='/' />
     }else{
       return(
         <div className='bg'>
@@ -43,7 +47,7 @@ class RegisterLoginPage extends Component {
           {
             this.state.toggler
             ? <RegisterForm addUser={this.props.actions.addUser}/>
-          : <LoginForm loginAttempt={this.props.actions.loginAttempt}/>
+            : <LoginForm loginAttempt={this.props.actions.loginAttempt}/>
           }
         </div>
       )

@@ -38,7 +38,7 @@ router.post('/api/finalp/register', function(req, res){
     }else{
       res.json({
         status : 'Success',
-        data : user,
+        user : user,
         token: token
       })
     }
@@ -55,7 +55,7 @@ router.get('/api/finalp/resep', function(req, res){
     }else{
       res.json({
         status: 'Success',
-        data: resep
+        resep: resep
       })
     }
   })
@@ -78,7 +78,7 @@ router.post('/api/finalp/tambahresep', function(req, res){
     bahan: req.body.bahan,
     detail: req.body.detail,
     created: req.body.created,
-    foto: '',
+    foto: [],
     like: 0
   })
 
@@ -94,15 +94,15 @@ router.post('/api/finalp/tambahresep', function(req, res){
       })
     }
   })
-
 })
 
 router.put('/api/finalp/:id', function(req, res, next){
   let resepid = req.params.id
   let imageFile = req.files.file
   let destination = path.join(__dirname, '../public/images')
+  let filename = `${Date.now()}img`
 
-  imageFile.mv(`${destination}/${req.body.filename}.jpg`, function(err) {
+  imageFile.mv(`${destination}/${filename}.jpg`, function(err) {
     if (err) {
       return res.status(500).send(err);
     }
@@ -113,9 +113,9 @@ router.put('/api/finalp/:id', function(req, res, next){
           message: 'error when updated to databse'
         })
       }else if(resep){
-        resep.foto = req.body.filename;
+        resep.images.push({listfoto: filename})
         resep.save(function(){
-          console.log('success');
+          res.json({file: `images/${filename}.jpg`});
         })
       }else{
         res.json({
@@ -124,24 +124,35 @@ router.put('/api/finalp/:id', function(req, res, next){
         })
       }
     })
-
-    res.json({file: `images/${req.body.filename}.jpg`});
   })
 })
 
 router.post('/api/finalp/checktoken', function(req, res){
-  let token = req.body.data;
-  var decoded = jwtDecode(token);
-  res.json(decoded)
+
 })
 
-// router.get('/api/finalp/getdata', function(req, res){
-//   let userid = req.params.id
-//   User.findOne({userid}, function(err, user){
-//     res.json(user)
-//     console.log(user);
-//   })
-// })
+router.get('/api/finalp/:token', function(req, res){
+  let token = req.params.token;
+  var decoded = jwtDecode(token);
+  User.findOne({userid: decoded.userid}, function(err, user){
+    if (err) {
+      res.json({
+        status: 'Failed'
+      })
+    }
+    if (!user) {
+      res.json({
+        status: 'User doesn\'t exist'
+      })
+    }
+    if (user) {
+      res.json({
+        status: 'Success',
+        user : user
+      })
+    }
+  })
+})
 
 router.post('/api/finalp/login', function(req, res, next){
   let data = {

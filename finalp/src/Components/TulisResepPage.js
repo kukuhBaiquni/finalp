@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import TulisResepForm from './TulisResepForm'
-import Navbar from './Navbar'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
@@ -8,8 +7,7 @@ import * as AppActions from './actions'
 class TulisResepPage extends Component {
   render(){
     return(
-      <div className='bg'>
-        <Navbar />
+      <div>
         <TulisResepForm tambahResep={this.props.actions.tambahResep}/>
       </div>
     )

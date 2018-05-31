@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Profile from './Components/Profile'
 import HomePage from './Components/HomePage'
 import TulisResepPage from './Components/TulisResepPage'
+import Authentication from './Components/Authentication'
 
 class App extends Component {
   render() {
@@ -15,7 +16,8 @@ class App extends Component {
               <Route exact path='/' component={HomePage} />
               <Route path='/profile' component={Profile} />
                 <Route path='/register&login' component={RegisterLoginPage} />
-                <Route path='/tulisresep' component={TulisResepPage} />
+                  <Route path='/tulisresep' component={TulisResepPage} />
+                <Route path='/authentication' component={Authentication} />
             </Switch>
           </BrowserRouter>
         </div>
