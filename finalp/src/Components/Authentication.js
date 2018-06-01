@@ -3,7 +3,6 @@ import {Redirect} from 'react-router'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
-import Navbar from './Navbar'
 import createHistory from "history/createBrowserHistory"
 const history = createHistory()
 
@@ -45,7 +44,8 @@ tick() {
       return <Redirect to='/profile' />
     }else{
       return(
-        <Navbar />
+        <div>
+        </div>
       )
     }
   }

@@ -38,79 +38,90 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-.form-control.cidug {
-  width: 475px;
-  height: 115px;
-  font-size: 17px;
+.mimic {
+  margin-left: 28px;
+  margin-top: -162px;
   position: absolute;
+  z-index: 1;
+}
+
+.langkahwrapper{
+  margin-top: 20px;
+}
+
+.bahanwrapper {
+  margin-top: 20px;
+}
+
+.gobot {
+  width: 40px;
+  height: 56px;
+  font-size: 20px;
+  font-family: 'enigmaticregular';
+  color: #adadad;
+  line-height: 57px;
+  text-align: center;
+  background: white;
   margin-left: 400px;
+  margin-top: -115px;
+  border: 1px solid #c6c6c6;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: 0.85;
+  position: absolute;
 }
 
 .editlangkah {
   width: 40px;
-  height: 40px;
+  height: 56px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
-  line-height: 45px;
+  line-height: 57px;
   text-align: center;
   background: #4d2e9b;
-  margin-left: 883px;
-  margin-top: -100px;
+  margin-left: 877px;
+  margin-top: -115px;
+  border: 1px solid white;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 5px;
   opacity: 0.85;
   position: absolute;
 }
 
 .hapuslangkah {
   opacity: 0.85;
+  border: 1px solid white;
   width: 40px;
-  height: 40px;
+  height: 56px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
-  line-height: 45px;
+  line-height: 55px;
   text-align: center;
   background: #ff4f4f;
-  margin-left: 883px;
-  margin-top: -55px;
+  margin-left: 877px;
+  margin-top: -56px;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 5px;
   position: absolute;
 }
 
 .simpanlangkah {
   opacity: 0.85;
   width: 40px;
-  height: 40px;
+  height: 115px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
-  line-height: 45px;
+  line-height: 115px;
   text-align: center;
   background: #4d2e9b;
-  margin-left: 505px;
-  margin-top: 15px;
+  margin-left: 500px;
+  margin-top: 0px;
   cursor: pointer;
-  border-radius: 50%;
-  position: absolute;
-}
-
-.langkahbatal {
-  width: 40px;
-  opacity: 0.85;
-  height: 40px;
-  font-size: 20px;
-  font-family: 'enigmaticregular';
-  color: white;
-  line-height: 45px;
-  text-align: center;
-  background: #ff4f4f;
-  margin-left: 505px;
-  margin-top: 60px;
-  cursor: pointer;
-  border-radius: 50%;
+  border: 1px solid white;
+  border-radius: 5px;
   position: absolute;
 }
 
@@ -119,13 +130,13 @@ body {
   line-height: 1.42857143;
   padding: 10px 10px;
   cursor: context-menu;
-  width: 475px;
+  width: 433px;
   height: 115px;
-  font-size: 21px;
+  font-size: 18px;
   font-family: 'enigmaticregular';
   color: #4d2e9b;
   background: white;
-  margin-left: 400px;
+  margin-left: 442px;
   margin-top: 5px;
   border: 1px solid #cecece;
   border-radius: 4px;
@@ -133,19 +144,15 @@ body {
 
 #bahanbahanform{
   margin-left: 0px;
+  margin-top: 150px;
 }
 
 #prosesform {
   margin-left: 0px;
+  position: absolute;
 }
 
-#ampasin{
-  width: 400px;
-  height: 60px;
-  font-size: 20px;
-  margin-left: -4px;
-  margin-top: -19px;
-}
+
 
 #formwidth3 {
   width: 475px;
@@ -208,6 +215,7 @@ body {
 }
 
 .gantifoto {
+  opacity: 0.9;
   width: 395px;
   height: 66px;
   font-size: 25px;
@@ -215,7 +223,7 @@ body {
   color: white;
   line-height: 68px;
   text-align: center;
-  background: #11f7c5;
+  background: #4d2e9b;
   margin-left: -21px;
   margin-top: -32px;
   cursor: pointer;
@@ -225,13 +233,14 @@ body {
 .buangfoto {
   cursor: pointer;
   font-family: 'enigmaticregular';
+  opacity: 0.9;
   width: 395px;
   height: 66px;
   font-size: 25px;
   color: white;
   line-height: 68px;
   text-align: center;
-  background: #ff3d3d;
+  background: #ff4747;
   margin-left: 378px;
   margin-top: -66px;
   border-radius: 20px;
@@ -284,7 +293,7 @@ body {
 .penjalin{
   margin-top: -20px;
   z-index: -1;
-  height: auto;
+  height: 0;
   width: 800px;
   margin-left: 535px;
   position: absolute;
@@ -303,7 +312,7 @@ abbr[title] {
 
   cursor: context-menu;
   width: 430px;
-  height: 46px;
+  height: 48px;
   font-size: 17px;
   font-family: 'enigmaticregular';
   color: #4d2e9b;
@@ -404,12 +413,13 @@ abbr[title] {
 }
 
 .previewimg {
-  border: 1px solid white;
-  height: 40%;
-  width: 40%;
-  margin-top: 120px;
-  margin-left: 52px;
-  box-shadow: 1px 1px 2px black, 5px 5px 10px black, 0 0 5px black;
+  /* border: 1px solid white; */
+  position: absolute;
+  height: 113px;
+  width: 198px;
+  margin-top: -149px;
+  margin-left: 921px;
+  /* box-shadow: 1px 1px 2px black, 5px 5px 10px black, 0 0 5px black; */
 }
 
 .poto:hover {
@@ -421,14 +431,21 @@ abbr[title] {
 }
 
 .poto {
+  background-color: #e5e5e5;
   position: absolute;
   z-index: 0;
+  text-align: center;
+  color: #919191;
+  line-height: 115px;
   padding: 5px 10px;
-  border-left: 1px solid #4d2e9b;
+  border: 1px solid #c6c6c6;
   font-family: 'enigmaticregular';
+  border-radius: 5px;
   font-size: 20px;
-  margin-top: 200px;
-  margin-left: 540px;
+  margin-top: -150px;
+  margin-left: 920px;
+  height: 115px;
+  width: 200px;
 }
 
 .rectangle {
@@ -464,6 +481,12 @@ textarea {
   resize: none;
 }
 
+.openspace {
+  height: 300px;
+  width: 100px;
+  position: absolute;
+}
+
 .bagikan {
   font-family: 'enigmaticregular';
   background-color: #4d2e9b;
@@ -471,9 +494,9 @@ textarea {
   color: white;
   padding: 10px 15px;
   font-size: 25px;
-  width: 180px;
-  margin-left: 311px;
-  margin-top: 200px;
+  width: 380px;
+  margin-left: 501px;
+  margin-top: 150px;
   border-radius: 35px;
   position: absolute;
 }
