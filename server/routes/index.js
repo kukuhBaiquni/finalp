@@ -65,32 +65,52 @@ router.post('/api/finalp/tambahresep', function(req, res){
   var resource = req.body.penulis
   var decode = jwtDecode(resource)
   var penulis = decode.userid
-  if (!decode || decode === undefined || decode === '') {
+  var imageFile = req.files
+  let destination = path.join(__dirname, '../public/images')
+  let filename = `${Date.now()}img`
+  if (!decode || decode === undefined || decode === '' || penulis === undefined) {
     res.json({
       status: 'Failed'
     })
   }
-
   const newResep = new Resep({
-    penulis: penulis,
     resepid: req.body.resepid,
-    namaresep: req.body.namaresep,
-    bahan: req.body.bahan,
-    detail: req.body.detail,
+    namaresep: req.body.nama,
+    penulis: penulis,
+    bahan: [],
+    langkah: [],
     created: req.body.created,
-    foto: [],
-    like: 0
+    like: 0,
+    likedby: [],
+    foto: ''
   })
-
   newResep.save(function(err, resep){
     if (err) {
       res.json({
         status: 'Failed, try again later'
       })
     }else{
-      res.json({
-        status: 'Success',
-        data: resep
+      req.body.bahan.map(x=> resep.bahan.push({listbahan: x}))
+      req.body.langkah.map(x=> resep.langkah.push({detail: x, images:''}))
+      req.body.indicator.map(x=> resep.indicator.push({status: x}))
+      imageFile.foto.mv(`${destination}/${filename}.jpg`, function(err) {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        resep.update({$set: {foto: `images/${filename}.jpg`}}).exec(function(err, gabon){
+          resep.save(function(err){
+            if (err) {
+              res.json({
+                status: 'Tercyduk'
+              })
+            }else{
+              res.json({
+                status: 'Done!',
+                data : resep
+              })
+            }
+          })
+        })
       })
     }
   })
@@ -110,10 +130,10 @@ router.put('/api/finalp/:id', function(req, res, next){
       if (err) {
         res.json({
           status: 'Failed',
-          message: 'error when updated to databse'
+          message: 'error when updated to database'
         })
       }else if(resep){
-        resep.images.push({listfoto: filename})
+        resep.langkahimages.push({images: filename})
         resep.save(function(){
           res.json({file: `images/${filename}.jpg`});
         })

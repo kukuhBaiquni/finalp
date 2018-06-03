@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import LangkahPartials from './LangkahPartials'
 
 var listbahan = []
 var checker = 0
@@ -12,13 +13,14 @@ export default class BahanPartials extends Component {
       handler3: -115+(-53*listbahan.length+1)+'px',
       handler4: '0px',
       editing: false,
-      nothing: true,
+      nothing: false,
       handleEditValue: '',
       bahanChangeHandler: '',
     }
 
     this.editClick = this.editClick.bind(this)
     this.onDeleteBahan = this.onDeleteBahan.bind(this)
+    this.pseudo2 = this.pseudo2.bind(this)
   }
   toggler(){
     this.setState({
@@ -74,7 +76,24 @@ export default class BahanPartials extends Component {
       handler3 : parseInt(this.state.handler3, 10)+53+'px'
     })
   }
+
+  pseudo2(){
+    this.setState(function(prevState){
+      return {nothing: !prevState.nothing}
+    })
+    this.setState({
+      handler2: -154+'px',
+      handler3: -114+'px'
+    })
+    listbahan = []
+    this.props.pseudo1()
+  }
+
   render(){
+
+    var nama = this.props.namaresep;
+    var foto = this.props.foto
+
     var editor ={
       width: '430px',
       height: '48px',
@@ -92,7 +111,7 @@ export default class BahanPartials extends Component {
 
     var styleNote = {
       position: 'absolute',
-      color: '#4d2e9b',
+      color: 'white',
       fontSize: '13px',
       marginLeft: '27px',
       marginTop: this.state.handler3
@@ -116,6 +135,7 @@ export default class BahanPartials extends Component {
   )
   return(
     <div>
+      <div style={{display: 'none', height: '1px', width: '1px'}} onClick={this.pseudo2}></div>
       <div className="form-group" id='bahanbahanform'>
         <p className='labelg'>Bahan-bahan</p>
       </div>
@@ -125,20 +145,22 @@ export default class BahanPartials extends Component {
         </ul>
       </div>
       <div className='dummykotak'></div>
-        {
-          this.state.editing &&
-          <div className='mimic'>
-            <input style={editor} onChange={this.handleEditChange.bind(this)} value={this.state.handleEditValue} maxLength='48' onKeyDown={this.pseudoSubmit.bind(this)} autoFocus autoComplete='off' type="text" className="form-control" placeholder="Edit Bahan" />
-          </div>
-        }
+      {
+        this.state.editing &&
+        <div className='mimic'>
+          <input style={editor} onChange={this.handleEditChange.bind(this)} value={this.state.handleEditValue} maxLength='48' onKeyDown={this.pseudoSubmit.bind(this)} autoFocus autoComplete='off' type="text" className="form-control" placeholder="Edit Bahan" />
+        </div>
+      }
 
-        <form onSubmit={this.bahanSubmit.bind(this)}>
-          <div className="form-group">
-            <input maxLength='48' ref={input => this.input = input} autoComplete='off' type="text" style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
-            <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
-          </div>
-        </form>
-  </div>
-)
+      <form onSubmit={this.bahanSubmit.bind(this)}>
+        <div className="form-group">
+          <input maxLength='48' ref={input => this.input = input} autoComplete='off' type="text" style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
+          <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
+        </div>
+      </form>
+      <LangkahPartials nama={nama} foto={foto} bahan={listbahan} pseudo1={this.props.pseudo1} pseudo2={this.pseudo2}/>
+
+    </div>
+  )
 }
 }

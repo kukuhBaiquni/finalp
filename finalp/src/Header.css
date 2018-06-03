@@ -54,34 +54,32 @@ body {
 }
 
 .gobot {
-  width: 40px;
-  height: 56px;
+  width: 50px;
+  height: 50px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: #adadad;
-  line-height: 57px;
+  line-height: 45px;
   text-align: center;
-  background: white;
-  margin-left: 400px;
+  background-color: white;
+  margin-left: 410px;
   margin-top: -115px;
-  border: 1px solid #c6c6c6;
-  cursor: pointer;
-  border-radius: 5px;
-  opacity: 0.85;
   position: absolute;
+  border-radius: 13px;
+  z-index: -1;
 }
 
 .editlangkah {
   width: 40px;
-  height: 56px;
+  height: 52px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
   line-height: 57px;
   text-align: center;
   background: #4d2e9b;
-  margin-left: 877px;
-  margin-top: -115px;
+  margin-left: 879px;
+  margin-top: -113px;
   border: 1px solid white;
   cursor: pointer;
   border-radius: 5px;
@@ -93,14 +91,14 @@ body {
   opacity: 0.85;
   border: 1px solid white;
   width: 40px;
-  height: 56px;
+  height: 52px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
   line-height: 55px;
   text-align: center;
   background: #ff4f4f;
-  margin-left: 877px;
+  margin-left: 879px;
   margin-top: -56px;
   cursor: pointer;
   border-radius: 5px;
@@ -137,22 +135,20 @@ body {
   color: #4d2e9b;
   background: white;
   margin-left: 442px;
-  margin-top: 5px;
-  border: 1px solid #cecece;
-  border-radius: 4px;
+  border-radius: 12px;
+  margin-top: 0px;
+  border-bottom: 1px solid #cecece;
 }
 
 #bahanbahanform{
   margin-left: 0px;
-  margin-top: 150px;
+  margin-top: 0px;
 }
 
 #prosesform {
   margin-left: 0px;
   position: absolute;
 }
-
-
 
 #formwidth3 {
   width: 475px;
@@ -181,34 +177,36 @@ body {
 }
 
 .deletebahan{
-  width: 40px;
+  width: 48px;
   opacity: 0.85;
-  height: 40px;
+  height: 48px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
-  line-height: 45px;
+  line-height: 49px;
   text-align: center;
   background: #ff4f4f;
-  margin-left: 440px;
-  margin-top: -43px;
+  margin-left: 445px;
+  margin-top: -47px;
+  border: 1px solid white;
   cursor: pointer;
   border-radius: 50%;
   position: absolute;
 }
 
 .editbahan{
-  width: 40px;
+  width: 48px;
+  border: 1px solid white;
   opacity: 0.85;
-  height: 40px;
+  height: 48px;
   font-size: 20px;
   font-family: 'enigmaticregular';
   color: white;
-  line-height: 45px;
+  line-height: 49px;
   text-align: center;
   background: #4d2e9b;
   margin-left: 395px;
-  margin-top: -43px;
+  margin-top: -47px;
   cursor: pointer;
   border-radius: 50%;
   position: absolute;
@@ -286,16 +284,29 @@ body {
   height: 500px;
   width: 800px;
   background-color: white;
-  margin-left: 535px;
+  margin-left: 555px;
   margin-top: 150px;
 }
 
+.openspace{
+  height: 80px;
+}
+
+.surrat20 {
+  margin-top: 80px;
+  height: 200px;
+  z-index: -5;
+}
+
 .penjalin{
+  background-image: radial-gradient(circle, #9d7ab9, #885eb1, #7042a9, #5526a1, #300199);
+  border-radius: 20px;
   margin-top: -20px;
-  z-index: -1;
-  height: 0;
+  z-index: -2;
+  opacity: 0.9;
+  height: auto;
   width: 800px;
-  margin-left: 535px;
+  margin-left: 555px;
   position: absolute;
   border-left: 2px solid white;
   border-right: 2px solid white;
@@ -322,7 +333,7 @@ abbr[title] {
   margin-left: -40px;
   margin-top: 5px;
   border: 1px solid #cecece;
-  border-radius: 4px;
+  border-radius: 30px;
 }
 
 .dummykotak {
@@ -415,10 +426,11 @@ abbr[title] {
 .previewimg {
   /* border: 1px solid white; */
   position: absolute;
+  z-index: 1;
   height: 113px;
   width: 198px;
   margin-top: -149px;
-  margin-left: 921px;
+  margin-left: 915px;
   /* box-shadow: 1px 1px 2px black, 5px 5px 10px black, 0 0 5px black; */
 }
 
@@ -430,20 +442,30 @@ abbr[title] {
 
 }
 
+
+.sibal{
+  margin-left: 1123px;
+  margin-top: -100px;
+  color: white;
+  cursor: pointer;
+  width: 16px;
+  height: 1px;
+}
+
 .poto {
   background-color: #e5e5e5;
   position: absolute;
   z-index: 0;
   text-align: center;
   color: #919191;
-  line-height: 115px;
+  line-height: 105px;
   padding: 5px 10px;
   border: 1px solid #c6c6c6;
   font-family: 'enigmaticregular';
   border-radius: 5px;
   font-size: 20px;
   margin-top: -150px;
-  margin-left: 920px;
+  margin-left: 914px;
   height: 115px;
   width: 200px;
 }
@@ -461,6 +483,7 @@ abbr[title] {
   margin-left:1050px;
   margin-top: 130px;
 }
+
 
 .modalholder {
   font-family: 'enigmaticregular';
@@ -481,24 +504,18 @@ textarea {
   resize: none;
 }
 
-.openspace {
-  height: 300px;
-  width: 100px;
-  position: absolute;
-}
-
 .bagikan {
   font-family: 'enigmaticregular';
   background-color: #4d2e9b;
-  border: none;
   color: white;
   padding: 10px 15px;
   font-size: 25px;
-  width: 380px;
-  margin-left: 501px;
-  margin-top: 150px;
+  width: 580px;
+  margin-left: 110px;
+  margin-top: 80px;
   border-radius: 35px;
   position: absolute;
+  z-index: 1;
 }
 
 .uploadbtn:hover {
@@ -526,10 +543,6 @@ textarea {
   height: 60px;
   font-size: 30px;
   color: #4d2e9b
-}
-
-#formwidth4 {
-  width: 450px;
 }
 
 .resepformholder {
@@ -786,7 +799,8 @@ textarea {
   margin-left: 23px;
   font-size: 30px;
   font-family: 'enigmaticregular';
-  color: #4d2e9b;
+  color: white;
+  /* color: #4d2e9b; */
 }
 
 .buttonw {

@@ -4,24 +4,24 @@ import './RegisterModal.css';
 import Navbar from './Navbar'
 import Dropzone from 'react-dropzone'
 import {Link} from 'react-router-dom';
-import LangkahPartials from './LangkahPartials'
-
 import BahanPartials from './BahanPartials'
 
-
-var thumbnailfoto = []
+var thumbnailfoto = ''
+var namaresep = 'Nama Resep'
 
 export default class TulisResepForm extends Component {
   constructor(props){
     super(props)
 
     this.state = {
-      namaresep: '',
-      bahan: '',
-      detail: '',
+      editjudul: false,
+      namaresep: namaresep,
       open: false,
+      nothing: false,
+      foto: thumbnailfoto,
       files: []
     }
+    this.pseudo1 = this.pseudo1.bind(this)
   }
 
   handleNamaResep(e){
@@ -30,15 +30,24 @@ export default class TulisResepForm extends Component {
     })
   }
 
-  handleBahan(e){
+  namaResepSubmit(e){
+    e.preventDefault()
     this.setState({
-      bahan: e.target.value
+      editjudul: false
     })
+    if (/^ *$/.test(this.state.namaresep)) {
+      namaresep = 'Nama Resep'
+      this.setState({
+        namaresep: 'Nama Resep'
+      })
+    }else{
+      namaresep = this.state.namaresep
+    }
   }
 
-  handleDetail(e){
+  openJudul(){
     this.setState({
-      detail: e.target.value
+      editjudul: true
     })
   }
 
@@ -46,16 +55,19 @@ export default class TulisResepForm extends Component {
     this.setState({ open: false });
   };
 
-
+  dipilih(e){
+    e.target.select()
+  }
 
   uploadFoto2(files) {
     this.setState({
-      files: files
+      files: files,
+      foto: files[0]
     })
     if (thumbnailfoto.length > 0) {
       thumbnailfoto = []
     }
-    thumbnailfoto.push(files[0])
+    thumbnailfoto = files[0]
   }
 
   hapusThumbnailFoto(){
@@ -64,16 +76,33 @@ export default class TulisResepForm extends Component {
       this.setState(function(prevState){
         return {nothing: !prevState.nothing}
       })
-      thumbnailfoto = []
+      thumbnailfoto = ''
     }
   }
 
-
+  pseudo1(){
+    this.setState({
+      namaresep: 'Nama Resep'
+    })
+    thumbnailfoto = ''
+    namaresep = 'Nama Resep'
+  }
 
   render(){
+
+    var customize = {
+      wordWrap: 'break-word',
+      width: '700px',
+      marginLeft: '50px',
+      textAlign: 'center',
+      fontSize: '40px',
+      fontFamily: 'enigmaticregular',
+      color: 'white',
+    }
     const { open } = this.state;
     return(
-      <div>
+      <div >
+
         <div className='thumbfoto'>
           <section className='rectangle'>
             <Dropzone className='dropzone' onDrop={this.uploadFoto2.bind(this)} accept="image/*" multiple={ false }>
@@ -96,27 +125,27 @@ export default class TulisResepForm extends Component {
             }
           </section>
           <div className='imgpos'>
-            {
-              thumbnailfoto.map((f,i) => <img key={i} src={ f.preview } alt="preview" className='thumbnailpreview'/>)
-            }
+              {
+                thumbnailfoto.length !== 0 &&
+                <img src={this.state.foto.preview} alt="preview" className='thumbnailpreview'/>
+              }
           </div>
         </div>
 
         <div className='penjalin'>
-          <form onSubmit={this.resepSubmit} className='resepformholder'>
+          <form onSubmit={this.namaResepSubmit.bind(this)} className='resepformholder'>
             <div className="form-group">
-              <p className='labelg'>Nama Resep</p>
-              <input autoComplete='off' onChange={this.handleNamaResep.bind(this)} value={this.state.namaresep} type="text" id='formwidth1' className="form-control" formwidthplaceholder="Nama Resep" />
+              {
+                this.state.editjudul
+                ?
+                <input autoFocus onFocus={this.dipilih.bind(this)} autoComplete='off' style={{textAlign: 'center'}} onChange={this.handleNamaResep.bind(this)} defaultValue={namaresep} type="text" id='formwidth1' className="form-control" />
+                :
+                <abbr title='Klik untuk mengubah nama resep'><div style={customize} onClick={this.openJudul.bind(this)}>{this.state.namaresep}</div></abbr>
+            }
             </div>
           </form>
-          <div className='bahanwrapper'>
-          <BahanPartials />
-          </div>
-          <div className='langkahwrapper'>
-            <LangkahPartials />
-          </div>
 
-
+          <BahanPartials namaresep={namaresep} foto={thumbnailfoto} pseudo1={this.pseudo1}/>
         </div>
         <Navbar />
         <div className="example">
@@ -138,6 +167,7 @@ export default class TulisResepForm extends Component {
               <hr/>
             </div>
           </Modal>
+          <div style={{display: 'none', height: '1px', width: '1px'}} onClick={this.pseudo1}></div>
         </div>
       </div>
     )

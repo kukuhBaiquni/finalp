@@ -8,7 +8,7 @@ class TulisResepPage extends Component {
   render(){
     return(
       <div>
-        <TulisResepForm tambahResep={this.props.actions.tambahResep}/>
+        <TulisResepForm/>
       </div>
     )
   }

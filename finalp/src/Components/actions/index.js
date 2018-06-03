@@ -81,24 +81,42 @@ function loadResepSukses(resep){
   return {type: 'loadResepSukses', resep}
 }
 
-export function tambahResep(namaresep, bahan, detail, penulis, images){
+export function tambahResep(bundler){
   let resepid = Date.now()
   let created = moment(resepid).format('DD-MM-YYYY')
   return dispatch => {
+    var nonImages = new FormData()
+    var parseStatus = []
+    var parseImages = []
+    bundler.langkah.map(function(x){
+      return nonImages.append('langkah',x.langkah)
+    })
+    bundler.langkah.map(function(r){
+      return parseStatus.push(r.status)
+    })
+    bundler.langkah.map(function(x){
+      return nonImages.append('indicator',x.status)
+    })
+    bundler.langkah.map(function(r){
+      return parseImages.push(r.images)
+    })
+    bundler.bahan.map(function(p){
+      return nonImages.append('bahan',p)
+    })
+    nonImages.append('resepid', resepid)
+    nonImages.append('created', created)
+    nonImages.append('nama', bundler.nama)
+    nonImages.append('foto', bundler.foto)
+    nonImages.append('penulis', bundler.penulis)
+
     return request
     .post(`${TARGET}tambahresep`)
-    .type('form')
-    .send({namaresep : namaresep})
-    .send({penulis : penulis})
-    .send({resepid : resepid})
-    .send({bahan : bahan})
-    .send({detail : detail})
-    .send({created : created})
+    .send(nonImages)
     .end((err, res)=>{
       if (err) {
         dispatch(tambahResepGagal())
       }else{
-        dispatch(uploadFotoResep(res.body.data.resepid, images))
+        dispatch(uploadFotoResep(res.body.data.resepid, parseImages, parseStatus))
       }
     })
   }
@@ -109,10 +127,13 @@ function tambahResepGagal(){
 }
 
 function uploadFotoResep(resepid ,images){
+  var filteredImages = images.filter(function(x){
+    return x !== ''
+  })
   return dispatch => {
-    images.map(file =>{
+    filteredImages.map(function(x){
       const data = new FormData()
-      data.append('file', file)
+      data.append('file', x)
       return request
       .put(`${TARGET}${resepid}`)
       .send(data)
@@ -168,9 +189,9 @@ function loginAttemptSuccess(data){
 }
 
 export function runAuth(){
-    return {type: 'runauth'}
+  return {type: 'runauth'}
 }
 
 export function stopAuth(){
-    return {type: 'stopauth'}
+  return {type: 'stopauth'}
 }

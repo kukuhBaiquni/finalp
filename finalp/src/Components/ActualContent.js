@@ -6,7 +6,7 @@ export default class ActualContent extends Component {
     return(
       <div>
       <div className='dataholder'>
-        <img className='imgholder' src={path + '/' + this.props.data.images[0].listfoto +'.jpg'} alt={this.props.data.resepid} />
+        <img className='imgholder' src={path + '/' + this.props.data.foto[0] +'.jpg'} alt={this.props.data.resepid} />
       </div>
       <div className='sekat'></div>
     </div>

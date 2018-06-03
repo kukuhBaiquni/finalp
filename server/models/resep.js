@@ -4,14 +4,15 @@ var Schema = mongoose.Schema;
 var resep = new Schema({
   resepid : Number,
   namaresep : String,
-  bahan : [{listbahan: String}],
-  detail: String,
   penulis : Number,
+  bahan : [{listbahan: String}],
+  langkah: [{detail: String}],
+  langkahimages: [{images: String}],
   created : String,
-  like: Number,
+  like: {type: Number, default: 0},
   likedby: [{userid: Number}],
-  thumbnail: String,
-  images : [{listfoto: String}]
+  foto: String,
+  indicator: [{status: String}]
 })
 
 module.exports = mongoose.model('Resep', resep)
