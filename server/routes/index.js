@@ -65,6 +65,7 @@ router.post('/api/finalp/tambahresep', function(req, res){
   var resource = req.body.penulis
   var decode = jwtDecode(resource)
   var penulis = decode.userid
+  var namapenulis = decode.namadepan.concat(' ' + decode.namabelakang)
   var imageFile = req.files
   let destination = path.join(__dirname, '../public/images')
   let filename = `${Date.now()}img`
@@ -76,13 +77,15 @@ router.post('/api/finalp/tambahresep', function(req, res){
   const newResep = new Resep({
     resepid: req.body.resepid,
     namaresep: req.body.nama,
+    namapenulis: namapenulis,
     penulis: penulis,
     bahan: [],
     langkah: [],
     created: req.body.created,
     like: 0,
     likedby: [],
-    foto: ''
+    foto: '',
+    kategori: req.body.kategori
   })
   newResep.save(function(err, resep){
     if (err) {
@@ -97,7 +100,7 @@ router.post('/api/finalp/tambahresep', function(req, res){
         if (err) {
           return res.status(500).send(err);
         }
-        resep.update({$set: {foto: `images/${filename}.jpg`}}).exec(function(err, gabon){
+        resep.update({$set: {foto: `${filename}.jpg`}}).exec(function(err, gabon){
           resep.save(function(err){
             if (err) {
               res.json({

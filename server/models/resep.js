@@ -5,6 +5,7 @@ var resep = new Schema({
   resepid : Number,
   namaresep : String,
   penulis : Number,
+  namapenulis: String,
   bahan : [{listbahan: String}],
   langkah: [{detail: String}],
   langkahimages: [{images: String}],
@@ -12,7 +13,9 @@ var resep = new Schema({
   like: {type: Number, default: 0},
   likedby: [{userid: Number}],
   foto: String,
-  indicator: [{status: String}]
+  indicator: [{status: String}],
+  comment: 0,
+  kategori: String,
 })
 
 module.exports = mongoose.model('Resep', resep)

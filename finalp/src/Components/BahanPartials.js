@@ -92,7 +92,8 @@ export default class BahanPartials extends Component {
   render(){
 
     var nama = this.props.namaresep;
-    var foto = this.props.foto
+    var foto = this.props.foto;
+    var kategori = this.props.kategori
 
     var editor ={
       width: '430px',
@@ -106,7 +107,8 @@ export default class BahanPartials extends Component {
       width: '400px',
       marginTop: this.state.handler2,
       marginLeft: '24px',
-      position: 'absolute'
+      position: 'absolute',
+      fontSize: '17px'
     }
 
     var styleNote = {
@@ -158,7 +160,8 @@ export default class BahanPartials extends Component {
           <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
         </div>
       </form>
-      <LangkahPartials nama={nama} foto={foto} bahan={listbahan} pseudo1={this.props.pseudo1} pseudo2={this.pseudo2}/>
+
+      <LangkahPartials kategori={kategori} nama={nama} foto={foto} bahan={listbahan} pseudo1={this.props.pseudo1} pseudo2={this.pseudo2}/>
 
     </div>
   )

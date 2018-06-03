@@ -103,6 +103,7 @@ export function tambahResep(bundler){
     bundler.bahan.map(function(p){
       return nonImages.append('bahan',p)
     })
+    nonImages.append('kategori', bundler.kategori)
     nonImages.append('resepid', resepid)
     nonImages.append('created', created)
     nonImages.append('nama', bundler.nama)

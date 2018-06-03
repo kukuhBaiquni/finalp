@@ -38,6 +38,45 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+.modalbutton:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #9e5ffc;
+}
+
+.modalbutton {
+  font-family: 'enigmaticregular';
+  background-color: #4d2e9b;
+  color: white;
+  padding: 9px 5px;
+  text-align: center;
+  font-size: 25px;
+  width: 180px;
+  font-size: 22px;
+  margin-left: 37px;
+  margin-top: 3px;
+  border-radius: 35px;
+  position: absolute;
+  z-index: 1;
+}
+
+.labelg.kategori{
+  border-left: 2px solid white;
+  padding-left: 15px;
+  color: #fff396;
+  font-size: 25px;
+}
+
+.selectspace {
+  height: 50px;
+}
+
+.form-control.selectform {
+  width: 300px;
+  font-size: 17px;
+  height: 35px;
+}
+
 .mimic {
   margin-left: 28px;
   margin-top: -162px;
@@ -324,7 +363,7 @@ abbr[title] {
   cursor: context-menu;
   width: 430px;
   height: 48px;
-  font-size: 17px;
+  font-size: 22px;
   font-family: 'enigmaticregular';
   color: #4d2e9b;
   line-height: 48px;
@@ -400,12 +439,48 @@ abbr[title] {
   width: 100%;
 }
 
+.kategorititle{
+  font-size: 20px;
+  color: #c5a3ff;
+}
+
+.likedll{
+  height: 50px;
+  width: 200px;
+  margin-top: -5px;
+  font-size: 18px;
+}
+
+.contenthome{
+  height: 100px;
+  width: 500px;
+  font-family: 'enigmaticregular';
+  font-size: 30px;
+  margin-left: 340px;
+  margin-top: -205px;
+  color: #4d2e9b;
+  word-wrap: break-word;
+  /* background-color: red; */
+}
+
+.identity{
+  height: 30px;
+  width: 200px;
+  /* background-color: yellow; */
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 5px;
+}
+
 .imgholder {
   border-width: 10px;
   border-style: solid;
   border-color: transparent;
-  height: auto;
-  width: 100%;
+  height: 218px;
+  width: 350px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 13px;
 }
 
 .dudukan {
@@ -416,11 +491,12 @@ abbr[title] {
 }
 
 .dataholder {
-  display: inline;
-  height: auto;
-  width: 300px;
-  background-image: linear-gradient(to right, #1b007c, #4d2e9b, #7757bb, #9f81db, #c7adfb);
-  box-shadow: 1px 1px 2px black, 0 0 15px black, 0 0 5px black;
+  background-color: white;
+  height: 200px;
+  width: 850px;
+  margin-left: 170px;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
 }
 
 .previewimg {
@@ -502,6 +578,27 @@ abbr[title] {
 
 textarea {
   resize: none;
+}
+
+.lihatresep:hover{
+  color: white;
+  text-decoration: none;
+  background-color: #9e5ffc;
+}
+
+.lihatresep{
+  font-family: 'enigmaticregular';
+  background-color: #4d2e9b;
+  color: white;
+  padding: 5px 5px;
+  font-size: 22px;
+  width: 130px;
+  text-align: center;
+  margin-left: 360px;
+  margin-top: -61px;
+  border-radius: 45px;
+  position: absolute;
+  z-index: 0;
 }
 
 .bagikan {
@@ -633,8 +730,8 @@ textarea {
   z-index: -5;
   height: 450px;
   width: 100%;
+  border-bottom: 1px solid #c4c4c4;
   background-color: white;
-  box-shadow: 1px 1px 2px black, 0 0 5px black, 0 0 5px black;
 }
 
 .boxtest {
@@ -649,8 +746,8 @@ textarea {
   top: 0;
   height: 70px;
   width: 102%;
-  border-width: 0px;
-  z-index: 0;
+  border-bottom: 1px solid black;
+  z-index: 3;
 }
 
 .regsu {

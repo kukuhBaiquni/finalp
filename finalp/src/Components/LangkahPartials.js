@@ -3,6 +3,9 @@ import Dropzone from 'react-dropzone'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
+import Modal from 'react-responsive-modal';
+import {Link} from 'react-router-dom';
+import './RegisterModal.css';
 
 var listlangkah = []
 var checker = 0
@@ -24,6 +27,7 @@ class LangkahPartials extends Component {
       editlangkah: false,
       nothing: false,
       positionhandler: '5px',
+      openmodal : false,
       buttonhandler: '4px',
       position: 'absolute',
       files: []
@@ -113,6 +117,10 @@ class LangkahPartials extends Component {
     }
   }
 
+  onCloseModal = () => {
+    this.setState({ openmodal: false });
+  };
+
   uploadFoto(files) {
     this.setState({
       files: files,
@@ -128,10 +136,14 @@ class LangkahPartials extends Component {
       nama: this.props.nama,
       foto: this.props.foto,
       bahan: this.props.bahan,
+      kategori: this.props.kategori,
       penulis: localStorage.getItem('token'),
       langkah: langkahDetail
     }
     this.props.actions.tambahResep(bundler)
+    this.setState({
+      openmodal: true
+    })
     // this.props.pseudo2()
     // this.props.pseudo1()
     // langkahDetail = []
@@ -227,6 +239,26 @@ class LangkahPartials extends Component {
           <button onClick={this.readyForAction} className='bagikan'>Bagikan <span className='glyphicon glyphicon-share'></span></button>
         </div>
         <div className='surrat20'></div>
+          <div className="example">
+            <Modal
+              open={this.state.openmodal}
+              onClose={this.onCloseModal}
+              center
+              classNames={{
+                transitionEnter: 'transition-enter',
+                transitionEnterActive: 'transition-enter-active',
+                transitionExit: 'transition-exit-active',
+                transitionExitActive: 'transition-exit-active',
+              }}
+              animationDuration={250}
+              >
+              <div className='modalholder'>
+                <p>Resep anda berhasil dibagikan!</p>
+                <Link to='/' className='modalbutton'>Lihat Resep</Link>
+                <hr/>
+              </div>
+            </Modal>
+          </div>
       </div>
     )
   }

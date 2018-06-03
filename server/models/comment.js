@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var comment = new Schema({
   resepid : Number,
-  userid : Number,
+  namauser : String,
   content : String,
   created : String,
 })

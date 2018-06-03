@@ -1,13 +1,11 @@
 import React, {Component} from 'react'
-import Modal from 'react-responsive-modal';
-import './RegisterModal.css';
 import Navbar from './Navbar'
 import Dropzone from 'react-dropzone'
-import {Link} from 'react-router-dom';
 import BahanPartials from './BahanPartials'
 
 var thumbnailfoto = ''
 var namaresep = 'Nama Resep'
+var kategori = 'Pilih Kategori'
 
 export default class TulisResepForm extends Component {
   constructor(props){
@@ -16,9 +14,9 @@ export default class TulisResepForm extends Component {
     this.state = {
       editjudul: false,
       namaresep: namaresep,
-      open: false,
       nothing: false,
       foto: thumbnailfoto,
+      editkategori: false,
       files: []
     }
     this.pseudo1 = this.pseudo1.bind(this)
@@ -51,10 +49,6 @@ export default class TulisResepForm extends Component {
     })
   }
 
-  onCloseModal = () => {
-    this.setState({ open: false });
-  };
-
   dipilih(e){
     e.target.select()
   }
@@ -86,6 +80,20 @@ export default class TulisResepForm extends Component {
     })
     thumbnailfoto = ''
     namaresep = 'Nama Resep'
+    kategori = 'Pilih Kategori'
+  }
+
+  pilihKategori(e){
+    this.setState({
+      editkategori: false
+    })
+    kategori = e.target.value
+  }
+
+  clickKategori(){
+    this.setState({
+      editkategori: true
+    })
   }
 
   render(){
@@ -99,7 +107,7 @@ export default class TulisResepForm extends Component {
       fontFamily: 'enigmaticregular',
       color: 'white',
     }
-    const { open } = this.state;
+
     return(
       <div >
 
@@ -125,10 +133,10 @@ export default class TulisResepForm extends Component {
             }
           </section>
           <div className='imgpos'>
-              {
-                thumbnailfoto.length !== 0 &&
-                <img src={this.state.foto.preview} alt="preview" className='thumbnailpreview'/>
-              }
+            {
+              thumbnailfoto.length !== 0 &&
+              <img src={this.state.foto.preview} alt="preview" className='thumbnailpreview'/>
+            }
           </div>
         </div>
 
@@ -138,37 +146,39 @@ export default class TulisResepForm extends Component {
               {
                 this.state.editjudul
                 ?
-                <input autoFocus onFocus={this.dipilih.bind(this)} autoComplete='off' style={{textAlign: 'center'}} onChange={this.handleNamaResep.bind(this)} defaultValue={namaresep} type="text" id='formwidth1' className="form-control" />
+                <input maxLength='55' autoFocus onFocus={this.dipilih.bind(this)} autoComplete='off' style={{textAlign: 'center'}} onChange={this.handleNamaResep.bind(this)} defaultValue={namaresep} type="text" id='formwidth1' className="form-control" />
                 :
                 <abbr title='Klik untuk mengubah nama resep'><div style={customize} onClick={this.openJudul.bind(this)}>{this.state.namaresep}</div></abbr>
-            }
+              }
             </div>
-          </form>
 
-          <BahanPartials namaresep={namaresep} foto={thumbnailfoto} pseudo1={this.pseudo1}/>
+            <p className='labelg'>Kategori :</p>
+            {
+              this.state.editkategori
+              ?
+              <select defaultValue={kategori} className="form-control selectform" onChange={this.pilihKategori.bind(this)}>
+                <option value='kosong'> Pilih Kategori </option>
+                <option value='Sarapan'> Sarapan </option>
+                <option value='Makan Siang'> Makan Siang </option>
+                <option value='Makan Malam'> Makan Malam </option>
+                <option value='Cemilan'> Cemilan </option>
+                <option value='Perasmanan'> Perasmanan </option>
+                <option value='Menu Sahur'> Menu Sahur </option>
+                <option value='Menu Buka'> Menu Buka </option>
+                <option value='Katering'> Katering </option>
+                <option value='Kue Lebaran'> Kue Lebaran </option>
+              </select>
+              :
+              <abbr title='klik untuk pilih kategori'><p className='labelg kategori' onClick={this.clickKategori.bind(this)}>{kategori}</p></abbr>
+            }
+
+          </form>
+          <div className='selectspace'></div>
+          <BahanPartials kategori={kategori} namaresep={namaresep} foto={thumbnailfoto} pseudo1={this.pseudo1}/>
         </div>
         <Navbar />
-        <div className="example">
-          <Modal
-            open={open}
-            onClose={this.onCloseModal}
-            center
-            classNames={{
-              transitionEnter: 'transition-enter',
-              transitionEnterActive: 'transition-enter-active',
-              transitionExit: 'transition-exit-active',
-              transitionExitActive: 'transition-exit-active',
-            }}
-            animationDuration={250}
-            >
-            <div className='modalholder'>
-              <p>Resep anda berhasil dibagikan!</p>
-              <Link to='/'><button>Lihat Resep</button></Link>
-              <hr/>
-            </div>
-          </Modal>
-          <div style={{display: 'none', height: '1px', width: '1px'}} onClick={this.pseudo1}></div>
-        </div>
+
+        <div style={{display: 'none', height: '1px', width: '1px'}} onClick={this.pseudo1}></div>
       </div>
     )
   }
