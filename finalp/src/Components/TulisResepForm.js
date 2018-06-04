@@ -169,7 +169,7 @@ export default class TulisResepForm extends Component {
                 <option value='Kue Lebaran'> Kue Lebaran </option>
               </select>
               :
-              <abbr title='klik untuk pilih kategori'><p className='labelg kategori' onClick={this.clickKategori.bind(this)}>{kategori}</p></abbr>
+              <p className='labelg kategori' onClick={this.clickKategori.bind(this)}><abbr title='klik untuk pilih kategori'>{kategori}</abbr></p>
             }
 
           </form>

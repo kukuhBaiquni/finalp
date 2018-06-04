@@ -27,6 +27,10 @@ export function addUser(namadepan, namabelakang, email, password){
   }
 }
 
+function addUserFailed(){
+  return {type: 'addUserFailed'}
+}
+
 export function loadUser(token){
   return dispatch => {
     return request
@@ -44,6 +48,29 @@ export function loadUser(token){
 
 function loadUserSuccess(user){
   return {type: 'loadUserSuccess', user}
+}
+
+export function resepDetail(resepid){
+  return dispatch => {
+    return request
+    .get(`${TARGET}resepdetail/${resepid}`)
+    .set('Accept', 'application/json')
+    .end((err, res)=>{
+      if (err) {
+        dispatch(resepDetailFailed())
+      }else{
+        dispatch(resepDetailSuccess(res.body))
+      }
+    })
+  }
+}
+
+function resepDetailSuccess(data){
+  return {type: 'resepDetailSuccess', data}
+}
+
+function resepDetailFailed(){
+  return {type: 'resepDetailFailed'}
 }
 
 // function checkToken(data){
@@ -86,16 +113,11 @@ export function tambahResep(bundler){
   let created = moment(resepid).format('DD-MM-YYYY')
   return dispatch => {
     var nonImages = new FormData()
-    var parseStatus = []
     var parseImages = []
+    var parseIndex = bundler.langkah.filter(x => x.images !== '')
+    var lordgabon = parseIndex.map(x => x.order)
     bundler.langkah.map(function(x){
       return nonImages.append('langkah',x.langkah)
-    })
-    bundler.langkah.map(function(r){
-      return parseStatus.push(r.status)
-    })
-    bundler.langkah.map(function(x){
-      return nonImages.append('indicator',x.status)
     })
     bundler.langkah.map(function(r){
       return parseImages.push(r.images)
@@ -117,7 +139,7 @@ export function tambahResep(bundler){
       if (err) {
         dispatch(tambahResepGagal())
       }else{
-        dispatch(uploadFotoResep(res.body.data.resepid, parseImages, parseStatus))
+        dispatch(uploadFotoResep(res.body.data.resepid, parseImages, lordgabon))
       }
     })
   }
@@ -127,14 +149,13 @@ function tambahResepGagal(){
   return {type: 'tambahResepGagal'}
 }
 
-function uploadFotoResep(resepid ,images){
-  var filteredImages = images.filter(function(x){
-    return x !== ''
-  })
+function uploadFotoResep(resepid ,images, index){
+  let filteredImages = images.filter(x => x !== '')
   return dispatch => {
-    filteredImages.map(function(x){
+    filteredImages.map(function(x, i){
       const data = new FormData()
       data.append('file', x)
+      data.append('index', index[i])
       return request
       .put(`${TARGET}${resepid}`)
       .send(data)
@@ -146,18 +167,13 @@ function uploadFotoResep(resepid ,images){
         }
       })
     })
+    return {type: 'Tercyduk'}
   }
 }
 
 function tambahResepSukses(data){
   return {type: 'tambahResepSukses', data}
 }
-
-
-function addUserFailed(){
-  return {type: 'addUserFailed'}
-}
-
 
 
 export function loginAttempt(email, password){

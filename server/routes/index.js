@@ -61,6 +61,24 @@ router.get('/api/finalp/resep', function(req, res){
   })
 })
 
+//getResepdetail
+router.get('/api/finalp/resepdetail/:id', function(req, res){
+  let resepid = req.params.id
+  Resep.find({resepid}, function(err, resep){
+    if (err) {
+      res.json({
+        status: 'Failed',
+        message: 'request timed out'
+      })
+    }else{
+      res.json({
+        status: 'Success',
+        resep: resep
+      })
+    }
+  })
+})
+
 router.post('/api/finalp/tambahresep', function(req, res){
   var resource = req.body.penulis
   var decode = jwtDecode(resource)
@@ -83,6 +101,7 @@ router.post('/api/finalp/tambahresep', function(req, res){
     langkah: [],
     created: req.body.created,
     like: 0,
+    comment: 0,
     likedby: [],
     foto: '',
     kategori: req.body.kategori
@@ -93,9 +112,16 @@ router.post('/api/finalp/tambahresep', function(req, res){
         status: 'Failed, try again later'
       })
     }else{
-      req.body.bahan.map(x=> resep.bahan.push({listbahan: x}))
-      req.body.langkah.map(x=> resep.langkah.push({detail: x, images:''}))
-      req.body.indicator.map(x=> resep.indicator.push({status: x}))
+      if (typeof req.body.bahan === 'string') {
+        resep.bahan.push({listbahan: req.body.bahan})
+      }else{
+        req.body.bahan.map(x=> resep.bahan.push({listbahan: x}))
+      }
+      if (typeof req.body.langkah === 'string') {
+        resep.langkah.push({detail: req.body.langkah, images: ''})
+      }else{
+        req.body.langkah.map(x=> resep.langkah.push({detail: x, images: ''}))
+      }
       imageFile.foto.mv(`${destination}/${filename}.jpg`, function(err) {
         if (err) {
           return res.status(500).send(err);
@@ -136,7 +162,11 @@ router.put('/api/finalp/:id', function(req, res, next){
           message: 'error when updated to database'
         })
       }else if(resep){
-        resep.langkahimages.push({images: filename})
+        // console.log(req.body.index);
+        // console.log('global',resep.langkah[req.body.index]);
+        // console.log('target',resep.langkah[req.body.index]);
+        resep.langkah[req.body.index-1].images = filename
+        // resep.langkahimages.push({images: filename, index: req.body.index})
         resep.save(function(){
           res.json({file: `images/${filename}.jpg`});
         })
@@ -148,10 +178,6 @@ router.put('/api/finalp/:id', function(req, res, next){
       }
     })
   })
-})
-
-router.post('/api/finalp/checktoken', function(req, res){
-
 })
 
 router.get('/api/finalp/:token', function(req, res){

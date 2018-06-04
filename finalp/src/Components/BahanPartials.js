@@ -150,13 +150,13 @@ export default class BahanPartials extends Component {
       {
         this.state.editing &&
         <div className='mimic'>
-          <input style={editor} onChange={this.handleEditChange.bind(this)} value={this.state.handleEditValue} maxLength='48' onKeyDown={this.pseudoSubmit.bind(this)} autoFocus autoComplete='off' type="text" className="form-control" placeholder="Edit Bahan" />
+          <input style={editor} onChange={this.handleEditChange.bind(this)} value={this.state.handleEditValue} maxLength='35' onKeyDown={this.pseudoSubmit.bind(this)} autoFocus autoComplete='off' type="text" className="form-control" placeholder="Edit Bahan" />
         </div>
       }
 
       <form onSubmit={this.bahanSubmit.bind(this)}>
         <div className="form-group">
-          <input maxLength='48' ref={input => this.input = input} autoComplete='off' type="text" style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
+          <input maxLength='35' ref={input => this.input = input} autoComplete='off' type="text" style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
           <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
         </div>
       </form>

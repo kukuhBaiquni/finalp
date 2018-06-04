@@ -15,6 +15,12 @@ export default function data(state = initialState, action){
     case 'addUserSuccess':
     return action.token
 
+    case 'resepDetailFailed':
+    return state
+
+    case 'resepDetailSuccess':
+    return action.data.resep
+
     case 'loadResepSukses':
     let order = action.resep.resep
     return order.reverse()

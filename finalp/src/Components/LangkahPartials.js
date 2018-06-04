@@ -12,7 +12,7 @@ var checker = 0
 var langkahDetail = []
 var lol = {
   order: 0,
-  status: 'e',
+  index: 0,
   images: '',
   langkah:'',
 }
@@ -54,7 +54,7 @@ class LangkahPartials extends Component {
     })
     lol = {
       order: 0,
-      status: 'e',
+      index: 0,
       images: '',
       langkah:''
     }
@@ -113,7 +113,7 @@ class LangkahPartials extends Component {
       this.setState(function(prevState){
         return {nothing: !prevState.nothing}
       })
-      langkahDetail[checker].status = 'e'
+      langkahDetail[checker].index = 0
     }
   }
 
@@ -127,7 +127,7 @@ class LangkahPartials extends Component {
       hover: false
     })
     langkahDetail[checker].images = files[0]
-    langkahDetail[checker].status = 'E'
+    langkahDetail[checker].index = checker + 1
   }
 
   readyForAction(e){
@@ -151,7 +151,6 @@ class LangkahPartials extends Component {
   }
 
   render(){
-
     var buttondewa = {
       marginTop: this.state.buttonhandler,
       opacity: '0.85',
