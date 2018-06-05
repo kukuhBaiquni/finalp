@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 
 export default class ResepDetailBahan extends Component {
+  componentDidMount(){
+    window.scrollTo(0, 0)
+  }
 
   render(){
     var path = 'http://localhost:3000/images/'
@@ -8,7 +11,6 @@ export default class ResepDetailBahan extends Component {
       return (<li style={{fontSize: '22px'}} key={i}>{x.listbahan}</li>)
     })
 
-    console.log(this.props.data.langkah);
     return(
       <div className='bahansub'>
         <p><strong>Bahan-bahan :</strong></p>

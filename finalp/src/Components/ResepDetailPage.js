@@ -49,6 +49,8 @@ class ResepDetailPage extends Component {
               <div className='anotherhr'></div>
               {pass}
           </div>
+          <hr />
+          <div className='utility'></div>
         </div>
         <div className='footer'></div>
       </div>

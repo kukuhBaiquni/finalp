@@ -4,7 +4,6 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import {Redirect} from 'react-router'
-import ProfileContent from './ProfileContent'
 
 class Profile extends Component {
   constructor(props){
@@ -27,13 +26,37 @@ class Profile extends Component {
   }
 
   render(){
+    var path = 'http://localhost:3000/images/'
+    const {user} = this.props
     if (this.state.redirect) {
       return <Redirect to='/' />
     }else{
       return(
         <div>
           <Navbar />
-          <ProfileContent user={this.props.user} />
+          <div className='propage'>
+            <div className='thebox'></div>
+            <img className='fotobox' src={path + user.fotoprofil + '.jpg'} alt={user.userid}/>
+            <div className='anotherbox'>
+            </div>
+            <div className='profilename'><strong>{user.namadepan} {user.namabelakang}</strong></div>
+            <abbr title='Ganti foto'><div className='changepp'><span className='glyphicon glyphicon-camera'></span></div></abbr>
+            <div className='buttonwrapper'>
+              <abbr title='Resep Saya'><div className='testbutton1'><span className='glyphicon glyphicon-list'></span></div></abbr>
+              <abbr title='Aktifitas Saya'><div className='testbutton2'><span className='glyphicon glyphicon-time'></span></div></abbr>
+              <abbr title='Resep yang disimpan'><div className='testbutton3'><span className='glyphicon glyphicon-folder-open'></span></div></abbr>
+            </div>
+            <div className='wadahpro'>
+              <hr/>
+              <div className='protitle'>
+                <p>List Cidug</p>
+              </div>
+              <hr/>
+              <div className='prolist'>
+              </div>
+            </div>
+            <div className='morespacepls'></div>
+          </div>
         </div>
       )
     }
@@ -42,7 +65,8 @@ class Profile extends Component {
 
 function mapStateToProps(state){
   return{
-    user: state.user
+    user: state.user,
+    data: state.data
   }
 }
 

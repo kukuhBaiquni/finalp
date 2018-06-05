@@ -4,12 +4,12 @@ export default function user(state = initialState, action){
   switch (action.type) {
 
     case 'loadUserSuccess':
-      return action.user.user
+    return action.user.user    
 
-    case 'stopauth':
-      return {auth: false}
+    case 'addUserSuccess':
+    return action.token
 
     default:
-      return state
+    return state
   }
 }

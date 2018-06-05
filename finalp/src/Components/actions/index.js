@@ -175,6 +175,9 @@ function tambahResepSukses(data){
   return {type: 'tambahResepSukses', data}
 }
 
+export function searching(query){
+  return {type: 'searching', query}
+}
 
 export function loginAttempt(email, password){
   return dispatch =>{
@@ -205,10 +208,10 @@ function loginAttemptSuccess(data){
   return {type: 'loginAttemptSuccess', data}
 }
 
-export function runAuth(){
-  return {type: 'runauth'}
+export function searchModeOn(){
+  return {type: 'searchmodeon'}
 }
 
-export function stopAuth(){
-  return {type: 'stopauth'}
+export function searchModeOff(){
+  return {type: 'searchmodeoff'}
 }

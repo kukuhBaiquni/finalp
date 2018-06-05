@@ -5,8 +5,9 @@ import SearchFormHome from './SearchFormHome'
 import SearchFormNavbar from './SearchFormNavbar'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as AppActions from './actions'
+import * as AppActions from './actions/index'
 import DataContent from './DataContent'
+import * as KategoriActions from './actions/KategoriActions'
 
 class HomePage extends Component {
   constructor(props){
@@ -23,6 +24,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0)
     this.props.actions.loadResep()
   }
 
@@ -43,15 +45,23 @@ class HomePage extends Component {
     }
   }
   render(){
+    console.log(this.props);
+    const {data, actions, utility} = this.props
     return(
       <div className='wrapper'>
         <Navbar />
         {
-          this.state.showme
-          ? <SearchFormNavbar />
-        : ''
-      }
-        <SearchFormHome />
+          this.state.showme &&
+          <SearchFormNavbar
+            searchmode={utility}
+            actions={actions}
+          />
+        }
+        <SearchFormHome
+          searchmode={utility}
+          data={data}
+          actions={actions}
+        />
         <div className='kotak'></div>
         <Link to='/tulisresep' className='tulisresepbutton'>Tulis Resep <span className='glyphicon glyphicon-edit'></span></Link>
         <DataContent data={this.props.data}/>
@@ -62,13 +72,15 @@ class HomePage extends Component {
 
 function mapStateToProps(state){
   return{
-    data: state.data
+    data: state.data,
+    utility: state.utility
   }
 }
 
 function mapDispatchToProps(dispatch){
   return{
-    actions: bindActionCreators(AppActions, dispatch)
+    actions: bindActionCreators(AppActions, dispatch),
+    kategoriactions: bindActionCreators(KategoriActions, dispatch)
   }
 }
 

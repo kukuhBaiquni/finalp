@@ -162,11 +162,7 @@ router.put('/api/finalp/:id', function(req, res, next){
           message: 'error when updated to database'
         })
       }else if(resep){
-        // console.log(req.body.index);
-        // console.log('global',resep.langkah[req.body.index]);
-        // console.log('target',resep.langkah[req.body.index]);
         resep.langkah[req.body.index-1].images = filename
-        // resep.langkahimages.push({images: filename, index: req.body.index})
         resep.save(function(){
           res.json({file: `images/${filename}.jpg`});
         })
