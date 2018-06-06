@@ -18,6 +18,14 @@ export default function data(state = initialState, action){
     case 'resepDetailSuccess':
     return action.data.resep
 
+    case 'myrecipe':
+    return action.resep.data
+
+    case 'deleteresepsuccess':
+    console.log(action);
+    console.log(state);
+    return state
+
     case 'searching':
     let result = state.filter(x => x.namaresep.includes(action.query))
     return result

@@ -18,7 +18,8 @@ router.post('/api/finalp/register', function(req, res){
     namabelakang : req.body.namabelakang,
     email : req.body.email,
     password : req.body.password,
-    created : req.body.created
+    created : req.body.created,
+    fotoprofil: 'initialfp'
   })
 
   let toToken = {
@@ -176,10 +177,90 @@ router.put('/api/finalp/:id', function(req, res, next){
   })
 })
 
+router.post('/api/finalp/uploadfp', function(req, res){
+  let imageFile = req.files.file
+  let destination = path.join(__dirname, '../public/images')
+  let filename = `${Date.now()}img`
+  var decode = jwtDecode(req.body.token)
+  var luser = decode.userid
+
+  imageFile.mv(`${destination}/${filename}.jpg`, function(err){
+    if (err) {
+      return res.status(500).send(err);
+    }
+    User.findOne({userid: luser}, function(err, user){
+      if (err) {
+        res.json({
+          status: 'Failed',
+          message: 'error when updated to database'
+        })
+      }else if(user){
+        user.update({$set: {fotoprofil: `${filename}.jpg`}}).exec(function(err, gabon){
+          user.save(function(err){
+            if (err) {
+              res.json({
+                status: 'Tercyduk'
+              })
+            }else{
+              res.json({
+                status: 'Done!',
+                data : user
+              })
+            }
+          })
+        })
+      }else{
+        res.json({
+          status: 'Failed',
+          message: 'cannot found the specified data'
+        })
+      }
+    })
+  })
+})
+
+router.get('/api/finalp/myrecipe/:token', function(req, res){
+  let token = req.params.token
+  let decoded = jwtDecode(token);
+  let penulis = decoded.userid
+  Resep.find({penulis}, function(err, recipes){
+    if (err) {
+      res.json({
+        status: 'Failed'
+      })
+    }else if (!recipes) {
+      res.json({
+        status: 'User belum pernah menulis resep'
+      })
+    }else{
+      res.json({
+        status: 'Success',
+        data: recipes
+      })
+    }
+  })
+})
+
+router.post('/api/finalp/myrecipe/:resepid', function(req, res){
+  let resepid = req.params.resepid
+
+  Resep.deleteOne({resepid}, function(err, res){
+    if (err) {
+      res.json({
+        status: 'Failed'
+      })
+    }else{
+      res.json({
+        status: 'Success'
+      })
+    }
+  })
+})
+
 router.get('/api/finalp/:token', function(req, res){
   let token = req.params.token;
   var decoded = jwtDecode(token);
-  User.findOne({userid: decoded.userid}, function(err, user){
+  User.find({userid: decoded.userid}, function(err, user){
     if (err) {
       res.json({
         status: 'Failed'

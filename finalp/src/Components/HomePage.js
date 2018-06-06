@@ -1,13 +1,11 @@
 import React, {Component} from 'react'
 import Navbar from './Navbar'
-import {Link} from 'react-router-dom'
 import SearchFormHome from './SearchFormHome'
 import SearchFormNavbar from './SearchFormNavbar'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as AppActions from './actions/index'
+import * as AppActions from './actions'
 import DataContent from './DataContent'
-import * as KategoriActions from './actions/KategoriActions'
 
 class HomePage extends Component {
   constructor(props){
@@ -45,11 +43,10 @@ class HomePage extends Component {
     }
   }
   render(){
-    console.log(this.props);
     const {data, actions, utility} = this.props
     return(
       <div className='wrapper'>
-        <Navbar />
+        <Navbar actions={actions} />
         {
           this.state.showme &&
           <SearchFormNavbar
@@ -63,7 +60,6 @@ class HomePage extends Component {
           actions={actions}
         />
         <div className='kotak'></div>
-        <Link to='/tulisresep' className='tulisresepbutton'>Tulis Resep <span className='glyphicon glyphicon-edit'></span></Link>
         <DataContent data={this.props.data}/>
       </div>
     )
@@ -79,8 +75,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return{
-    actions: bindActionCreators(AppActions, dispatch),
-    kategoriactions: bindActionCreators(KategoriActions, dispatch)
+    actions: bindActionCreators(AppActions, dispatch)
   }
 }
 

@@ -73,6 +73,67 @@ function resepDetailFailed(){
   return {type: 'resepDetailFailed'}
 }
 
+export function uploadfp(fp, token){
+  return dispatch => {
+    const single = new FormData()
+    single.append('file', fp)
+    single.append('token', token)
+    return request
+    .post(`${TARGET}uploadfp`)
+    .send(single)
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(uploadfpDone())
+      }
+    })
+  }
+}
+
+export function myRecipe(token){
+  return dispatch => {
+    return request
+    .get(`${TARGET}myrecipe/${token}`)
+    .set('Accept', 'application/json')
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(myRecipeSuccess(res.body))
+      }
+    })
+  }
+}
+
+function myRecipeSuccess(resep){
+  return {type: 'myrecipe', resep}
+}
+
+export function deleteResep(resepid){
+  return dispatch => {
+    return request
+    .post(`${TARGET}myrecipe/${resepid}`)
+    .type('form')
+    .send({resepid: resepid})
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(deleteResepSuccess())
+      }
+    })
+  }
+}
+
+function deleteResepSuccess(){
+  return {type: 'deleteresepsuccess'}
+}
+
+function uploadfpDone(){
+  return {type: 'uploadfpDone'}
+}
+
 // function checkToken(data){
 //   return dispatch => {
 //     return request
@@ -167,7 +228,6 @@ function uploadFotoResep(resepid ,images, index){
         }
       })
     })
-    return {type: 'Tercyduk'}
   }
 }
 
@@ -214,4 +274,40 @@ export function searchModeOn(){
 
 export function searchModeOff(){
   return {type: 'searchmodeoff'}
+}
+
+export function menuSahur(){
+  return {type: 'menusahur'}
+}
+
+export function menuBuka(){
+  return {type: 'menubuka'}
+}
+
+export function sarapan(){
+  return {type: 'sarapan'}
+}
+
+export function cemilan(){
+  return {type: 'cemilan'}
+}
+
+export function makanSiang(){
+  return {type: 'makansiang'}
+}
+
+export function makanMalam(){
+  return {type: 'makanmalam'}
+}
+
+export function katering(){
+  return {type: 'katering'}
+}
+
+export function perasmanan(){
+  return {type: 'perasmanan'}
+}
+
+export function kueLebaran(){
+  return {type: 'kuelebaran'}
 }

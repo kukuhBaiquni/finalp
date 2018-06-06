@@ -90,16 +90,20 @@ class LangkahPartials extends Component {
       editlangkah: true,
       positionhandler: -((115*(listlangkah.length-i)))+'px',
       buttonhandler: -((115*(listlangkah.length-i)))+'px',
-      handleEditValue: listlangkah[checker]
+      handleEditValue: listlangkah[checker],
+      langkahChangeHandlerEdit: listlangkah[checker],
     })
   }
 
   langkahdelete(i){
-    listlangkah.splice(i, 1)
-    this.setState(function(prevState){
-      return {nothing: !prevState.nothing}
-    })
-    langkahDetail.splice(i, 1)
+    let yon = window.confirm('apakah anda yakin ingin menghapus?')
+    if (yon) {
+      listlangkah.splice(i, 1)
+      this.setState(function(prevState){
+        return {nothing: !prevState.nothing}
+      })
+      langkahDetail.splice(i, 1)
+    }
   }
 
   testid(i){
@@ -200,10 +204,10 @@ class LangkahPartials extends Component {
               <abbr title='klik untuk ganti foto'><img src={langkahDetail[i].images.preview} alt="preview" className='previewimg'/></abbr>
             }
           </Dropzone>
-            {
-              langkahDetail[i].images.length !== 0 &&
-              <abbr className='kug' onClick={()=> this.deleteFotoLangkah(i)} title='hapus'><div className='sibal'><span className='glyphicon glyphicon-trash'></span></div></abbr>
-            }
+          {
+            langkahDetail[i].images.length !== 0 &&
+            <abbr className='kug' onClick={()=> this.deleteFotoLangkah(i)} title='hapus'><div className='sibal'><span className='glyphicon glyphicon-trash'></span></div></abbr>
+          }
         </section>
 
       </div>
@@ -211,56 +215,56 @@ class LangkahPartials extends Component {
   )
 
 
-    return(
-      <div>
-        <div className="form-group">
-          <p className='labelg'>Proses Pembuatan</p>
-          <div>
-            <textarea maxLength='125' onChange={this.langkahChangeHandler.bind(this)} placeholder='Tambah Langkah' autoComplete='off' value={this.state.langkahChangeHandler} id='formwidth3' className="form-control" />
-            {
-              !this.state.editlangkah &&
-              <abbr title='Simpan langkah'><div onClick={this.langkahSubmit.bind(this)} className='simpanlangkah'><span className='glyphicon glyphicon-ok'></span></div></abbr>
-            }
-          </div>
-          <div className='formdivider2'>
-            <ul>
-              {list2}
-              {
-                this.state.editlangkah &&
-                <div>
-                  <textarea style={editor} defaultValue={listlangkah[checker]} maxLength='125' onChange={this.langkahChangeHandlerEdit.bind(this)} placeholder='Edit Langkah' autoFocus autoComplete='off' />
-                  <abbr style={buttondewa} title='Simpan'><div onClick={this.langkahEditSubmit.bind(this)} ><span className='glyphicon glyphicon-ok'></span></div></abbr>
-                </div>
-              }
-            </ul>
-
-          </div>
-          <button onClick={this.readyForAction} className='bagikan'>Bagikan <span className='glyphicon glyphicon-share'></span></button>
+  return(
+    <div>
+      <div className="form-group">
+        <p className='labelg'>Proses Pembuatan</p>
+        <div>
+          <textarea disabled={this.state.editlangkah} maxLength='125' onChange={this.langkahChangeHandler.bind(this)} placeholder='Tambah Langkah' autoComplete='off' value={this.state.langkahChangeHandler} id='formwidth3' className="form-control" />
+          {
+            !this.state.editlangkah &&
+            <abbr title='Simpan langkah'><div onClick={this.langkahSubmit.bind(this)} className='simpanlangkah'><span className='glyphicon glyphicon-ok'></span></div></abbr>
+          }
         </div>
-        <div className='surrat20'></div>
-          <div className="example">
-            <Modal
-              open={this.state.openmodal}
-              onClose={this.onCloseModal}
-              center
-              classNames={{
-                transitionEnter: 'transition-enter',
-                transitionEnterActive: 'transition-enter-active',
-                transitionExit: 'transition-exit-active',
-                transitionExitActive: 'transition-exit-active',
-              }}
-              animationDuration={250}
-              >
-              <div className='modalholder'>
-                <p>Resep anda berhasil dibagikan!</p>
-                <Link to='/' className='modalbutton'>Lihat Resep</Link>
-                <hr/>
+        <div className='formdivider2'>
+          <ul>
+            {list2}
+            {
+              this.state.editlangkah &&
+              <div>
+                <textarea style={editor} defaultValue={listlangkah[checker]} maxLength='125' onChange={this.langkahChangeHandlerEdit.bind(this)} placeholder='Edit Langkah' autoFocus autoComplete='off' />
+                <abbr style={buttondewa} title='Simpan'><div onClick={this.langkahEditSubmit.bind(this)} ><span className='glyphicon glyphicon-ok'></span></div></abbr>
               </div>
-            </Modal>
-          </div>
+            }
+          </ul>
+
+        </div>
+        <button onClick={this.readyForAction} className='bagikan'>Bagikan <span className='glyphicon glyphicon-share'></span></button>
       </div>
-    )
-  }
+      <div className='surrat20'></div>
+      <div className="example">
+        <Modal
+          open={this.state.openmodal}
+          onClose={this.onCloseModal}
+          center
+          classNames={{
+            transitionEnter: 'transition-enter',
+            transitionEnterActive: 'transition-enter-active',
+            transitionExit: 'transition-exit-active',
+            transitionExitActive: 'transition-exit-active',
+          }}
+          animationDuration={250}
+          >
+          <div className='modalholder'>
+            <p>Resep anda berhasil dibagikan!</p>
+            <Link to='/' className='modalbutton'>Lihat Resep</Link>
+            <hr/>
+          </div>
+        </Modal>
+      </div>
+    </div>
+  )
+}
 }
 
 function mapStateToProps(state){

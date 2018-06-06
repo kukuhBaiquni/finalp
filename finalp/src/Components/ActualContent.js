@@ -14,7 +14,7 @@ export default class ActualContent extends Component {
     let preview = path + this.props.data.foto
 
     var spacer = {
-      height: this.props.data.namaresep.length + this.props.data.kategori.length > 35 ? '0px' : '42px'
+      height: '42px'
     }
 
     var identity = {
@@ -35,20 +35,27 @@ export default class ActualContent extends Component {
               <p style={{color: '#c5a3ff'}}><span style={{color: '#c5a3ff'}} className='glyphicon glyphicon-time'></span> {this.props.data.created}</p>
             </div>
             <div style={spacer}></div>
-            <hr />
+
+          </div>
+          <div className='dllwrap'>
             <div className='likedll'>
-              <abbr title='suka'><span className='glyphicon glyphicon-heart'></span>
-              &nbsp;<span style={{fontSize: '20px'}}>{this.props.data.like}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </abbr>
-            <abbr title='komentar'><span className='glyphicon glyphicon-comment'></span>
-            &nbsp; <span style={{fontSize: '20px'}}>{this.props.data.comment}</span>
-        </abbr>
+              <abbr title='suka'>
+                <span className='glyphicon glyphicon-heart'></span>
+              </abbr>
+            </div>
+
+            <div className='komendll'>
+              <abbr title='komentar'>
+                <span className='glyphicon glyphicon-comment'></span>
+              </abbr>
+            </div>
+            <div className='datautil'>{this.props.data.like} Suka & {this.props.data.comment} Komentar</div>
+            <span className='lihatdetail'>Lihat Detail</span>
+            <Link to={'/resep/' + this.props.data.resepid} className='lihatresep'><span className='glyphicon glyphicon-zoom-in'></span></Link>
+          </div>
+        </div>
+        <div className='sekat'></div>
       </div>
-      <Link to={'/resep/' + this.props.data.resepid} className='lihatresep'>Lihat Resep</Link>
-    </div>
-  </div>
-  <div className='sekat'></div>
-</div>
-)
-}
+    )
+  }
 }

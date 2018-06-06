@@ -156,7 +156,7 @@ export default class BahanPartials extends Component {
 
       <form onSubmit={this.bahanSubmit.bind(this)}>
         <div className="form-group">
-          <input maxLength='35' ref={input => this.input = input} autoComplete='off' type="text" style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
+          <input maxLength='35' ref={input => this.input = input} autoComplete='off' disabled={this.state.editing} type='text' style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
           <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
         </div>
       </form>
