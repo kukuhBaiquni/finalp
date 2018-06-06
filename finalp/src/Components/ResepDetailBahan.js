@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ResepDetailUtility from './ResepDetailUtility'
 
 export default class ResepDetailBahan extends Component {
   componentDidMount(){
@@ -10,7 +11,6 @@ export default class ResepDetailBahan extends Component {
     var listbahan = this.props.data.bahan.map((x, i) => {
       return (<li style={{fontSize: '22px'}} key={i}>{x.listbahan}</li>)
     })
-
     return(
       <div className='bahansub'>
         <p><strong>Bahan-bahan :</strong></p>
@@ -41,6 +41,8 @@ export default class ResepDetailBahan extends Component {
           })
         }
       </div>
+      <hr/>
+      <ResepDetailUtility data={this.props.data} actions={this.props.actions} user={this.props.user} />
     </div>
   )
 }

@@ -19,7 +19,7 @@ router.post('/api/finalp/register', function(req, res){
     email : req.body.email,
     password : req.body.password,
     created : req.body.created,
-    fotoprofil: 'initialfp'
+    fotoprofil: 'initialfp.jpg'
   })
 
   let toToken = {
@@ -244,14 +244,25 @@ router.get('/api/finalp/myrecipe/:token', function(req, res){
 router.post('/api/finalp/myrecipe/:resepid', function(req, res){
   let resepid = req.params.resepid
 
-  Resep.deleteOne({resepid}, function(err, res){
+  Resep.deleteOne({resepid}, function(err){
+    if (err) {
+      res.json({
+        status: 'Failed'
+      })
+    }
+  })
+})
+
+router.get('/api/finalp/alluser', function(req, res){
+  User.find({}, function(err, users){
     if (err) {
       res.json({
         status: 'Failed'
       })
     }else{
       res.json({
-        status: 'Success'
+        status: 'Success',
+        user: users
       })
     }
   })
@@ -286,7 +297,7 @@ router.post('/api/finalp/login', function(req, res, next){
     password: req.body.password
   }
 
-  User.findOne(data, function(err, user){
+  User.find(data, function(err, user){
     if (err) {
       res.json({
         status: 'Failed, try again later'
@@ -301,19 +312,70 @@ router.post('/api/finalp/login', function(req, res, next){
 
     if (user) {
       let toToken = {
-        userid:user.userid,
-        namadepan:user.namadepan,
-        namabelakang:user.namabelakang,
-        email:user.email,
-        created:user.created
+        userid:user[0].userid,
+        namadepan:user[0].namadepan,
+        namabelakang:user[0].namabelakang,
+        email:user[0].email,
+        created:user[0].created
       }
       let token = jwt.sign(toToken, 'gabonlatoz', {})
       res.json({
         status: 'Success',
-        data: user,
+        user: user,
         token: token
       })
     }
+  })
+})
+
+router.post('/api/finalp/liking', function(req, res){
+  let userid = req.body.userid
+  let resepid = req.body.resepid
+
+  Resep.findOne({resepid}, function(err, resep){
+    if (err) {
+      res.json({
+        status: 'Tercyduk'
+      })
+    }else if(resep){
+      resep.like = resep.like + 1
+      resep.likedby.push(userid)
+      resep.save(function(){
+        res.json({
+          status: 'Liking Success'
+        })
+      })
+    }else{
+      res.json({
+        status: 'Data Tercyduk'
+      })
+    }
+  })
+})
+
+router.post('/api/finalp/unliking', function(req, res){
+  let userid = req.body.userid
+  let resepid = req.body.resepid
+
+  Resep.update({resepid}, {$pullAll: {likedby: [userid]}}).exec(function(err, gabon){
+    Resep.findOne({resepid}, function(err, resep){
+      if (err) {
+        res.json({
+          status: 'Tercyduk'
+        })
+      }else if(resep){
+        resep.like = resep.like -1
+        resep.save(function(){
+          res.json({
+            status: 'Unliking Success'
+          })
+        })
+      }else{
+        res.json({
+          status: 'Resep tidak ditemukan'
+        })
+      }
+    })  
   })
 })
 

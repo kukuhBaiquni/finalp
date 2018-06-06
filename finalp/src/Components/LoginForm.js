@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router-dom'
 
 export default class LoginForm extends Component {
@@ -9,14 +10,15 @@ export default class LoginForm extends Component {
       password: '',
       emailvalid: false,
       passwordvalid: false,
-      redirect: false
+      redirect: false,
+      loginalert: false
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   emailValue(e){
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     })
 
     if(this.state.emailvalid.length !== 0){
@@ -53,10 +55,24 @@ export default class LoginForm extends Component {
       var email = this.state.email.trim();
       var password = this.state.password.trim();
 
-      this.setState({
-        redirect: true
+      var loginvalidation = []
+      this.props.user.map(function(x){
+        if (email === x.email && password === x.password) {
+          loginvalidation.push(x)
+        }
+        return x
       })
-      this.props.loginAttempt(email, password)
+
+      if (loginvalidation.length === 0) {
+        this.setState({
+          loginalert: true
+        })
+      }else{
+        this.props.actions.loginAttempt(email, password)
+        this.setState({
+          redirect: true
+        })
+      }
 
     }else{
       this.setState({
@@ -68,7 +84,7 @@ export default class LoginForm extends Component {
 
   render(){
     if(this.state.redirect) {
-      return <Redirect to='/profile' />
+      return <Redirect to='/authentication' />
     }else{
       return(
         <div className='logform'>
@@ -84,6 +100,10 @@ export default class LoginForm extends Component {
               <input type="password" className="form-control" onChange={this.passwordValue.bind(this)} placeholder="Password" />
             </div>
             <button className='dft'>Masuk</button>
+            {
+              this.state.loginalert &&
+              <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>User tidak ditemukan</div></FlashMessage>
+            }
           </form>
         </div>
       )

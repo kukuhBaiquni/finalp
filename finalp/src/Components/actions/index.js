@@ -22,6 +22,7 @@ export function addUser(namadepan, namabelakang, email, password){
       }else{
         let token = res.body.token;
         localStorage.setItem('token', token)
+        dispatch(loadUser(token))
       }
     })
   }
@@ -29,6 +30,25 @@ export function addUser(namadepan, namabelakang, email, password){
 
 function addUserFailed(){
   return {type: 'addUserFailed'}
+}
+
+export function loadAllUser(){
+  return dispatch => {
+    return request
+    .get(`${TARGET}alluser`)
+    .set('Accept', 'application/json')
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(allUser(res.body))
+      }
+    })
+  }
+}
+
+function allUser(users){
+  return {type: 'alluser', users}
 }
 
 export function loadUser(token){
@@ -119,19 +139,55 @@ export function deleteResep(resepid){
     .end((err, res)=>{
       if (err) {
         console.error(err);
-      }else{
-        dispatch(deleteResepSuccess())
       }
     })
   }
 }
 
-function deleteResepSuccess(){
-  return {type: 'deleteresepsuccess'}
+export function deletefilter(resepid){
+  return {type: 'deletefilter', resepid}
 }
 
 function uploadfpDone(){
   return {type: 'uploadfpDone'}
+}
+
+export function liking(userid, resepid){
+  return dispatch => {
+    return request
+    .post(`${TARGET}liking`)
+    .type('form')
+    .send({userid: userid})
+    .send({resepid: resepid})
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(likingSuccess())
+      }
+    })
+  }
+}
+
+function likingSuccess(){
+  return {type: 'likingsuccess'}
+}
+
+export function unliking(userid, resepid){
+  return dispatch => {
+    return request
+    .post(`${TARGET}unliking`)
+    .type('form')
+    .send({userid: userid})
+    .send({resepid: resepid})
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(likingSuccess())
+      }
+    })
+  }
 }
 
 // function checkToken(data){
@@ -254,7 +310,7 @@ export function loginAttempt(email, password){
         if (token || token !== undefined) {
           localStorage.setItem('token',res.body.token)
         }
-        dispatch(loginAttemptSuccess(res.body))
+        dispatch(loadUser(res.body.token))
       }
     })
   }
@@ -262,10 +318,6 @@ export function loginAttempt(email, password){
 
 function loginAttemptFail(){
   return {type: 'loginAttemptFail'}
-}
-
-function loginAttemptSuccess(data){
-  return {type: 'loginAttemptSuccess', data}
 }
 
 export function searchModeOn(){

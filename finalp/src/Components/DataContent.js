@@ -31,9 +31,16 @@ export default class DataContent extends Component {
     var data = this.props.data
     var limit = this.state.limit
     var initialData = data.slice(0, limit)
+    var userid = this.props.user.map(x => x.userid)
     var dataItem = initialData.map(function(x){
       return(
-        <ActualContent key={x.resepid} data={x} />
+        <div key={x.resepid}>
+          {
+            x.likedby.includes(userid[0]) &&
+            <abbr title='Disukai'><div className='likemark'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+          }
+        <ActualContent data={x}/>
+        </div>
       )
     })
     return(

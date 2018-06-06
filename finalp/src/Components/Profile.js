@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import Dropzone from 'react-dropzone'
 import {Redirect} from 'react-router'
+import FlashMessage from 'react-flash-message'
 import ProfileContent from './ProfileContent'
 
 var fotoprofil = ''
@@ -17,13 +18,14 @@ class Profile extends Component {
       foto: fotoprofil,
       files: [],
       preview: false,
-      alertsuccess: false
+      alertsuccess: false,
+      visibility: 'visible'
     }
   }
   componentDidMount(){
     let token = localStorage.getItem('token')
-    this.props.actions.myRecipe(token)
     if (token) {
+      this.props.actions.myRecipe(token)
       this.props.actions.loadUser(token)
     }else{
       this.setState({
@@ -36,7 +38,9 @@ class Profile extends Component {
     this.setState({
       files: files,
       foto: files[0],
-      preview: true
+      preview: true,
+      visibility: 'visible',
+      alertsuccess: false
     })
     if (fotoprofil.length > 0) {
       fotoprofil = []
@@ -47,8 +51,9 @@ class Profile extends Component {
   save(){
     this.setState({
       alertsuccess: true,
-      preview: false
+      visibility: 'hidden'
     })
+
     let self = localStorage.getItem('token')
     this.props.actions.uploadfp(fotoprofil, self)
   }
@@ -64,12 +69,15 @@ class Profile extends Component {
     const {user} = this.props
     var nama = user.map((x, i) => x.namadepan + ' ' + x.namabelakang)
     var path = 'http://localhost:3000/images/'
+    var vanish = {
+      visibility: this.state.visibility
+    }
     if (this.state.redirect) {
       return <Redirect to='/' />
     }else{
       return(
         <div>
-          <Navbar />
+          <Navbar actions={this.props.actions}/>
           <div className='propage'>
             <div className='thebox'></div>
             {
@@ -77,13 +85,17 @@ class Profile extends Component {
               ?
               <div>
                 <img className='fotobox' src={this.state.foto.preview} alt='preview'/>
-                <div onClick={this.save.bind(this)} className='simpanfoto'>Simpan</div>
-                <div onClick={this.batal.bind(this)} className='batalsimpan'>Batal</div>
+                <div style={vanish} onClick={this.save.bind(this)} className='simpanfoto'>Simpan</div>
+                <div style={vanish} onClick={this.batal.bind(this)} className='batalsimpan'>Batal</div>
               </div>
               :
               user.map((x, i) => {
                 return (<img key={i} className='fotobox' src={path + x.fotoprofil} alt={user.userid}/>)
               })
+            }
+            {
+              this.state.alertsuccess &&
+              <FlashMessage duration={6000}><div className='savesuccess'>Perubahan berhasil disimpan</div></FlashMessage>
             }
             <div className='anotherbox'>
             </div>

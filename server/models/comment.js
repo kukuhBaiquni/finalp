@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var comment = new Schema({
   resepid : Number,
   namauser : String,
+  userid: Number,
   content : String,
   created : String,
 })

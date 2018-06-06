@@ -7,6 +7,10 @@ import ResepDetailBahan from './ResepDetailBahan'
 
 class ResepDetailPage extends Component {
   componentDidMount(){
+    let token = localStorage.getItem('token')
+    if (token) {
+      this.props.actions.loadUser(token)
+    }
     var parseId = this.props.location.pathname.replace('/resep/', '')
     this.props.actions.resepDetail(parseId)
   }
@@ -30,11 +34,11 @@ class ResepDetailPage extends Component {
     })
 
     var pass = this.props.data.map(x => {
-      return (<ResepDetailBahan key={x.resepid} data={x}/>)
+      return (<ResepDetailBahan key={x.resepid} data={x} actions={this.props.actions} user={this.props.user}/>)
     })
     return(
       <div>
-        <Navbar/>
+        <Navbar actions={this.props.actions} />
         <div className='pdbg'>
           <div className='visiblebg'>
             {image}
@@ -49,8 +53,6 @@ class ResepDetailPage extends Component {
               <div className='anotherhr'></div>
               {pass}
           </div>
-          <hr />
-          <div className='utility'></div>
         </div>
         <div className='footer'></div>
       </div>
@@ -60,7 +62,8 @@ class ResepDetailPage extends Component {
 
 function mapStateToProps(state){
   return{
-    data: state.data
+    data: state.data,
+    user: state.user
   }
 }
 

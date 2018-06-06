@@ -3,9 +3,6 @@ let initialState = []
 export default function data(state = initialState, action){
   switch (action.type) {
 
-    case 'loginAttemptSuccess':
-      return action.data
-
     case 'tambahResepGagal':
       return state
 
@@ -18,13 +15,15 @@ export default function data(state = initialState, action){
     case 'resepDetailSuccess':
     return action.data.resep
 
+    case 'likingsuccess':
+    return state
+
     case 'myrecipe':
     return action.resep.data
 
-    case 'deleteresepsuccess':
-    console.log(action);
-    console.log(state);
-    return state
+    case 'deletefilter':
+    let filtered = state.filter(x => x.resepid !== action.resepid)
+    return filtered
 
     case 'searching':
     let result = state.filter(x => x.namaresep.includes(action.query))

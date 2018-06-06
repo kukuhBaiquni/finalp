@@ -12,7 +12,8 @@ class HomePage extends Component {
     super(props)
 
     this.state = {
-      showme: false
+      showme: false,
+      gl: false
     }
     this.handleScroll = this.handleScroll.bind(this)
   }
@@ -22,7 +23,12 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    let token = localStorage.getItem('token')
     window.scrollTo(0, 0)
+    if (token) {
+      this.props.actions.loadUser(token)
+    }
+    this.props.actions.searchModeOff()
     this.props.actions.loadResep()
   }
 
@@ -46,7 +52,7 @@ class HomePage extends Component {
     const {data, actions, utility} = this.props
     return(
       <div className='wrapper'>
-        <Navbar actions={actions} />
+        <Navbar actions={actions} location={this.props.location.pathname}/>
         {
           this.state.showme &&
           <SearchFormNavbar
@@ -60,7 +66,7 @@ class HomePage extends Component {
           actions={actions}
         />
         <div className='kotak'></div>
-        <DataContent data={this.props.data}/>
+        <DataContent data={data} actions={actions} user={this.props.user}/>
       </div>
     )
   }
@@ -69,7 +75,8 @@ class HomePage extends Component {
 function mapStateToProps(state){
   return{
     data: state.data,
-    utility: state.utility
+    utility: state.utility,
+    user: state.user
   }
 }
 

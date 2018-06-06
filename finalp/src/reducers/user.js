@@ -6,11 +6,11 @@ export default function user(state = initialState, action){
     case 'loadUserSuccess':
     return action.user.user
 
-    case 'addUserSuccess':
-    return action.token
-
     case 'uploadfpDone':
     return state
+
+    case 'alluser':
+    return action.users.user
 
     default:
     return state

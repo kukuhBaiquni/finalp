@@ -20,6 +20,7 @@ class RegisterLoginPage extends Component {
 
   componentDidMount(){
     let token = localStorage.getItem('token')
+    this.props.actions.loadAllUser()
     if (token) {
       this.setState({
         redirect: true
@@ -46,8 +47,8 @@ class RegisterLoginPage extends Component {
           <button className='togglerreg' onClick={this.onClick}><span className='glyphicon glyphicon-refresh'></span></button>
           {
             this.state.toggler
-            ? <RegisterForm addUser={this.props.actions.addUser}/>
-            : <LoginForm loginAttempt={this.props.actions.loginAttempt}/>
+            ? <RegisterForm actions={this.props.actions} user={this.props.user}/>
+            : <LoginForm actions={this.props.actions} user={this.props.user}/>
           }
         </div>
       )
@@ -57,7 +58,7 @@ class RegisterLoginPage extends Component {
 
 function mapStateToProps(state){
   return{
-    data: state.data
+    user: state.user
   }
 }
 

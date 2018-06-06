@@ -22,7 +22,8 @@ export default class RegisterForm extends Component {
       namabelakangvalid: false,
       emailvalid: false,
       formvalid: false,
-      redirect: false
+      redirect: false,
+      emailalert: false,
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -70,7 +71,7 @@ export default class RegisterForm extends Component {
 
   handleEmail(e){
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     })
 
     if (e.target.value.length !== 0) {
@@ -186,19 +187,35 @@ export default class RegisterForm extends Component {
         var email = this.state.email.trim();
         var password = this.state.password.trim();
 
-        this.setState({
-          namadepan: '',
-          namabelakang: '',
-          email: '',
-          password: '',
-          ulangipassword: '',
-          formvalid: false,
-          register: false,
-          registersukses: true,
-          redirect: true
+        let emailvalidation = []
+        this.props.user.map(function(x){
+          if (x.email === email) {
+            emailvalidation.push(x)
+          }
+          return x
         })
 
-        this.props.addUser(namadepan, namabelakang, email, password)
+        if (emailvalidation.length !== 0) {
+          this.setState({
+            emailalert: true
+          })
+        }else{
+          this.setState({
+            namadepan: '',
+            namabelakang: '',
+            email: '',
+            password: '',
+            ulangipassword: '',
+            formvalid: false,
+            register: false,
+            registersukses: true,
+            redirect: true,
+            emailalert: false,
+          })
+          this.props.actions.addUser(namadepan, namabelakang, email, password)
+        }
+
+
       }else{
         this.setState({
           formvalid:true
@@ -211,38 +228,41 @@ export default class RegisterForm extends Component {
         return <Redirect to='/authentication' />
       }else{
         return(
-        <div className='bgform'>
-        <button disabled className='regb'>Register Form</button>
-        <br/><br/><br/>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-        <label className='labelf'>Nama Depan {this.state.namadepanvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-        <input type="text" className="form-control" placeholder="Nama Depan" onFocus={this.namaDepanValid.bind(this)} value={this.state.namadepan} onChange={this.handleNamaDepan.bind(this)} />
-        </div>
-        <div className="form-group">
-        <label className='labelf'>Nama Belakang {this.state.namabelakangvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-        <input type="text" className="form-control" placeholder="Nama Belakang" onFocus={this.namaBelakangValid.bind(this)} value={this.state.namabelakang} onChange={this.handleNamaBelakang.bind(this)} />
-        </div>
-        <div className="form-group">
-        <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-        <input type="email" className="form-control" placeholder="Email" onFocus={this.emailValid.bind(this)} value={this.state.email} onChange={this.handleEmail.bind(this)} />
-        </div>
-        <div className="form-group">
-        <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>minimal 6 karakter</b> : ''}</label>
-        <input type="password" className="form-control" placeholder="Password" onFocus={this.passwordValid.bind(this)} value={this.state.password} onChange={this.handlePassword.bind(this)} />
-        </div>
-        <div className="form-group">
-        <label className='labelf'>Ulangi Password {this.state.ulangivalid ? <b className='alert'>password tidak cocok</b> : ''}</label>
-        <input type="password" className="form-control" placeholder="Ulangi Password" onFocus={this.ulangiValid.bind(this)} value={this.state.ulangipassword} onChange={this.handleRetypePassword.bind(this)} />
-        </div>
-        <button className='dft'>Daftar</button>
-        </form>
-        {
-          this.state.formvalid
-          ? <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Catatan: Mohon isi form dengan benar!!</div></FlashMessage>
-          : ''
-        }
-        </div>
+          <div className='bgform'>
+            <button disabled className='regb'>Register Form</button>
+            <br/><br/><br/>
+            <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label className='labelf'>Nama Depan {this.state.namadepanvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                <input type="text" className="form-control" placeholder="Nama Depan" onFocus={this.namaDepanValid.bind(this)} value={this.state.namadepan} onChange={this.handleNamaDepan.bind(this)} />
+              </div>
+              <div className="form-group">
+                <label className='labelf'>Nama Belakang {this.state.namabelakangvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                <input type="text" className="form-control" placeholder="Nama Belakang" onFocus={this.namaBelakangValid.bind(this)} value={this.state.namabelakang} onChange={this.handleNamaBelakang.bind(this)} />
+              </div>
+              <div className="form-group">
+                <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                <input type="email" className="form-control" placeholder="Email" onFocus={this.emailValid.bind(this)} value={this.state.email} onChange={this.handleEmail.bind(this)} />
+              </div>
+              <div className="form-group">
+                <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>minimal 6 karakter</b> : ''}</label>
+                <input type="password" className="form-control" placeholder="Password" onFocus={this.passwordValid.bind(this)} value={this.state.password} onChange={this.handlePassword.bind(this)} />
+              </div>
+              <div className="form-group">
+                <label className='labelf'>Ulangi Password {this.state.ulangivalid ? <b className='alert'>password tidak cocok</b> : ''}</label>
+                <input type="password" className="form-control" placeholder="Ulangi Password" onFocus={this.ulangiValid.bind(this)} value={this.state.ulangipassword} onChange={this.handleRetypePassword.bind(this)} />
+              </div>
+              <button className='dft'>Daftar</button>
+            </form>
+            {
+              this.state.formvalid &&
+              <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Mohon isi form dengan benar!!</div></FlashMessage>
+            }
+            {
+              this.state.emailalert &&
+              <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Email yang anda masukan sudah digunakan</div></FlashMessage>
+            }
+          </div>
         )
       }
     }

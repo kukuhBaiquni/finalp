@@ -176,7 +176,7 @@ export default class TulisResepForm extends Component {
           <div className='selectspace'></div>
           <BahanPartials kategori={kategori} namaresep={namaresep} foto={thumbnailfoto} pseudo1={this.pseudo1}/>
         </div>
-        <Navbar />
+        <Navbar actions={this.props.actions}/>
 
         <div style={{display: 'none', height: '1px', width: '1px'}} onClick={this.pseudo1}></div>
       </div>

@@ -10,9 +10,10 @@ var resep = new Schema({
   langkah: [{detail: String, images: String}],
   created : String,
   like: {type: Number, default: 0},
-  likedby: [{userid: Number}],
+  likedby: [Number],
   foto: String,
   comment: 0,
+  commentedby: [],
   kategori: String,
 })
 
