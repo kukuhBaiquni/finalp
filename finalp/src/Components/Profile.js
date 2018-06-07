@@ -7,6 +7,7 @@ import Dropzone from 'react-dropzone'
 import {Redirect} from 'react-router'
 import FlashMessage from 'react-flash-message'
 import ProfileContent from './ProfileContent'
+import LikedContent from './LikedContent'
 
 var fotoprofil = ''
 class Profile extends Component {
@@ -19,7 +20,8 @@ class Profile extends Component {
       files: [],
       preview: false,
       alertsuccess: false,
-      visibility: 'visible'
+      visibility: 'visible',
+      likeorself: false
     }
   }
   componentDidMount(){
@@ -27,6 +29,7 @@ class Profile extends Component {
     if (token) {
       this.props.actions.myRecipe(token)
       this.props.actions.loadUser(token)
+      this.props.actions.loadLiked(token)
     }else{
       this.setState({
         redirect: true
@@ -46,6 +49,12 @@ class Profile extends Component {
       fotoprofil = []
     }
     fotoprofil = files[0]
+  }
+
+  toggler(){
+    this.setState(function(prevState){
+      return {likeorself: !prevState.likeorself}
+    })
   }
 
   save(){
@@ -106,11 +115,16 @@ class Profile extends Component {
             </Dropzone>
 
             <div className='buttonwrapper'>
-              <abbr title='Resep Saya'><div className='testbutton1'><span className='glyphicon glyphicon-list'></span></div></abbr>
-              <abbr title='Aktifitas Saya'><div className='testbutton2'><span className='glyphicon glyphicon-time'></span></div></abbr>
-              <abbr title='Resep yang disimpan'><div className='testbutton3'><span className='glyphicon glyphicon-folder-open'></span></div></abbr>
+              <abbr title='Resep Saya'><div onClick={this.toggler.bind(this)} className='testbutton1'><span className='glyphicon glyphicon-list'></span></div></abbr>
+              <abbr title='Resep yang disukai'><div onClick={this.toggler.bind(this)} className='testbutton3'><span className='glyphicon glyphicon-heart'></span></div></abbr>
             </div>
-            <ProfileContent data={this.props.data} user={this.props.user} actions={this.props.actions}/>
+            {
+              this.state.likeorself
+              ?
+              <LikedContent liked={this.props.liked} user={this.props.user} actions={this.props.actions}/>
+              :
+              <ProfileContent data={this.props.data} user={this.props.user} actions={this.props.actions}/>
+            }
             <div className='morespacepls'></div>
           </div>
         </div>
@@ -122,7 +136,8 @@ class Profile extends Component {
 function mapStateToProps(state){
   return{
     user: state.user,
-    data: state.data
+    data: state.data,
+    liked: state.liked
   }
 }
 

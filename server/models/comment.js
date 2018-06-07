@@ -3,10 +3,11 @@ var Schema = mongoose.Schema;
 
 var comment = new Schema({
   resepid : Number,
-  namauser : String,
   userid: Number,
+  username : String,
+  userfoto: String,
   content : String,
   created : String,
 })
 
-module.exports = mongoose.model('Resep', resep)
+module.exports = mongoose.model('Comment', comment)

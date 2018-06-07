@@ -61,8 +61,8 @@ export default function data(state = initialState, action){
     let result7 = state.filter(x => x.kategori === 'Katering')
     return result7
 
-    case 'perasmanan':
-    let result8 = state.filter(x => x.kategori === 'Perasmanan')
+    case 'prasmanan':
+    let result8 = state.filter(x => x.kategori === 'Prasmanan')
     return result8
 
     case 'kuelebaran':

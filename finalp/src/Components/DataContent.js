@@ -37,7 +37,7 @@ export default class DataContent extends Component {
         <div key={x.resepid}>
           {
             x.likedby.includes(userid[0]) &&
-            <abbr title='Disukai'><div className='likemark'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+            <abbr title='Anda menyukai kiriman ini'><div className='likemark'><span className='glyphicon glyphicon-heart'></span></div></abbr>
           }
         <ActualContent data={x}/>
         </div>

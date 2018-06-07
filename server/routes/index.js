@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken')
 var User = require('../models/user')
+var Comment = require('../models/comment')
 var Resep = require('../models/resep')
 var jwtDecode = require('jwt-decode');
 var path = require('path');
@@ -328,6 +329,91 @@ router.post('/api/finalp/login', function(req, res, next){
   })
 })
 
+router.get('/api/finalp/liked/:token', function(req, res){
+  let token = req.params.token;
+  var decoded = jwtDecode(token);
+  var userid = decoded.userid
+  var target = []
+
+  User.findOne({userid}, function(err, user){
+    Resep.find({}, function(err, resep){
+      if (err) {
+        res.json({
+          status: 'Tercyduk'
+        })
+      }else{
+        for (var i = 0; i < user.liking.length; i++) {
+          resep.map(function(x){
+            if (x.resepid === user.liking[i]) {
+              target.push(x)
+            }
+            return x
+          })
+        }
+        res.json({
+          status: 'Cool',
+          liked: target
+        })
+      }
+    })
+  })
+})
+
+router.get('/api/finalp/loadcomment/:id', function(req, res){
+  let resepid = req.params.id
+  Comment.find({resepid}, function(err, comment){
+    if (err) {
+      res.json({
+        status: 'Tercyduk'
+      })
+    }else if(comment){
+      res.json({
+        status: 'Data found',
+        comment: comment
+      })
+    }else{
+      res.json({
+        status: 'Resep is missing'
+      })
+    }
+  })
+})
+
+router.post('/api/finalp/submitcomment', function(req, res){
+  let resepid = req.body.resepid
+  
+  const newComment = new Comment({
+    resepid: req.body.resepid,
+    userid : req.body.userid,
+    username: req.body.username,
+    userfoto: req.body.userfoto,
+    content: req.body.content,
+    created : req.body.created
+  })
+
+  newComment.save(function(err, comment){
+    if (err) {
+      res.json({
+        status: 'Failed, try again later'
+      })
+    }else{
+      Resep.find({resepid}, function(err, resep){
+        if (err) {
+          res.json({status: 'Tercyduk'})
+        }else if(resep){
+          resep[0].comment = resep[0].comment + 1
+          resep[0].save(function(){
+            res.json({
+              status : 'Success',
+              comment : comment
+            })
+          })
+        }
+      })
+    }
+  })
+})
+
 router.post('/api/finalp/liking', function(req, res){
   let userid = req.body.userid
   let resepid = req.body.resepid
@@ -341,8 +427,23 @@ router.post('/api/finalp/liking', function(req, res){
       resep.like = resep.like + 1
       resep.likedby.push(userid)
       resep.save(function(){
-        res.json({
-          status: 'Liking Success'
+        User.findOne({userid}, function(err, user){
+          if (err) {
+            res.json({
+              status: 'Tercyduk'
+            })
+          }else if(user){
+            user.liking.push(resepid)
+            user.save(function(){
+              res.json({
+                status: 'Liking Success'
+              })
+            })
+          }else{
+            res.json({
+              status: 'Tercyduk2'
+            })
+          }
         })
       })
     }else{
@@ -366,8 +467,10 @@ router.post('/api/finalp/unliking', function(req, res){
       }else if(resep){
         resep.like = resep.like -1
         resep.save(function(){
-          res.json({
-            status: 'Unliking Success'
+          User.update({userid}, {$pullAll: {liking: [resepid]}}).exec(function(err, master){
+            res.json({
+              status: 'Unliking Success'
+            })
           })
         })
       }else{
@@ -375,7 +478,7 @@ router.post('/api/finalp/unliking', function(req, res){
           status: 'Resep tidak ditemukan'
         })
       }
-    })  
+    })
   })
 })
 

@@ -12,8 +12,7 @@ var resep = new Schema({
   like: {type: Number, default: 0},
   likedby: [Number],
   foto: String,
-  comment: 0,
-  commentedby: [],
+  comment: {type: Number, default: 0},
   kategori: String,
 })
 

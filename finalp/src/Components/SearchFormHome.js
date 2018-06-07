@@ -100,8 +100,8 @@ export default class SearchFormHome extends Component {
     this.props.actions.searchModeOn()
   }
 
-  perasmanan(){
-    this.props.actions.perasmanan()
+  prasmanan(){
+    this.props.actions.prasmanan()
     this.props.actions.searchModeOn()
   }
 
@@ -181,7 +181,7 @@ export default class SearchFormHome extends Component {
           <p onClick={this.makanSiang.bind(this)} className='kategorilist5'>Makan Siang</p>
           <p onClick={this.makanMalam.bind(this)} className='kategorilist6'>Makan Malam</p>
           <p onClick={this.katering.bind(this)} className='kategorilist7'>Katering</p>
-          <p onClick={this.perasmanan.bind(this)} className='kategorilist8'>Perasmanan</p>
+          <p onClick={this.prasmanan.bind(this)} className='kategorilist8'>Prasmanan</p>
           <p onClick={this.kueLebaran.bind(this)} className='kategorilist9'>Kue Lebaran</p>
         </ul>
       </div>

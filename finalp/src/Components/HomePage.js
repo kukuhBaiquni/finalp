@@ -13,7 +13,8 @@ class HomePage extends Component {
 
     this.state = {
       showme: false,
-      gl: false
+      gl: false,
+      jumper: false
     }
     this.handleScroll = this.handleScroll.bind(this)
   }
@@ -36,6 +37,13 @@ class HomePage extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  jumper(){
+    this.setState({
+      jumper: false
+    })
+    window.scrollTo(0, 0)
+  }
+
   handleScroll() {
     let scroll = document.documentElement.scrollTop;
     if (scroll > 383) {
@@ -47,6 +55,16 @@ class HomePage extends Component {
         showme: false
       })
     }
+    if (scroll > 1200) {
+      this.setState({
+        jumper: true
+      })
+    }else{
+      this.setState({
+        jumper: false
+      })
+    }
+
   }
   render(){
     const {data, actions, utility} = this.props
@@ -58,13 +76,19 @@ class HomePage extends Component {
           <SearchFormNavbar
             searchmode={utility}
             actions={actions}
-          />
+            />
         }
         <SearchFormHome
           searchmode={utility}
           data={data}
           actions={actions}
-        />
+          />
+        {
+          this.state.jumper &&
+          <abbr title='Loncat keatas'>
+            <div onClick={this.jumper.bind(this)} className='jumper'><span className='glyphicon glyphicon-arrow-up'></span></div>
+          </abbr>
+        }
         <div className='kotak'></div>
         <DataContent data={data} actions={actions} user={this.props.user}/>
       </div>

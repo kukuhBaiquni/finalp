@@ -4,15 +4,25 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import ResepDetailBahan from './ResepDetailBahan'
+import CommentSection from './CommentSection'
+import CommentList from './CommentList'
 
 class ResepDetailPage extends Component {
+
   componentDidMount(){
     let token = localStorage.getItem('token')
     if (token) {
       this.props.actions.loadUser(token)
     }
-    var parseId = this.props.location.pathname.replace('/resep/', '')
+    var parseId = this.props.location.pathname.replace('/resep/', '').trim()
     this.props.actions.resepDetail(parseId)
+    this.props.actions.loadComment(parseId)
+  }
+
+  opencomment(){
+    this.setState({
+      commentexpanded: true
+    })
   }
 
   render(){
@@ -44,36 +54,40 @@ class ResepDetailPage extends Component {
             {image}
           </div>
           <div className='resepdetailspacer'>
-              {title}
-              {kategori}
-              <hr />
+            {title}
+            {kategori}
+            <hr />
           </div>
           <div className='resepdetails'>
             <span>Penulis : </span>{penulis}
               <div className='anotherhr'></div>
               {pass}
+            </div>
           </div>
+          <CommentSection data={this.props.data[0]} user={this.props.user} actions={this.props.actions} />
+          <div className='spacercomment'></div>
+          <CommentList comment={this.props.comment} actions={this.props.actions} />
+          <div className='footer'></div>
         </div>
-        <div className='footer'></div>
-      </div>
-    )
+      )
+    }
   }
-}
 
-function mapStateToProps(state){
-  return{
-    data: state.data,
-    user: state.user
+  function mapStateToProps(state){
+    return{
+      data: state.data,
+      user: state.user,
+      comment: state.comment
+    }
   }
-}
 
-function mapDispatchToProps(dispatch){
-  return{
-    actions: bindActionCreators(AppActions, dispatch)
+  function mapDispatchToProps(dispatch){
+    return{
+      actions: bindActionCreators(AppActions, dispatch)
+    }
   }
-}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ResepDetailPage)
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ResepDetailPage)

@@ -190,6 +190,47 @@ export function unliking(userid, resepid){
   }
 }
 
+export function submitComment(userid, username, userfoto, content, resepid){
+  let created = moment(Date.now()).format('DD-MM-YYYY')
+  return dispatch => {
+    return request
+    .post(`${TARGET}submitcomment`)
+    .type('form')
+    .send({userid: userid})
+    .send({username: username})
+    .send({userfoto: userfoto})
+    .send({content: content})
+    .send({resepid: resepid})
+    .send({created: created})
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(loadComment(resepid))
+      }
+    })
+  }
+}
+
+export function loadComment(resepid){
+  return dispatch => {
+    return request
+    .get(`${TARGET}loadcomment/${resepid}`)
+    .set('Accept', 'application/json')
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(loadCommentSuccess(res.body))
+      }
+    })
+  }
+}
+
+function loadCommentSuccess(comment){
+  return {type: 'loadcommentsuccess', comment}
+}
+
 // function checkToken(data){
 //   return dispatch => {
 //     return request
@@ -205,6 +246,25 @@ export function unliking(userid, resepid){
 //     })
 //   }
 // }
+
+export function loadLiked(token){
+  return dispatch => {
+    return request
+    .get(`${TARGET}liked/${token}`)
+    .set('Accept', 'application/json')
+    .end((err, res)=>{
+      if (err) {
+        console.error(err);
+      }else{
+        dispatch(loadlikesuccess(res.body))
+      }
+    })
+  }
+}
+
+function loadlikesuccess(liked){
+  return {type: 'loadlikesuccess', liked}
+}
 
 export function loadResep(){
   return dispatch => {
@@ -356,8 +416,8 @@ export function katering(){
   return {type: 'katering'}
 }
 
-export function perasmanan(){
-  return {type: 'perasmanan'}
+export function prasmanan(){
+  return {type: 'prasmanan'}
 }
 
 export function kueLebaran(){

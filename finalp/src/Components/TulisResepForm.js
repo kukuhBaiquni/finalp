@@ -162,7 +162,7 @@ export default class TulisResepForm extends Component {
                 <option value='Makan Siang'> Makan Siang </option>
                 <option value='Makan Malam'> Makan Malam </option>
                 <option value='Cemilan'> Cemilan </option>
-                <option value='Perasmanan'> Perasmanan </option>
+                <option value='Prasmanan'> Prasmanan </option>
                 <option value='Menu Sahur'> Menu Sahur </option>
                 <option value='Menu Buka'> Menu Buka </option>
                 <option value='Katering'> Katering </option>

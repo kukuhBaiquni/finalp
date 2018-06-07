@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 
-export default class ProfileContent extends Component {
+export default class LikedContent extends Component {
   constructor(props){
     super(props)
 
@@ -13,10 +13,10 @@ export default class ProfileContent extends Component {
   }
 
   loadmore(){
-    if (this.props.data.length > 10) {
+    if (this.props.liked.length > 10) {
       this.setState({
         limit: this.state.limit + 10,
-        handler: this.props.data.length
+        handler: this.props.liked.length
       })
     }
   }
@@ -31,19 +31,26 @@ export default class ProfileContent extends Component {
   }
 
   render(){
-    console.log(this.props.data.length);
+    console.log(this.props);
     var path = 'http://localhost:3000/images/'
-    let content = this.props.data.map((x, i) =>{
+    let content = this.props.liked.map((x, i) =>{
       return(
         <div key={i}>
           <div className='fillcontent'>
-            <Link to={'/resep/' + this.props.data[i].resepid}>
+            <Link to={'/resep/' + this.props.liked[i].resepid}>
               <abbr title='Lihat detail'>
-                <p style={{color: 'white'}}>{x.namaresep}</p>
+                <p style={{color: 'white', marginTop: '-10px', textDecoration: 'none'}}>{x.namaresep}</p>
               </abbr>
             </Link>
+            <p style={{fontSize: '13px', marginTop: '-42px'}}>Penulis : {x.namapenulis}</p>
           </div>
-          <abbr title='Hapus'><div onClick={()=> this.delete(i)} className='option2'><span className='glyphicon glyphicon-trash'></span></div></abbr>
+          {
+            x.penulis === this.props.user[0].userid
+            ?
+            <abbr title='Hapus'><div onClick={()=> this.delete(i)} className='option2'><span className='glyphicon glyphicon-trash'></span></div></abbr>
+            :
+            <abbr title='Disukai'><div className='option3'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+          }
           <div className='prolist'>
             <img className='litleimg' src={path + x.foto} alt='123' />
           </div>
@@ -56,21 +63,16 @@ export default class ProfileContent extends Component {
       <div className='wadahpro'>
         <hr/>
         <div className='protitle'>
-          <p>Resep Saya</p>
-          <p className='subhead'>Total Resep yang ditulis : {this.props.data.length}</p>
+          <p>Resep yang disukai</p>
+          <p className='subhead'>Total : {this.props.liked.length}</p>
         </div>
         <hr/>
         {
           initial
         }
         {
-          this.state.hasmore
-          ?
-          this.props.data.length > 10
-          ?
-          <div onClick={this.loadmore.bind(this)} className='loadmore2'>Muat lebih banyak</div>
-          : ''
-          : ''
+          this.props.liked.length > 10 &&
+          <div onClick={this.loadmore.bind(this)} className='loadmore2'>Muat lebih banyak</div>          
         }
       </div>
     )

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router'
 
 export default class ResepDetailUtility extends Component {
@@ -7,7 +8,8 @@ export default class ResepDetailUtility extends Component {
 
     this.state = {
       redirect: false,
-      liked: false
+      liked: false,
+      flash: false
     }
   }
 
@@ -26,7 +28,8 @@ export default class ResepDetailUtility extends Component {
     let resepid = this.props.data.resepid
     this.props.actions.unliking(userid, resepid)
     this.setState({
-      liked: false
+      liked: false,
+      flash: false
     })
   }
 
@@ -36,13 +39,14 @@ export default class ResepDetailUtility extends Component {
       let resepid = this.props.data.resepid
       this.props.actions.liking(userid, resepid)
       this.setState({
-        liked: true
+        liked: true,
+        flash: true
       })
     }else{
       let yon = window.confirm('Anda harus Login untuk menyukai kiriman \nLogin sekarang?')
       if (yon) {
         this.setState({
-          redirect: true
+          redirect: true,
         })
       }
     }
@@ -57,12 +61,16 @@ export default class ResepDetailUtility extends Component {
           {
             this.state.liked
             ?
-            <abbr title='Batal suka'><div onClick={this.unliking.bind(this)} className='liked'>Disukai</div></abbr>
+            <abbr title='Batal suka'><div onClick={this.unliking.bind(this)} className='liked'>Disukai&nbsp;<span className='glyphicon glyphicon-thumbs-up'></span></div></abbr>
             :
-            <div onClick={this.liking.bind(this)} className='likebutton'><span className='glyphicon glyphicon-heart'></span></div>
+            <div onClick={this.liking.bind(this)} className='likebutton'>Suka&nbsp;<span className='glyphicon glyphicon-heart'></span></div>
           }
-            <div className='commentbutton'><span className='glyphicon glyphicon-comment'></span></div>
-          <div className='savebutton'><span className='glyphicon glyphicon-bookmark'></span></div>
+          {
+            this.state.flash &&
+            <FlashMessage persistOnHover={false} duration={2000}>
+              <div onClick={this.liking.bind(this)} className='likeflash'></div>
+            </FlashMessage>
+          }
         </div>
       )
     }
