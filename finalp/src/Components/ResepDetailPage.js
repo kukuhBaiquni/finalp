@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import ResepDetailBahan from './ResepDetailBahan'
 import CommentSection from './CommentSection'
+import {SERVER_URL} from '../config'
 import CommentList from './CommentList'
 
 class ResepDetailPage extends Component {
@@ -26,7 +27,7 @@ class ResepDetailPage extends Component {
   }
 
   render(){
-    let path = 'http://localhost:3000/images/'
+    let path = SERVER_URL + 'images/'
     var image = this.props.data.map(x => {
       return (<img className='fotoresepdetail' key={x.resepid} alt={x.resepid} src={path + x.foto} />)
     })
@@ -57,6 +58,7 @@ class ResepDetailPage extends Component {
             {title}
             {kategori}
             <hr />
+
           </div>
           <div className='resepdetails'>
             <span>Penulis : </span>{penulis}

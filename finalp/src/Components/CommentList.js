@@ -1,3 +1,4 @@
+import {SERVER_URL} from '../config'
 import React, {Component} from 'react'
 
 export default class CommentList extends Component {
@@ -29,7 +30,7 @@ export default class CommentList extends Component {
   }
 
   render(){
-    let path = 'http://localhost:3000/images/'
+    let path = SERVER_URL + 'images/'
     let comment = this.props.comment.map(function(x, i){
       return(
         <div key={i}>

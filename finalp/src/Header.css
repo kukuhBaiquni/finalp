@@ -861,8 +861,6 @@ body {
   width: 800px;
   margin-left: 555px;
   position: absolute;
-  border-left: 2px solid white;
-  border-right: 2px solid white;
 }
 
 abbr[title] {
@@ -995,6 +993,60 @@ abbr[title] {
   border-radius: 50%;
 }
 
+.likedll2{
+  height: 35px;
+  width: 35px;
+  color: white;
+  position: absolute;
+  text-align: center;
+  margin-top: 150px;
+  margin-left: 130px;
+  line-height: 40px;
+  font-size: 19px;
+  background-color: #ff546d;
+  border-radius: 50%;
+}
+
+.inf{
+  height: 45px;
+  position: absolute;
+  width: 300px;
+  border: 1px solid white;
+  z-index: 0;
+  margin-left: 123px;
+  margin-top: 145px;
+  border-radius: 50px;
+}
+
+.inf2{
+  height: 45px;
+  position: absolute;
+  width: 400px;
+  color: white;
+  font-size: 18px;
+  font-family: 'enigmaticregular';
+  line-height: 45px;
+  z-index: 0;
+  margin-left: 208px;
+  margin-top: 145px;
+  border-radius: 50px;
+}
+
+.komendll2 {
+  border-radius: 50%;
+  height: 35px;
+  color: white;
+  position: absolute;
+  width: 35px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 40px;
+  margin-top: 150px;
+  margin-left: 160px;
+  font-size: 18px;
+  background-color: #00d382;
+}
+
 .komendll {
   border-radius: 50%;
   height: 35px;
@@ -1109,6 +1161,50 @@ abbr[title] {
   margin-left: 1200px;
   margin-top: 270px;
   border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+}
+
+.asc:hover{
+  background-color: #a442f4;
+  color: white;
+}
+
+.desc:hover{
+  background-color: #a442f4;
+  color: white;
+}
+
+.asc{
+  font-family: 'enigmaticregular';
+  color: #a442f4;
+  font-size: 15px;
+  line-height: 37px;
+  text-align: center;
+  width: 95px;
+  height: 35px;
+  margin-left: 1270px;
+  margin-top: 390px;
+  cursor: pointer;
+  border: 1px solid #a442f4;
+  border-radius: 50px;
+  position: absolute;
+  z-index: 1;
+}
+
+.desc{
+  font-family: 'enigmaticregular';
+  color: #a442f4;
+  font-size: 15px;
+  line-height: 37px;
+  text-align: center;
+  width: 95px;
+  height: 35px;
+  margin-left: 1370px;
+  margin-top: 390px;
+  cursor: pointer;
+  border: 1px solid #a442f4;
+  border-radius: 50px;
   position: absolute;
   z-index: 1;
 }
@@ -2288,6 +2384,33 @@ opacity: 0.5;
   margin-top: 290px;
 
   border-radius: 40px;
+}
+
+.spasi{
+  height: 150px;
+  background: #e5e5e5;
+  width: 100%;
+  margin-top: 0px;
+}
+
+.flash2{
+  animation: flash 5s;
+  animation-delay: 2s;
+  position: absolute;
+  background-color: #ff6868;
+  z-index: 5;
+  font-family: 'enigmaticregular';
+  border: none;
+  color: #4d2e9b;
+  height: 210px;
+  text-align: center;
+  line-height: 180px;
+  width: 800px;
+  font-size: 26px;
+  margin-left: 0px;
+  margin-top: 0px;
+
+  border-radius: 10px;
 }
 
 .flash{

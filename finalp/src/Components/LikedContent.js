@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import {SERVER_URL} from '../config'
 
 export default class LikedContent extends Component {
   constructor(props){
@@ -31,8 +32,7 @@ export default class LikedContent extends Component {
   }
 
   render(){
-    console.log(this.props);
-    var path = 'http://localhost:3000/images/'
+    var path = SERVER_URL + 'images/'
     let content = this.props.liked.map((x, i) =>{
       return(
         <div key={i}>
@@ -72,7 +72,7 @@ export default class LikedContent extends Component {
         }
         {
           this.props.liked.length > 10 &&
-          <div onClick={this.loadmore.bind(this)} className='loadmore2'>Muat lebih banyak</div>          
+          <div onClick={this.loadmore.bind(this)} className='loadmore2'>Muat lebih banyak</div>
         }
       </div>
     )

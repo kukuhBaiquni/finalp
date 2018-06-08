@@ -381,7 +381,7 @@ router.get('/api/finalp/loadcomment/:id', function(req, res){
 
 router.post('/api/finalp/submitcomment', function(req, res){
   let resepid = req.body.resepid
-  
+
   const newComment = new Comment({
     resepid: req.body.resepid,
     userid : req.body.userid,

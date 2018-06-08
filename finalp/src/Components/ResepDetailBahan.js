@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {SERVER_URL} from '../config'
 import ResepDetailUtility from './ResepDetailUtility'
 
 export default class ResepDetailBahan extends Component {
@@ -7,7 +8,7 @@ export default class ResepDetailBahan extends Component {
   }
 
   render(){
-    var path = 'http://localhost:3000/images/'
+    var path = SERVER_URL + 'images/'
     var listbahan = this.props.data.bahan.map((x, i) => {
       return (<li style={{fontSize: '22px'}} key={i}>{x.listbahan}</li>)
     })

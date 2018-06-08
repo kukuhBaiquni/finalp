@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {SERVER_URL} from '../config'
 import {Link} from 'react-router-dom'
 
 export default class ProfileContent extends Component {
@@ -31,8 +32,7 @@ export default class ProfileContent extends Component {
   }
 
   render(){
-    console.log(this.props.data.length);
-    var path = 'http://localhost:3000/images/'
+    var path = SERVER_URL + 'images/'
     let content = this.props.data.map((x, i) =>{
       return(
         <div key={i}>

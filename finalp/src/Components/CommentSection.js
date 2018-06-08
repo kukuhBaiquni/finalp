@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import FlashMessage from 'react-flash-message'
+import {SERVER_URL} from '../config'
 
 export default class CommentSection extends Component {
   constructor(props){
@@ -29,26 +30,34 @@ export default class CommentSection extends Component {
   }
 
   render(){
-    let path = 'http://localhost:3000/images/'
+    let path = SERVER_URL + 'images/'
     return(
       <div>
-        <div className='spacercomment'></div>
-        <div className='commentmain'>
-          <div className='tuliskomen'>Tulis komentar&nbsp;<span className='glyphicon glyphicon-comment'></span></div>
-          {
-            this.props.user.map((x, i) => {
-              return (<img key={i} className='fotouser' src={path + x.fotoprofil} alt={x.userid}/>)
-            })
-          }
-          {
-            this.state.alertcomment
-            ?
-            <FlashMessage persistOnHover={false} duration={2000}><div className='flash'>Komentar berhasil dikirim</div></FlashMessage>
-            : ''
-          }
-          <textarea onBlur={this.alertprepare.bind(this)} ref={input => this.input = input} maxLength='350' className='custominput' placeholder='Tulis komentar'/>
-          <abbr title='Kirim komentar'><div onClick={this.pseudoSubmit.bind(this)} className='kirim'>Kirim</div></abbr>
-        </div>
+        {
+          this.props.user.length === 1
+          ?
+          <div>
+            <div className='spacercomment'></div>
+            <div className='commentmain'>
+
+              <div className='tuliskomen'>Tulis komentar&nbsp;<span className='glyphicon glyphicon-comment'></span></div>
+              {
+                this.props.user.map((x, i) => {
+                  return (<img key={i} className='fotouser' src={path + x.fotoprofil} alt={x.userid}/>)
+                })
+              }
+              {
+                this.state.alertcomment
+                ?
+                <FlashMessage persistOnHover={false} duration={1800}><div className='flash'>Komentar berhasil dikirim</div></FlashMessage>
+                : ''
+              }
+              <textarea onBlur={this.alertprepare.bind(this)} ref={input => this.input = input} maxLength='350' className='custominput' placeholder='Tulis komentar'/>
+              <abbr title='Kirim komentar'><div onClick={this.pseudoSubmit.bind(this)} className='kirim'>Kirim</div></abbr>
+            </div>
+          </div>
+          : ''
+        }
       </div>
     )
   }

@@ -162,7 +162,7 @@ export default class BahanPartials extends Component {
       </form>
 
       <LangkahPartials kategori={kategori} nama={nama} foto={foto} bahan={listbahan} pseudo1={this.props.pseudo1} pseudo2={this.pseudo2}/>
-
+      
     </div>
   )
 }

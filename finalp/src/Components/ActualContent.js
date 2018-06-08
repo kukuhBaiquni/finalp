@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import {SERVER_URL} from '../config'
 
 export default class ActualContent extends Component {
   constructor(props){
@@ -10,7 +11,7 @@ export default class ActualContent extends Component {
     }
   }
   render(){
-    let path = 'http://localhost:3000/images/'
+    let path = SERVER_URL + 'images/'
     let preview = path + this.props.data.foto
 
     var spacer = {

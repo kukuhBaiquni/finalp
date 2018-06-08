@@ -69,6 +69,9 @@ export default function data(state = initialState, action){
     let result9 = state.filter(x => x.kategori === 'Kue Lebaran')
     return result9
 
+    case 'asc-alfabet':
+    return state
+
     default:
       return state
   }

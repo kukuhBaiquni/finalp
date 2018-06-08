@@ -1,7 +1,8 @@
 import request from 'superagent'
 import moment from 'moment'
+import {SERVER_URL} from '../../config'
 
-const TARGET = 'http://localhost:3000/api/finalp/'
+const TARGET = SERVER_URL + 'api/finalp/'
 
 export function addUser(namadepan, namabelakang, email, password){
   let userid = Date.now()
@@ -373,6 +374,22 @@ export function loginAttempt(email, password){
         dispatch(loadUser(res.body.token))
       }
     })
+  }
+}
+
+export function sortasc(type){
+  switch (type) {
+    case 'alfabet':
+    return {type: 'asc-alfabet'}
+    case 'date':
+    return {type: 'asc-date'}
+    case 'like':
+    return {type: 'asc-like'}
+    case 'comment':
+    return {type: 'asc-comment'}
+
+    default:
+      return 'Tercyduk'
   }
 }
 

@@ -55,7 +55,7 @@ class HomePage extends Component {
         showme: false
       })
     }
-    if (scroll > 1200) {
+    if (scroll > 600) {
       this.setState({
         jumper: true
       })
@@ -79,6 +79,7 @@ class HomePage extends Component {
             />
         }
         <SearchFormHome
+          user={this.props.user}
           searchmode={utility}
           data={data}
           actions={actions}

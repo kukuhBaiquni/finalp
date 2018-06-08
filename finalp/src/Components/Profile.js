@@ -7,6 +7,7 @@ import Dropzone from 'react-dropzone'
 import {Redirect} from 'react-router'
 import FlashMessage from 'react-flash-message'
 import ProfileContent from './ProfileContent'
+import {SERVER_URL} from '../config'
 import LikedContent from './LikedContent'
 
 var fotoprofil = ''
@@ -25,6 +26,7 @@ class Profile extends Component {
     }
   }
   componentDidMount(){
+    window.scrollTo(0, 0)
     let token = localStorage.getItem('token')
     if (token) {
       this.props.actions.myRecipe(token)
@@ -77,7 +79,7 @@ class Profile extends Component {
   render(){
     const {user} = this.props
     var nama = user.map((x, i) => x.namadepan + ' ' + x.namabelakang)
-    var path = 'http://localhost:3000/images/'
+    var path = SERVER_URL + 'images/'
     var vanish = {
       visibility: this.state.visibility
     }

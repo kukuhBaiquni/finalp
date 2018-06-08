@@ -10,7 +10,9 @@ export default class SearchFormHome extends Component {
       handleSearch: '',
       sortmode: false,
       alertmode: false,
+      sorthandler: ''
     }
+    this.sortType = this.sortType.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.sortModeOn = this.sortModeOn.bind(this)
@@ -110,6 +112,23 @@ export default class SearchFormHome extends Component {
     this.props.actions.searchModeOn()
   }
 
+  asc(){
+    let sortType = this.state.sorthandler
+    if (sortType.length !== 0) {
+      this.props.actions.sortasc(sortType)
+    }
+  }
+
+  sortType(e){
+    this.setState({
+      sorthandler: e
+    })
+  }
+
+  nonmember(){
+    window.alert('Anda harus login untuk menulis resep')
+  }
+
   render(){
     const {data, searchmode} = this.props
     return(
@@ -126,21 +145,25 @@ export default class SearchFormHome extends Component {
           ?
           <div>
             <div className="abjad">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />
-                &nbsp;&nbsp;Urutkan berdasarkan alfabet
+              <input onChange={()=> this.sortType('alfabet')} type="radio" name="optionsRadios" id="optionsRadios1" value="alfabet" />
+              &nbsp;&nbsp;Urutkan berdasarkan alfabet
             </div>
             <div className="waktu">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />
-                &nbsp;&nbsp;Urutkan berdasarkan tanggal penulisan
+              <input onChange={()=> this.sortType('date')} type="radio" name="optionsRadios" id="optionsRadios1" value="date" />
+              &nbsp;&nbsp;Urutkan berdasarkan tanggal penulisan
             </div>
             <div className="suka">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />
-                &nbsp;&nbsp;Urutkan berdasarkan jumlah suka
+              <input onChange={()=> this.sortType('like')}  type="radio" name="optionsRadios" id="optionsRadios1" value="like" />
+              &nbsp;&nbsp;Urutkan berdasarkan jumlah suka
             </div>
             <div className="komentar">
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />
-                &nbsp;&nbsp;Urutkan berdasarkan jumlah komentar
+              <input onChange={()=> this.sortType('comment')} type="radio" name="optionsRadios" id="optionsRadios1" value="comment" />
+              &nbsp;&nbsp;Urutkan berdasarkan jumlah komentar
             </div>
+            <abbr onClick={this.asc.bind(this)} title='Naik'><div className='asc'><span className='glyphicon glyphicon-arrow-up'></span></div></abbr>
+            <abbr onClick={this.asc.bind(this)} title='Turun'><div className='desc'><span className='glyphicon glyphicon-arrow-down'></span></div></abbr>
+
+
             <div className='sortabjad'><span className='glyphicon glyphicon-sort-by-alphabet'></span></div>
             <div className='sorttime'><span className='glyphicon glyphicon-time'></span></div>
             <div className='sortlike'><span className='glyphicon glyphicon-heart'></span></div>
@@ -156,7 +179,13 @@ export default class SearchFormHome extends Component {
             <div className='alertsearch'>Huruf kapital mempengaruhi hasil pencarian</div>
           </FlashMessage>
         }
-        <Link to='/tulisresep' className='tulisresepbutton'>Tulis Resep <span className='glyphicon glyphicon-edit'></span></Link>
+        {
+          this.props.user.length === 1
+          ?
+          <Link to='/tulisresep' className='tulisresepbutton'>Tulis Resep <span className='glyphicon glyphicon-edit'></span></Link>
+          :
+          <div onClick={this.nonmember.bind(this)} className='tulisresepbutton'>Tulis Resep <span className='glyphicon glyphicon-edit'></span></div>
+        }
         <form onSubmit={this.handleSubmit} className='formcari'>
           <div className="col-lg-6">
             <div className="input-group">
@@ -167,7 +196,6 @@ export default class SearchFormHome extends Component {
             </div>
           </div>
         </form>
-
 
         <div className='signkategori'><span className='glyphicon glyphicon-info-sign'></span></div>
         <abbr title='reset pencarian sebelum melakukan pencarian baru'>

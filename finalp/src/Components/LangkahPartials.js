@@ -6,6 +6,7 @@ import * as AppActions from './actions'
 import Modal from 'react-responsive-modal';
 import {Link} from 'react-router-dom';
 import './RegisterModal.css';
+import FlashMessage from 'react-flash-message'
 
 var listlangkah = []
 var checker = 0
@@ -30,7 +31,8 @@ class LangkahPartials extends Component {
       openmodal : false,
       buttonhandler: '4px',
       position: 'absolute',
-      files: []
+      files: [],
+      alert: false
     }
     this.deleteFotoLangkah = this.deleteFotoLangkah.bind(this)
     this.testid = this.testid.bind(this)
@@ -134,24 +136,37 @@ class LangkahPartials extends Component {
     langkahDetail[checker].index = checker + 1
   }
 
+  alertprepare(){
+    this.setState({
+      alert: false
+    })
+  }
+
   readyForAction(e){
     e.preventDefault()
-    var bundler = {
-      nama: this.props.nama,
-      foto: this.props.foto,
-      bahan: this.props.bahan,
-      kategori: this.props.kategori,
-      penulis: localStorage.getItem('token'),
-      langkah: langkahDetail
+    let {nama, foto, bahan, kategori} = this.props
+    if (nama && foto && bahan.length !== 0 && kategori && langkahDetail.length !== 0) {
+      var bundler = {
+        nama: this.props.nama,
+        foto: this.props.foto,
+        bahan: this.props.bahan,
+        kategori: this.props.kategori,
+        penulis: localStorage.getItem('token'),
+        langkah: langkahDetail
+      }
+      this.props.actions.tambahResep(bundler)
+      this.setState({
+        openmodal: true
+      })
+      this.props.pseudo2()
+      this.props.pseudo1()
+      langkahDetail = []
+      listlangkah = []
+    }else{
+      this.setState({
+        alert: true
+      })
     }
-    this.props.actions.tambahResep(bundler)
-    this.setState({
-      openmodal: true
-    })
-    // this.props.pseudo2()
-    // this.props.pseudo1()
-    // langkahDetail = []
-    // listlangkah = []
   }
 
   render(){
@@ -232,13 +247,17 @@ class LangkahPartials extends Component {
             {
               this.state.editlangkah &&
               <div>
-                <textarea style={editor} defaultValue={listlangkah[checker]} maxLength='125' onChange={this.langkahChangeHandlerEdit.bind(this)} placeholder='Edit Langkah' autoFocus autoComplete='off' />
+                <textarea onFocus={this.alertprepare.bind(this)} style={editor} defaultValue={listlangkah[checker]} maxLength='125' onChange={this.langkahChangeHandlerEdit.bind(this)} placeholder='Edit Langkah' autoFocus autoComplete='off' />
                 <abbr style={buttondewa} title='Simpan'><div onClick={this.langkahEditSubmit.bind(this)} ><span className='glyphicon glyphicon-ok'></span></div></abbr>
               </div>
             }
           </ul>
 
         </div>
+        {
+          this.state.alert &&
+          <FlashMessage persistOnHover={false} duration={7000}><div className='flash2'>Anda harus memberikan informasi yang lengkap</div></FlashMessage>
+        }
         <button onClick={this.readyForAction} className='bagikan'>Bagikan <span className='glyphicon glyphicon-share'></span></button>
       </div>
       <div className='surrat20'></div>
