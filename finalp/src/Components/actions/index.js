@@ -22,8 +22,10 @@ export function addUser(namadepan, namabelakang, email, password){
         dispatch(addUserFailed())
       }else{
         let token = res.body.token;
-        localStorage.setItem('token', token)
-        dispatch(loadUser(token))
+        if (token) {
+          localStorage.setItem('token', token)
+          dispatch(loadUser(token))
+        }
       }
     })
   }
@@ -61,10 +63,35 @@ export function loadUser(token){
       if (err) {
         console.error(err);
       }else{
-        dispatch(loadUserSuccess(res.body))
+        if (res.body.status === 'Someone trying to hack our system') {
+          dispatch(loadUserFailed())
+        }else{
+          dispatch(userlogin())
+          dispatch(loadUserSuccess(res.body))
+        }
       }
     })
   }
+}
+
+function loadUserFailed(){
+  return {type: 'loaduserfailed'}
+}
+
+export function logoutconfirmationShow(){
+  return {type: 'logoutconfirmationShow'}
+}
+
+export function logoutconfirmationHide(){
+  return {type: 'logoutconfirmationHide'}
+}
+
+function userlogin(){
+  return {type: 'userlogin'}
+}
+
+export function userlogout(){
+  return {type: 'userlogout'}
 }
 
 function loadUserSuccess(user){
@@ -121,10 +148,18 @@ export function myRecipe(token){
       if (err) {
         console.error(err);
       }else{
-        dispatch(myRecipeSuccess(res.body))
+        if (res.body.status === 'Someone trying to hack our system') {
+          dispatch(myRecipeLost())
+        }else{
+          dispatch(myRecipeSuccess(res.body))
+        }
       }
     })
   }
+}
+
+function myRecipeLost(){
+  return {type: 'myrecipelost'}
 }
 
 function myRecipeSuccess(resep){
@@ -248,6 +283,22 @@ function loadCommentSuccess(comment){
 //   }
 // }
 
+export function openmodal(){
+  return {type: 'openmodal'}
+}
+
+export function closemodal(){
+  return {type: 'closemodal'}
+}
+
+export function alertresepformOn (){
+  return {type: 'alertresepformOn'}
+}
+
+export function alertresepformOff(){
+  return {type: 'alertresepformOff'}
+}
+
 export function loadLiked(token){
   return dispatch => {
     return request
@@ -257,10 +308,18 @@ export function loadLiked(token){
       if (err) {
         console.error(err);
       }else{
-        dispatch(loadlikesuccess(res.body))
+        if (res.body.alert === 'Someone trying to hack our system') {
+          dispatch(loadlikedfailed())
+        }else{
+          dispatch(loadlikesuccess(res.body))
+        }
       }
     })
   }
+}
+
+function loadlikedfailed(){
+  return {type: 'loadlikedfailed'}
 }
 
 function loadlikesuccess(liked){
@@ -368,10 +427,10 @@ export function loginAttempt(email, password){
         dispatch(loginAttemptFail())
       }else{
         let token = res.body.token
-        if (token || token !== undefined) {
+        if (token) {
           localStorage.setItem('token',res.body.token)
+          dispatch(loadUser(res.body.token))
         }
-        dispatch(loadUser(res.body.token))
       }
     })
   }
@@ -389,7 +448,7 @@ export function sortasc(type){
     return {type: 'asc-comment'}
 
     default:
-      return 'Tercyduk'
+    return 'Tercyduk'
   }
 }
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {SERVER_URL} from '../config'
 import {Link} from 'react-router-dom'
+import {Animated} from "react-animated-css"
 
 export default class ProfileContent extends Component {
   constructor(props){
@@ -36,17 +37,19 @@ export default class ProfileContent extends Component {
     let content = this.props.data.map((x, i) =>{
       return(
         <div key={i}>
-          <div className='fillcontent'>
-            <Link to={'/resep/' + this.props.data[i].resepid}>
-              <abbr title='Lihat detail'>
-                <p style={{color: 'white'}}>{x.namaresep}</p>
-              </abbr>
-            </Link>
-          </div>
-          <abbr title='Hapus'><div onClick={()=> this.delete(i)} className='option2'><span className='glyphicon glyphicon-trash'></span></div></abbr>
-          <div className='prolist'>
-            <img className='litleimg' src={path + x.foto} alt='123' />
-          </div>
+          <Animated animationIn="flipInX" isVisible={true}>
+            <div className='fillcontent'>
+              <Link to={'/resep/' + this.props.data[i].resepid}>
+                <abbr title='Lihat detail'>
+                  <p style={{color: 'white'}}>{x.namaresep}</p>
+                </abbr>
+              </Link>
+            </div>
+            <abbr title='Hapus'><div onClick={()=> this.delete(i)} className='option2'><span className='glyphicon glyphicon-trash'></span></div></abbr>
+            <div className='prolist'>
+              <img className='litleimg' src={path + x.foto} alt='123' />
+            </div>
+          </Animated>
         </div>
       )
     })

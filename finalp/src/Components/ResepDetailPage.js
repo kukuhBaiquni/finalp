@@ -7,6 +7,7 @@ import ResepDetailBahan from './ResepDetailBahan'
 import CommentSection from './CommentSection'
 import {SERVER_URL} from '../config'
 import CommentList from './CommentList'
+import {Animated} from "react-animated-css"
 
 class ResepDetailPage extends Component {
 
@@ -49,26 +50,28 @@ class ResepDetailPage extends Component {
     })
     return(
       <div>
-        <Navbar actions={this.props.actions} />
-        <div className='pdbg'>
-          <div className='visiblebg'>
-            {image}
-          </div>
-          <div className='resepdetailspacer'>
-            {title}
-            {kategori}
-            <hr />
-
-          </div>
-          <div className='resepdetails'>
-            <span>Penulis : </span>{penulis}
-              <div className='anotherhr'></div>
-              {pass}
+        <Navbar actions={this.props.actions} utility={this.props.utility} />
+        <Animated animationIn="fadeInUp" isVisible={true}>
+          <div className='pdbg'>
+            <div className='visiblebg'>
+              {image}
             </div>
-          </div>
-          <CommentSection data={this.props.data[0]} user={this.props.user} actions={this.props.actions} />
-          <div className='spacercomment'></div>
-          <CommentList comment={this.props.comment} actions={this.props.actions} />
+            <div className='resepdetailspacer'>
+              {title}
+              {kategori}
+              <hr />
+
+            </div>
+            <div className='resepdetails'>
+              <span>Penulis : </span>{penulis}
+                <div className='anotherhr'></div>
+                {pass}
+              </div>
+            </div>
+            <CommentSection data={this.props.data[0]} user={this.props.user} actions={this.props.actions} />
+            <div className='spacercomment'></div>
+            <CommentList comment={this.props.comment} actions={this.props.actions} />
+          </Animated>
           <div className='footer'></div>
         </div>
       )
@@ -79,7 +82,8 @@ class ResepDetailPage extends Component {
     return{
       data: state.data,
       user: state.user,
-      comment: state.comment
+      comment: state.comment,
+      utility: state.utility
     }
   }
 

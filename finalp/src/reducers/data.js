@@ -21,6 +21,12 @@ export default function data(state = initialState, action){
     case 'myrecipe':
     return action.resep.data
 
+    case 'myrecipelost':
+    return []
+
+    case 'loadlikedfailed':
+    return []
+
     case 'deletefilter':
     let filtered = state.filter(x => x.resepid !== action.resepid)
     return filtered

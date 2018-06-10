@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router-dom'
+import {Animated} from "react-animated-css"
 
 export default class LoginForm extends Component {
   constructor(props){
@@ -87,25 +88,26 @@ export default class LoginForm extends Component {
       return <Redirect to='/authentication' />
     }else{
       return(
-        <div className='logform'>
-          <button className='regb' disabled>Silahkan Login</button>
-          <br/><br/><br/>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-              <input type="email" className="form-control" onChange={this.emailValue.bind(this)} placeholder="Email" />
-            </div>
-            <div className="form-group">
-              <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-              <input type="password" className="form-control" onChange={this.passwordValue.bind(this)} placeholder="Password" />
-            </div>
-            <button className='dft'>Masuk</button>
-            {
-              this.state.loginalert &&
-              <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>User tidak ditemukan</div></FlashMessage>
-            }
-          </form>
-        </div>
+        <Animated animationInDelay={200} animationIn="bounceInUp" animationOut='bounceOutDown' isVisible={this.props.mode}>
+          <div className='logform'>
+            <br/><br/><br/>
+            <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                <input type="email" className="form-control" onChange={this.emailValue.bind(this)} placeholder="Email" />
+              </div>
+              <div className="form-group">
+                <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                <input type="password" className="form-control" onChange={this.passwordValue.bind(this)} placeholder="Password" />
+              </div>
+              <button className='dft'>Masuk</button>
+              {
+                this.state.loginalert &&
+                <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>User tidak ditemukan</div></FlashMessage>
+              }
+            </form>
+          </div>
+        </Animated>
       )
     }
   }

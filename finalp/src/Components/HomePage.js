@@ -70,17 +70,17 @@ class HomePage extends Component {
     const {data, actions, utility} = this.props
     return(
       <div className='wrapper'>
-        <Navbar actions={actions} location={this.props.location.pathname}/>
+        <Navbar utility={this.props.utility} user={this.props.user} actions={actions} location={this.props.location.pathname}/>
         {
           this.state.showme &&
           <SearchFormNavbar
-            searchmode={utility}
+            utility={utility}
             actions={actions}
             />
         }
         <SearchFormHome
           user={this.props.user}
-          searchmode={utility}
+          utility={utility}
           data={data}
           actions={actions}
           />
@@ -91,7 +91,8 @@ class HomePage extends Component {
           </abbr>
         }
         <div className='kotak'></div>
-        <DataContent data={data} actions={actions} user={this.props.user}/>
+        <DataContent data={data} actions={actions} utility={utility} user={this.props.user}/>
+          <div className='footer'></div>
       </div>
     )
   }

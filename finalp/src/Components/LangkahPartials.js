@@ -3,10 +3,8 @@ import Dropzone from 'react-dropzone'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
-import Modal from 'react-responsive-modal';
-import {Link} from 'react-router-dom';
 import './RegisterModal.css';
-import FlashMessage from 'react-flash-message'
+import {Animated} from "react-animated-css"
 
 var listlangkah = []
 var checker = 0
@@ -28,12 +26,10 @@ class LangkahPartials extends Component {
       editlangkah: false,
       nothing: false,
       positionhandler: '5px',
-      openmodal : false,
       buttonhandler: '4px',
       position: 'absolute',
       files: [],
-      alert: false
-    }
+          }
     this.deleteFotoLangkah = this.deleteFotoLangkah.bind(this)
     this.testid = this.testid.bind(this)
     this.langkaheditclick = this.langkaheditclick.bind(this)
@@ -123,29 +119,24 @@ class LangkahPartials extends Component {
     }
   }
 
-  onCloseModal = () => {
-    this.setState({ openmodal: false });
-  };
-
   uploadFoto(files) {
+    this.props.actions.alertresepformOff()
     this.setState({
       files: files,
-      hover: false
+      hover: false,
     })
     langkahDetail[checker].images = files[0]
     langkahDetail[checker].index = checker + 1
   }
 
   alertprepare(){
-    this.setState({
-      alert: false
-    })
+    this.props.actions.alertresepformOff()
   }
 
   readyForAction(e){
     e.preventDefault()
     let {nama, foto, bahan, kategori} = this.props
-    if (nama && foto && bahan.length !== 0 && kategori && langkahDetail.length !== 0) {
+    if (nama !== 'Nama Resep' && foto !== '' && bahan.length !== 0 && kategori !== 'kosong' && langkahDetail.length !== 0) {
       var bundler = {
         nama: this.props.nama,
         foto: this.props.foto,
@@ -155,17 +146,13 @@ class LangkahPartials extends Component {
         langkah: langkahDetail
       }
       this.props.actions.tambahResep(bundler)
-      this.setState({
-        openmodal: true
-      })
+      this.props.actions.openmodal()
       this.props.pseudo2()
       this.props.pseudo1()
       langkahDetail = []
       listlangkah = []
     }else{
-      this.setState({
-        alert: true
-      })
+      this.props.actions.alertresepformOn()
     }
   }
 
@@ -198,44 +185,46 @@ class LangkahPartials extends Component {
       borderRadius: '5px',
       marginTop: this.state.positionhandler
     }
-
     var list2 = listlangkah.map((f,i) =>
     <div key={i}>
       <div>
-        <div className='lala'>{listlangkah[i]}</div>
-        <abbr title={'Langkah ' + (i+1) }><div className='gobot'>{i+1 + '.'}</div></abbr>
-        {
-          !this.state.editlangkah &&
-          <div>
-            <abbr title='Edit langkah'><div className='editlangkah' onClick={()=> this.langkaheditclick(i)}><span className='glyphicon glyphicon-pencil'></span></div></abbr>
-            <abbr title='Hapus langkah'><div className='hapuslangkah' onClick={()=> this.langkahdelete(i)}><span className='glyphicon glyphicon-trash'></span></div></abbr>
-          </div>
-        }
-        <section className='rectangle'>
-          <Dropzone onClick={()=> this.testid(i)} className='dropzone' onDrop={this.uploadFoto.bind(this)} accept="image/*" multiple={ false }>
-            <p className='poto'><span className='glyphicon glyphicon-camera'></span> Tambahkan foto</p>
+        <Animated animationIn="fadeIn" isVisible={true}>
+          <div className='lala'>{listlangkah[i]}</div>
+          <abbr title={'Langkah ' + (i+1) }><div className='gobot'>{i+1 + '.'}</div></abbr>
+          {
+            !this.state.editlangkah &&
+            <div>
+              <abbr title='Edit langkah'><div className='editlangkah' onClick={()=> this.langkaheditclick(i)}><span className='glyphicon glyphicon-pencil'></span></div></abbr>
+              <abbr title='Hapus langkah'><div className='hapuslangkah' onClick={()=> this.langkahdelete(i)}><span className='glyphicon glyphicon-trash'></span></div></abbr>
+            </div>
+          }
+          <section className='rectangle'>
+            <Dropzone onClick={()=> this.testid(i)} className='dropzone' onDrop={this.uploadFoto.bind(this)} accept="image/*" multiple={ false }>
+              <p className='poto'><span className='glyphicon glyphicon-camera'></span> Tambahkan foto</p>
+              {
+                langkahDetail[i].images.length !== 0 &&
+                <Animated animationIn="fadeIn" isVisible={true}>
+                  <abbr title='klik untuk ganti foto'><img src={langkahDetail[i].images.preview} alt="preview" className='previewimg'/></abbr>
+                </Animated>
+              }
+            </Dropzone>
             {
               langkahDetail[i].images.length !== 0 &&
-              <abbr title='klik untuk ganti foto'><img src={langkahDetail[i].images.preview} alt="preview" className='previewimg'/></abbr>
+              <abbr className='kug' onClick={()=> this.deleteFotoLangkah(i)} title='hapus'><div className='sibal'><span className='glyphicon glyphicon-trash'></span></div></abbr>
             }
-          </Dropzone>
-          {
-            langkahDetail[i].images.length !== 0 &&
-            <abbr className='kug' onClick={()=> this.deleteFotoLangkah(i)} title='hapus'><div className='sibal'><span className='glyphicon glyphicon-trash'></span></div></abbr>
-          }
-        </section>
+          </section>
 
+        </Animated>
       </div>
     </div>
   )
-
 
   return(
     <div>
       <div className="form-group">
         <p className='labelg'>Proses Pembuatan</p>
         <div>
-          <textarea disabled={this.state.editlangkah} maxLength='125' onChange={this.langkahChangeHandler.bind(this)} placeholder='Tambah Langkah' autoComplete='off' value={this.state.langkahChangeHandler} id='formwidth3' className="form-control" />
+          <textarea onFocus={this.alertprepare.bind(this)} disabled={this.state.editlangkah} maxLength='125' onChange={this.langkahChangeHandler.bind(this)} placeholder='Tambah Langkah' autoComplete='off' value={this.state.langkahChangeHandler} id='formwidth3' className="form-control" />
           {
             !this.state.editlangkah &&
             <abbr title='Simpan langkah'><div onClick={this.langkahSubmit.bind(this)} className='simpanlangkah'><span className='glyphicon glyphicon-ok'></span></div></abbr>
@@ -247,40 +236,22 @@ class LangkahPartials extends Component {
             {
               this.state.editlangkah &&
               <div>
-                <textarea onFocus={this.alertprepare.bind(this)} style={editor} defaultValue={listlangkah[checker]} maxLength='125' onChange={this.langkahChangeHandlerEdit.bind(this)} placeholder='Edit Langkah' autoFocus autoComplete='off' />
+                <textarea style={editor} defaultValue={listlangkah[checker]} maxLength='125' onChange={this.langkahChangeHandlerEdit.bind(this)} placeholder='Edit Langkah' autoFocus autoComplete='off' />
                 <abbr style={buttondewa} title='Simpan'><div onClick={this.langkahEditSubmit.bind(this)} ><span className='glyphicon glyphicon-ok'></span></div></abbr>
               </div>
             }
           </ul>
 
         </div>
-        {
-          this.state.alert &&
-          <FlashMessage persistOnHover={false} duration={7000}><div className='flash2'>Anda harus memberikan informasi yang lengkap</div></FlashMessage>
-        }
+          {
+            this.props.utility.alertresepstatus &&
+            <Animated animationIn="flipInX" animationOut="flipOutX" isVisible={this.props.utility.alertresepstatus}>
+              <div className='flash2'>Anda harus memberikan informasi yang lengkap!</div>
+            </Animated>
+          }
         <button onClick={this.readyForAction} className='bagikan'>Bagikan <span className='glyphicon glyphicon-share'></span></button>
       </div>
       <div className='surrat20'></div>
-      <div className="example">
-        <Modal
-          open={this.state.openmodal}
-          onClose={this.onCloseModal}
-          center
-          classNames={{
-            transitionEnter: 'transition-enter',
-            transitionEnterActive: 'transition-enter-active',
-            transitionExit: 'transition-exit-active',
-            transitionExitActive: 'transition-exit-active',
-          }}
-          animationDuration={250}
-          >
-          <div className='modalholder'>
-            <p>Resep anda berhasil dibagikan!</p>
-            <Link to='/' className='modalbutton'>Lihat Resep</Link>
-            <hr/>
-          </div>
-        </Modal>
-      </div>
     </div>
   )
 }

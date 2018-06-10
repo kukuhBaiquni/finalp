@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import {Animated} from "react-animated-css"
 import {Redirect} from 'react-router'
 
 export default class Navbar extends Component {
@@ -21,24 +22,47 @@ export default class Navbar extends Component {
     }
   }
 
+  confirmation(){
+    this.props.actions.logoutconfirmationShow()
+
+  }
+
+  closeconfirmation(){
+    this.props.actions.logoutconfirmationHide()
+  }
+
   takeMeOut(){
-    let yon = window.confirm('Apakah kamu yakin ingin keluar?')
-    if (yon) {
-      this.setState({
-        isLogin: false,
-        redirect: true
-      })
-      localStorage.removeItem('token')
-      this.props.actions.searchModeOff()
-    }
+    this.props.actions.logoutconfirmationHide()
+    this.props.actions.userlogout()
+    this.setState({
+      isLogin: false,
+      redirect: true
+    })
+    localStorage.removeItem('token')
+    this.props.actions.searchModeOff()
   }
 
   render(){
+    var visibility = {
+      display: this.props.utility.logoutconfirmation ? 'block' : 'none'
+    }
     if (this.state.redirect) {
       return <Redirect to='/register&login' />
     }else{
       return(
         <div>
+          {
+            this.props.utility.logoutconfirmation &&
+            <div id="overlay">
+              <Animated animationIn="bounceInDown" animationOut='flipOutX' isVisible={this.props.utility.logoutconfirmation}>
+              <div className='popup' style={visibility}>
+                <div className='notice'>Apakah anda yakin ingin keluar?</div>
+                <div onClick={this.takeMeOut.bind(this)} id='text' className='modalbutton'>Keluar &nbsp;<span className='glyphicon glyphicon-log-out'></span></div>
+                <div onClick={this.closeconfirmation.bind(this)} id='text' className='modalbutton2'>Batal &nbsp;<span className='glyphicon glyphicon-remove'></span></div>
+              </div>
+            </Animated>
+            </div>
+          }
           <Link to='/' className='brand'>Supermia</Link>
           {
             this.state.isLogin &&
@@ -49,7 +73,7 @@ export default class Navbar extends Component {
         {
           this.state.isLogin
           ?
-            <div onClick={this.takeMeOut} className='topnavlist2'>
+            <div onClick={this.confirmation.bind(this)} className='topnavlist2'>
               Logout <span className='glyphicon glyphicon-log-out'></span>
             </div>
 

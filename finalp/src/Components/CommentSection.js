@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import FlashMessage from 'react-flash-message'
 import {SERVER_URL} from '../config'
+import {Animated} from "react-animated-css"
 
 export default class CommentSection extends Component {
   constructor(props){
@@ -49,10 +49,12 @@ export default class CommentSection extends Component {
               {
                 this.state.alertcomment
                 ?
-                <FlashMessage persistOnHover={false} duration={1800}><div className='flash'>Komentar berhasil dikirim</div></FlashMessage>
+                <Animated animationIn="flipInX" isVisible={true}>
+                  <div className='flash'>Komentar berhasil dikirim&nbsp;<span className='glyphicon glyphicon-thumbs-up'></span></div>
+                </Animated>
                 : ''
               }
-              <textarea onBlur={this.alertprepare.bind(this)} ref={input => this.input = input} maxLength='350' className='custominput' placeholder='Tulis komentar'/>
+              <textarea onFocus={this.alertprepare.bind(this)} ref={input => this.input = input} maxLength='350' className='custominput' placeholder='Tulis komentar'/>
               <abbr title='Kirim komentar'><div onClick={this.pseudoSubmit.bind(this)} className='kirim'>Kirim</div></abbr>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import InfiniteScroll from 'react-infinite-scroller';
+import {Animated} from "react-animated-css"
 import ActualContent from './ActualContent'
 
 export default class DataContent extends Component {
@@ -28,6 +29,7 @@ export default class DataContent extends Component {
   }
 
   render(){
+    var token = localStorage.getItem('token')
     var data = this.props.data
     var limit = this.state.limit
     var initialData = data.slice(0, limit)
@@ -36,22 +38,29 @@ export default class DataContent extends Component {
       return(
         <div key={x.resepid}>
           {
-            x.likedby.includes(userid[0]) &&
-            <abbr title='Anda menyukai kiriman ini'><div className='likemark'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+            token
+            ?
+            x.likedby.includes(userid[0])
+            ?
+            <Animated animationInDelay={200} animationIn="flipInX" isVisible={true}>
+              <abbr title='Anda menyukai kiriman ini'><div className='likemark'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+            </Animated>
+            : ''
+            : ''
           }
-        <ActualContent data={x}/>
+          <ActualContent data={x}/>
         </div>
       )
     })
     return(
       <div className='dudukan'>
         <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadMore.bind(this)}
-            hasMore={this.state.hasMore}
-            loader={<div className="loader" key={0}>Loading ...</div>}
-        >
-        {dataItem}
+          pageStart={0}
+          loadMore={this.loadMore.bind(this)}
+          hasMore={this.state.hasMore}
+          loader={<div className="loader" key={0}></div>}
+          >
+          {dataItem}
         </InfiniteScroll>
       </div>
     )

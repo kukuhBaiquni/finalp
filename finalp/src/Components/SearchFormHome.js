@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import FlashMessage from 'react-flash-message'
+import {Animated} from "react-animated-css"
 
 export default class SearchFormHome extends Component {
   constructor(props){
@@ -130,15 +130,15 @@ export default class SearchFormHome extends Component {
   }
 
   render(){
-    const {data, searchmode} = this.props
+    const {data, utility} = this.props
     return(
       <div>
         {
-          searchmode.searchmode &&
-          <div>
+          utility.searchmode &&
+          <Animated animationIn="flipInX" animationOut='flipOutX' isVisible={utility.searchmode}>
             <div className='hasilpencarian'>Hasil Pencarian : {data.length === 0 ? 'Tidak ditemukan' : data.length + ' ditemukan'}</div>
             <abbr title='Reset'><div onClick={this.endSearch.bind(this)} className='resetmode'><span className='glyphicon glyphicon-remove'></span></div></abbr>
-          </div>
+          </Animated>
         }
         {
           this.state.sortmode
@@ -175,9 +175,11 @@ export default class SearchFormHome extends Component {
         }
         {
           this.state.alertmode &&
-          <FlashMessage duration={7000}>
+
+          <Animated animationIn="fadeInDown" isVisible={true}>
             <div className='alertsearch'>Huruf kapital mempengaruhi hasil pencarian</div>
-          </FlashMessage>
+          </Animated>
+
         }
         {
           this.props.user.length === 1
@@ -191,7 +193,6 @@ export default class SearchFormHome extends Component {
             <div className="input-group">
               <input onBlur={this.alertOff} onFocus={this.alertOn} value={this.state.handleSearch} onChange={this.handleSearch} id='forml' type="text" className="form-control" placeholder="Cari Resep" />
               <span className="input-group-btn">
-                <button className="btn btn-default" id='tom' type="submit"><span className='glyphicon glyphicon-search'></span></button>
               </span>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import LangkahPartials from './LangkahPartials'
+import {Animated} from "react-animated-css"
 
 var listbahan = []
 var checker = 0
@@ -28,6 +29,10 @@ export default class BahanPartials extends Component {
     })
   }
 
+  alertprepare(){
+    this.props.actions.alertresepformOff()
+  }
+
   bahanSubmit(e){
     e.preventDefault()
     function cidug(x){
@@ -36,7 +41,7 @@ export default class BahanPartials extends Component {
     listbahan.push(cidug(this.input.value))
     this.setState({
       handler2 : -155+(-53*listbahan.length+1)+'px',
-      handler3 : -115+(-53*listbahan.length+1)+'px'
+      handler3 : -115+(-53*listbahan.length+1)+'px',
     })
     this.input.value = ''
   }
@@ -73,7 +78,7 @@ export default class BahanPartials extends Component {
     listbahan.splice(i, 1)
     this.setState({
       handler2 : ((-154-(listbahan.length*53)))+'px',
-      handler3 : parseInt(this.state.handler3, 10)+53+'px'
+      handler3 : parseInt(this.state.handler3, 10)+53+'px',
     })
   }
 
@@ -118,9 +123,9 @@ export default class BahanPartials extends Component {
       marginLeft: '27px',
       marginTop: this.state.handler3
     }
-
     var list = listbahan.map((f,i) =>
     <div key={i}>
+      <Animated animationIn="flipInX" isVisible={true}>
       <div>
         <div className='lili'>{listbahan[i]}</div>
         <div>
@@ -133,6 +138,7 @@ export default class BahanPartials extends Component {
           }
         </div>
       </div>
+    </Animated>
     </div>
   )
   return(
@@ -143,7 +149,7 @@ export default class BahanPartials extends Component {
       </div>
       <div className='formdivider'>
         <ul>
-          {list}
+            {list}
         </ul>
       </div>
       <div className='dummykotak'></div>
@@ -156,14 +162,22 @@ export default class BahanPartials extends Component {
 
       <form onSubmit={this.bahanSubmit.bind(this)}>
         <div className="form-group">
-          <input maxLength='35' ref={input => this.input = input} autoComplete='off' disabled={this.state.editing} type='text' style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
+          <input onFocus={this.alertprepare.bind(this)} maxLength='35' ref={input => this.input = input} autoComplete='off' disabled={this.state.editing} type='text' style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
           <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
-        </div>
+        </div>{}
       </form>
 
-      <LangkahPartials kategori={kategori} nama={nama} foto={foto} bahan={listbahan} pseudo1={this.props.pseudo1} pseudo2={this.pseudo2}/>
-      
-    </div>
+      <LangkahPartials
+        kategori={kategori}
+        nama={nama}
+        foto={foto}
+        bahan={listbahan}
+        pseudo1={this.props.pseudo1}
+        pseudo2={this.pseudo2}
+        actions={this.props.actions}
+        utility={this.props.utility}/>      
+  </div>
+
   )
 }
 }

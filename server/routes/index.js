@@ -7,7 +7,7 @@ var Resep = require('../models/resep')
 var jwtDecode = require('jwt-decode');
 var path = require('path');
 
-router.get('/api/finalp', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.send('server\'s up')
 });
 
@@ -222,21 +222,28 @@ router.post('/api/finalp/uploadfp', function(req, res){
 
 router.get('/api/finalp/myrecipe/:token', function(req, res){
   let token = req.params.token
-  let decoded = jwtDecode(token);
-  let penulis = decoded.userid
-  Resep.find({penulis}, function(err, recipes){
-    if (err) {
+  jwt.verify(token, 'gabonlatoz', function(err, decoded){
+    if (decoded === undefined) {
       res.json({
-        status: 'Failed'
-      })
-    }else if (!recipes) {
-      res.json({
-        status: 'User belum pernah menulis resep'
+        status: 'Someone trying to hack our system'
       })
     }else{
-      res.json({
-        status: 'Success',
-        data: recipes
+      let penulis = decoded.userid
+      Resep.find({penulis}, function(err, recipes){
+        if (err) {
+          res.json({
+            status: 'Failed'
+          })
+        }else if (!recipes) {
+          res.json({
+            status: 'User belum pernah menulis resep'
+          })
+        }else{
+          res.json({
+            status: 'Success',
+            data: recipes
+          })
+        }
       })
     }
   })
@@ -271,22 +278,30 @@ router.get('/api/finalp/alluser', function(req, res){
 
 router.get('/api/finalp/:token', function(req, res){
   let token = req.params.token;
-  var decoded = jwtDecode(token);
-  User.find({userid: decoded.userid}, function(err, user){
-    if (err) {
+  jwt.verify(token, 'gabonlatoz', function(err, decoded){
+    if (decoded === undefined) {
       res.json({
-        status: 'Failed'
+        status: 'Someone trying to hack our system'
       })
-    }
-    if (!user) {
-      res.json({
-        status: 'User doesn\'t exist'
-      })
-    }
-    if (user) {
-      res.json({
-        status: 'Success',
-        user : user
+    }else{
+    var decoded = jwtDecode(token);
+      User.find({userid: decoded.userid}, function(err, user){
+        if (err) {
+          res.json({
+            status: 'Failed'
+          })
+        }
+        if (!user) {
+          res.json({
+            status: 'User doesn\'t exist'
+          })
+        }
+        if (user) {
+          res.json({
+            status: 'Success',
+            user : user
+          })
+        }
       })
     }
   })
@@ -331,32 +346,39 @@ router.post('/api/finalp/login', function(req, res, next){
 
 router.get('/api/finalp/liked/:token', function(req, res){
   let token = req.params.token;
-  var decoded = jwtDecode(token);
-  var userid = decoded.userid
-  var target = []
-
-  User.findOne({userid}, function(err, user){
-    Resep.find({}, function(err, resep){
-      if (err) {
-        res.json({
-          status: 'Tercyduk'
-        })
-      }else{
-        for (var i = 0; i < user.liking.length; i++) {
-          resep.map(function(x){
-            if (x.resepid === user.liking[i]) {
-              target.push(x)
+  jwt.verify(token, 'gabonlatoz', function(err, decoded){
+    if (decoded === undefined) {
+      res.json({
+        alert: 'Someone trying to hack our system'
+      })
+    }else{
+      var target = []
+      var userid = decoded.userid
+      User.findOne({userid}, function(err, user){
+        Resep.find({}, function(err, resep){
+          if (err) {
+            res.json({
+              status: 'Tercyduk'
+            })
+          }else{
+            for (var i = 0; i < user.liking.length; i++) {
+              resep.map(function(x){
+                if (x.resepid === user.liking[i]) {
+                  target.push(x)
+                }
+                return x
+              })
             }
-            return x
-          })
-        }
-        res.json({
-          status: 'Cool',
-          liked: target
+            res.json({
+              status: 'Cool',
+              liked: target
+            })
+          }
         })
-      }
-    })
+      })
+    }
   })
+
 })
 
 router.get('/api/finalp/loadcomment/:id', function(req, res){

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router'
+import {Animated} from "react-animated-css"
 
 export default class ResepDetailUtility extends Component {
   constructor(props){
@@ -9,7 +9,7 @@ export default class ResepDetailUtility extends Component {
     this.state = {
       redirect: false,
       liked: false,
-      flash: false
+      flash: true
     }
   }
 
@@ -40,7 +40,6 @@ export default class ResepDetailUtility extends Component {
       this.props.actions.liking(userid, resepid)
       this.setState({
         liked: true,
-        flash: true
       })
     }else{
       let yon = window.confirm('Anda harus Login untuk menyukai kiriman \nLogin sekarang?')
@@ -58,19 +57,12 @@ export default class ResepDetailUtility extends Component {
     }else{
       return(
         <div className='utility'>
-          {
-            this.state.liked
-            ?
+          <Animated animationIn="flipInX" animationOut='flipOutX' isVisible={this.state.liked}>
             <abbr title='Batal suka'><div onClick={this.unliking.bind(this)} className='liked'>Disukai&nbsp;<span className='glyphicon glyphicon-thumbs-up'></span></div></abbr>
-            :
+          </Animated>
+          <Animated animationIn="flipInX" animationOut='flipOutX' isVisible={!this.state.liked}>
             <div onClick={this.liking.bind(this)} className='likebutton'>Suka&nbsp;<span className='glyphicon glyphicon-heart'></span></div>
-          }
-          {
-            this.state.flash &&
-            <FlashMessage persistOnHover={false} duration={2000}>
-              <div onClick={this.liking.bind(this)} className='likeflash'></div>
-            </FlashMessage>
-          }
+          </Animated>
         </div>
       )
     }

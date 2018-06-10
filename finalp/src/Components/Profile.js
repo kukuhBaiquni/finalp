@@ -5,10 +5,10 @@ import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import Dropzone from 'react-dropzone'
 import {Redirect} from 'react-router'
-import FlashMessage from 'react-flash-message'
 import ProfileContent from './ProfileContent'
 import {SERVER_URL} from '../config'
 import LikedContent from './LikedContent'
+import {Animated} from "react-animated-css"
 
 var fotoprofil = ''
 class Profile extends Component {
@@ -53,9 +53,17 @@ class Profile extends Component {
     fotoprofil = files[0]
   }
 
-  toggler(){
-    this.setState(function(prevState){
-      return {likeorself: !prevState.likeorself}
+  togglerLike(){
+    this.setState({
+      alertsuccess: false,
+      likeorself: true
+    })
+  }
+
+  togglerSelf(){
+    this.setState({
+      alertsuccess: false,
+      likeorself: false
     })
   }
 
@@ -83,52 +91,60 @@ class Profile extends Component {
     var vanish = {
       visibility: this.state.visibility
     }
-    if (this.state.redirect) {
+    if (this.state.redirect && !this.props.utility.userlogin) {
       return <Redirect to='/' />
     }else{
       return(
         <div>
-          <Navbar actions={this.props.actions}/>
-          <div className='propage'>
-            <div className='thebox'></div>
-            {
-              this.state.preview
-              ?
-              <div>
-                <img className='fotobox' src={this.state.foto.preview} alt='preview'/>
-                <div style={vanish} onClick={this.save.bind(this)} className='simpanfoto'>Simpan</div>
-                <div style={vanish} onClick={this.batal.bind(this)} className='batalsimpan'>Batal</div>
+          <Navbar actions={this.props.actions} utility={this.props.utility}/>
+          <Animated animationIn="fadeInDown" isVisible={true}>
+            <div className='propage'>
+              <div className='thebox'></div>
+              {
+                this.state.preview
+                ?
+                <div>
+                  <img className='fotobox' src={this.state.foto.preview} alt='preview'/>
+                  <div style={vanish} onClick={this.save.bind(this)} className='simpanfoto'>Simpan</div>
+                  <div style={vanish} onClick={this.batal.bind(this)} className='batalsimpan'>Batal</div>
+                </div>
+                :
+                user.map((x, i) => {
+                  return (<img key={i} className='fotobox' src={path + x.fotoprofil} alt={user.userid}/>)
+                })
+              }
+              {
+                this.state.alertsuccess &&
+
+
+
+                <Animated animationIn="bounceIn" isVisible={true}>
+                  <div className='savesuccess'>Perubahan berhasil disimpan</div>
+                </Animated>
+              }
+              <div className='anotherbox'>
               </div>
-              :
-              user.map((x, i) => {
-                return (<img key={i} className='fotobox' src={path + x.fotoprofil} alt={user.userid}/>)
-              })
-            }
-            {
-              this.state.alertsuccess &&
-              <FlashMessage duration={6000}><div className='savesuccess'>Perubahan berhasil disimpan</div></FlashMessage>
-            }
-            <div className='anotherbox'>
-            </div>
-            <div className='profilename'>{nama}</div>
+              <div className='profilename'>{nama}</div>
 
-            <Dropzone className='dropzone' onDrop={this.uploadFoto2.bind(this)} accept="image/*" multiple={ false }>
-              <abbr title='Ganti foto'><div className='changepp'><span className='glyphicon glyphicon-camera'></span></div></abbr>
-            </Dropzone>
+              <Dropzone className='dropzone' onDrop={this.uploadFoto2.bind(this)} accept="image/*" multiple={ false }>
+                <abbr title='Ganti foto'><div className='changepp'><span className='glyphicon glyphicon-camera'></span></div></abbr>
+              </Dropzone>
 
-            <div className='buttonwrapper'>
-              <abbr title='Resep Saya'><div onClick={this.toggler.bind(this)} className='testbutton1'><span className='glyphicon glyphicon-list'></span></div></abbr>
-              <abbr title='Resep yang disukai'><div onClick={this.toggler.bind(this)} className='testbutton3'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+              <div className='buttonwrapper'>
+                <abbr title='Resep Saya'><div onClick={this.togglerSelf.bind(this)} className='testbutton1'><span className='glyphicon glyphicon-list'></span></div></abbr>
+                <abbr title='Resep yang disukai'><div onClick={this.togglerLike.bind(this)} className='testbutton3'><span className='glyphicon glyphicon-heart'></span></div></abbr>
+              </div>
+              {
+                this.state.likeorself
+                ?
+                <LikedContent liked={this.props.liked} user={this.props.user} actions={this.props.actions}/>
+                :
+                <ProfileContent data={this.props.data} user={this.props.user} actions={this.props.actions}/>
+              }
+              <div className='morespacepls'></div>
             </div>
-            {
-              this.state.likeorself
-              ?
-              <LikedContent liked={this.props.liked} user={this.props.user} actions={this.props.actions}/>
-              :
-              <ProfileContent data={this.props.data} user={this.props.user} actions={this.props.actions}/>
-            }
-            <div className='morespacepls'></div>
-          </div>
+          </Animated>
+          <div className='footer'></div>
         </div>
       )
     }
@@ -139,7 +155,8 @@ function mapStateToProps(state){
   return{
     user: state.user,
     data: state.data,
-    liked: state.liked
+    liked: state.liked,
+    utility: state.utility
   }
 }
 

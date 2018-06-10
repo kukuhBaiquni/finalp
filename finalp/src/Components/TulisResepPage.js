@@ -8,7 +8,7 @@ class TulisResepPage extends Component {
   render(){
     return(
       <div>
-        <TulisResepForm actions={this.props.actions} />
+        <TulisResepForm utility={this.props.utility} actions={this.props.actions} />
       </div>
     )
   }
@@ -16,7 +16,8 @@ class TulisResepPage extends Component {
 
 function mapStateToProps(state){
   return{
-    data: state.data
+    data: state.data,
+    utility: state.utility
   }
 }
 

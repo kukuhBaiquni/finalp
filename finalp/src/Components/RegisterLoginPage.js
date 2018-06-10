@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import RegisterForm from './RegisterForm'
-import Navbar from './Navbar'
 import LoginForm from './LoginForm'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import {Redirect} from 'react-router'
+import {Link} from 'react-router-dom'
 
 class RegisterLoginPage extends Component {
   constructor(props){
@@ -43,13 +43,20 @@ class RegisterLoginPage extends Component {
     }else{
       return(
         <div className='bg'>
-          <Navbar />
-          <button className='togglerreg' onClick={this.onClick}><span className='glyphicon glyphicon-refresh'></span></button>
-          {
-            this.state.toggler
-            ? <RegisterForm actions={this.props.actions} user={this.props.user}/>
-            : <LoginForm actions={this.props.actions} user={this.props.user}/>
-          }
+          <div>
+            <Link to='/' className='brand'>Supermia</Link>
+            <Link to='/register&login' className='topnavlist2'>
+              Daftar & Login <span className='glyphicon glyphicon-user'></span>
+          </Link>
+          <Link to='/' className='topnavlist1'>
+            Beranda <span className='glyphicon glyphicon-home'></span>
+          </Link>
+            <p className='topnavlist3'>Bantuan <span className='glyphicon glyphicon-book'></span></p>
+            <nav className="navbar navbar-default" id='navb'></nav>
+          </div>
+        <button className='togglerreg' onClick={this.onClick}>Login &nbsp;<span className='glyphicon glyphicon-refresh'></span>&nbsp; Register</button>
+        <RegisterForm mode={this.state.toggler} actions={this.props.actions} user={this.props.user}/>
+        <LoginForm mode={!this.state.toggler} actions={this.props.actions} user={this.props.user}/>
         </div>
       )
     }

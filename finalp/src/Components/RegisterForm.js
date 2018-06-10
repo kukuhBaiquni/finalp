@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router'
+import {Animated} from "react-animated-css"
 
 export default class RegisterForm extends Component {
   constructor(props){
@@ -28,7 +29,7 @@ export default class RegisterForm extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentWillMount(){
+  componentDidMount(){
     let token = localStorage.getItem('token')
     if (token) {
       this.setState({
@@ -215,7 +216,6 @@ export default class RegisterForm extends Component {
           this.props.actions.addUser(namadepan, namabelakang, email, password)
         }
 
-
       }else{
         this.setState({
           formvalid:true
@@ -228,41 +228,42 @@ export default class RegisterForm extends Component {
         return <Redirect to='/authentication' />
       }else{
         return(
+          <Animated animationInDelay={200} animationIn="bounceInDown" animationOut='bounceOutUp' isVisible={this.props.mode}>
           <div className='bgform'>
-            <button disabled className='regb'>Register Form</button>
-            <br/><br/><br/>
-            <form onSubmit={this.onSubmit}>
-              <div className="form-group">
-                <label className='labelf'>Nama Depan {this.state.namadepanvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                <input type="text" className="form-control" placeholder="Nama Depan" onFocus={this.namaDepanValid.bind(this)} value={this.state.namadepan} onChange={this.handleNamaDepan.bind(this)} />
-              </div>
-              <div className="form-group">
-                <label className='labelf'>Nama Belakang {this.state.namabelakangvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                <input type="text" className="form-control" placeholder="Nama Belakang" onFocus={this.namaBelakangValid.bind(this)} value={this.state.namabelakang} onChange={this.handleNamaBelakang.bind(this)} />
-              </div>
-              <div className="form-group">
-                <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                <input type="email" className="form-control" placeholder="Email" onFocus={this.emailValid.bind(this)} value={this.state.email} onChange={this.handleEmail.bind(this)} />
-              </div>
-              <div className="form-group">
-                <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>minimal 6 karakter</b> : ''}</label>
-                <input type="password" className="form-control" placeholder="Password" onFocus={this.passwordValid.bind(this)} value={this.state.password} onChange={this.handlePassword.bind(this)} />
-              </div>
-              <div className="form-group">
-                <label className='labelf'>Ulangi Password {this.state.ulangivalid ? <b className='alert'>password tidak cocok</b> : ''}</label>
-                <input type="password" className="form-control" placeholder="Ulangi Password" onFocus={this.ulangiValid.bind(this)} value={this.state.ulangipassword} onChange={this.handleRetypePassword.bind(this)} />
-              </div>
-              <button className='dft'>Daftar</button>
-            </form>
-            {
-              this.state.formvalid &&
-              <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Mohon isi form dengan benar!!</div></FlashMessage>
-            }
-            {
-              this.state.emailalert &&
-              <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Email yang anda masukan sudah digunakan</div></FlashMessage>
-            }
+              <br/><br/>
+              <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                  <label className='labelf'>Nama Depan {this.state.namadepanvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                  <input type="text" className="form-control" placeholder="Nama Depan" onFocus={this.namaDepanValid.bind(this)} value={this.state.namadepan} onChange={this.handleNamaDepan.bind(this)} />
+                </div>
+                <div className="form-group">
+                  <label className='labelf'>Nama Belakang {this.state.namabelakangvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                  <input type="text" className="form-control" placeholder="Nama Belakang" onFocus={this.namaBelakangValid.bind(this)} value={this.state.namabelakang} onChange={this.handleNamaBelakang.bind(this)} />
+                </div>
+                <div className="form-group">
+                  <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
+                  <input type="email" className="form-control" placeholder="Email" onFocus={this.emailValid.bind(this)} value={this.state.email} onChange={this.handleEmail.bind(this)} />
+                </div>
+                <div className="form-group">
+                  <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>minimal 6 karakter</b> : ''}</label>
+                  <input type="password" className="form-control" placeholder="Password" onFocus={this.passwordValid.bind(this)} value={this.state.password} onChange={this.handlePassword.bind(this)} />
+                </div>
+                <div className="form-group">
+                  <label className='labelf'>Ulangi Password {this.state.ulangivalid ? <b className='alert'>password tidak cocok</b> : ''}</label>
+                  <input type="password" className="form-control" placeholder="Ulangi Password" onFocus={this.ulangiValid.bind(this)} value={this.state.ulangipassword} onChange={this.handleRetypePassword.bind(this)} />
+                </div>
+                <button className='dft'>Daftar</button>
+              </form>
+              {
+                this.state.formvalid &&
+                <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Mohon isi form dengan benar!!</div></FlashMessage>
+              }
+              {
+                this.state.emailalert &&
+                <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Email yang anda masukan sudah digunakan</div></FlashMessage>
+              }
           </div>
+        </Animated>
         )
       }
     }
