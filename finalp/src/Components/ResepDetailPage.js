@@ -50,6 +50,11 @@ class ResepDetailPage extends Component {
     })
     return(
       <div>
+        {
+          this.props.user.map(function(x, i){
+            return (<img key={i} className='topimgrd' src={path + x.fotoprofil} alt='user' />)
+          })
+        }
         <Navbar actions={this.props.actions} utility={this.props.utility} />
         <Animated animationIn="fadeInUp" isVisible={true}>
           <div className='pdbg'>

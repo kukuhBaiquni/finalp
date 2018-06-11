@@ -15,9 +15,11 @@ export default class ResepDetailBahan extends Component {
     return(
       <div className='bahansub'>
         <p className='subbahan'><strong>Bahan-bahan :</strong></p>
+        <br />
         {listbahan}
         <br />
         <p className='subbahan'><strong>Langkah-langkah :</strong></p>
+        <br />
         <div className='langkahlist'>
           {
             this.props.data.langkah.map((x, i) => {

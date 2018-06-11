@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var resep = new Schema({
   resepid : Number,
+  actualdate: Number,
   namaresep : String,
   penulis : Number,
   namapenulis: String,

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/user')
 var jwt = require('jsonwebtoken')
+var Comment = require('../models/comment')
 var Resep = require('../models/resep')
 var jwtDecode = require('jwt-decode');
 var path = require('path');
@@ -33,9 +35,17 @@ router.get('/resepdetail/:resepid', function(req, res){
         message: 'request timed out'
       })
     }else{
-      res.json({
-        status: 'Success',
-        resep: resep
+      User.find({userid: resep[0].penulis}, function(err, user){
+        if (err) {
+          res.json({
+            status: 'Tercyduk'
+          })
+        }else{
+          res.json({
+            status: 'Success',
+            resep: resep
+          })
+        }
       })
     }
   })
@@ -58,6 +68,7 @@ router.post('/tambahresep', function(req, res){
     resepid: req.body.resepid,
     namaresep: req.body.nama,
     namapenulis: namapenulis,
+    actualdate: Date.now(),
     penulis: penulis,
     bahan: [],
     langkah: [],
@@ -96,7 +107,7 @@ router.post('/tambahresep', function(req, res){
               })
             }else{
               res.json({
-                status: 'Done!',
+                status: 'Success',
                 data : resep
               })
             }

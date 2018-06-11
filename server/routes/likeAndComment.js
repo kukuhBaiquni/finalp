@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken')
+var User = require('../models/user')
+var Resep = require('../models/resep')
 var Comment = require('../models/comment')
 var jwtDecode = require('jwt-decode');
 

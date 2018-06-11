@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router-dom'
 import {Animated} from "react-animated-css"
 
@@ -12,7 +11,7 @@ export default class LoginForm extends Component {
       emailvalid: false,
       passwordvalid: false,
       redirect: false,
-      loginalert: false
+      alert: false
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -66,7 +65,7 @@ export default class LoginForm extends Component {
 
       if (loginvalidation.length === 0) {
         this.setState({
-          loginalert: true
+          alert: true
         })
       }else{
         this.props.actions.loginAttempt(email, password)
@@ -83,7 +82,16 @@ export default class LoginForm extends Component {
     }
   }
 
+  preparealert(){
+    this.setState({
+      alert: false
+    })
+  }
+
   render(){
+    var visibility = {
+      visibility: this.state.alert ? 'visible' : 'hidden'
+    }
     if(this.state.redirect) {
       return <Redirect to='/authentication' />
     }else{
@@ -94,17 +102,16 @@ export default class LoginForm extends Component {
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                <input type="email" className="form-control" onChange={this.emailValue.bind(this)} placeholder="Email" />
+                <input onFocus={this.preparealert.bind(this)} type="email" className="form-control" onChange={this.emailValue.bind(this)} placeholder="Email" />
               </div>
               <div className="form-group">
                 <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                <input type="password" className="form-control" onChange={this.passwordValue.bind(this)} placeholder="Password" />
+                <input onFocus={this.preparealert.bind(this)} type="password" className="form-control" onChange={this.passwordValue.bind(this)} placeholder="Password" />
               </div>
               <button className='dft'>Masuk</button>
-              {
-                this.state.loginalert &&
-                <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>User tidak ditemukan</div></FlashMessage>
-              }
+                <Animated animationIn="bounceInUp" animationOut='flipOutX' isVisible={true}>
+                  <div style={visibility} id='noteinvalid'>User tidak ditemukan</div>
+                </Animated>
             </form>
           </div>
         </Animated>

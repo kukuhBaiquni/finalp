@@ -96,7 +96,12 @@ class Profile extends Component {
     }else{
       return(
         <div>
-          <Navbar actions={this.props.actions} utility={this.props.utility}/>
+          {
+            this.props.user.map(function(x, i){
+              return (<img key={i} className='topimgp' src={path + x.fotoprofil} alt='user' />)
+            })
+          }
+          <Navbar user={this.props.user} actions={this.props.actions} utility={this.props.utility}/>
           <Animated animationIn="fadeInDown" isVisible={true}>
             <div className='propage'>
               <div className='thebox'></div>

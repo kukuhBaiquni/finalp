@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from './actions'
 import DataContent from './DataContent'
+import {SERVER_URL} from '../config'
 
 class HomePage extends Component {
   constructor(props){
@@ -67,9 +68,15 @@ class HomePage extends Component {
 
   }
   render(){
+    let path = SERVER_URL + 'images/'
     const {data, actions, utility} = this.props
     return(
       <div className='wrapper'>
+        {
+          this.props.user.map(function(x, i){
+            return (<img key={i} className='topimg' src={path + x.fotoprofil} alt='user' />)
+          })
+        }
         <Navbar utility={this.props.utility} user={this.props.user} actions={actions} location={this.props.location.pathname}/>
         {
           this.state.showme &&

@@ -10,7 +10,7 @@ const fileUpload = require('express-fileupload');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var resep = require('./routes/resep');
-var likeAndComment = require('./routes/likeAndComment');
+var likeandcomment = require('./routes/likeandcomment');
 
 var app = express();
 var mongoose = require('mongoose')
@@ -39,7 +39,7 @@ app.use(fileUpload());
 app.use('/', index);
 app.use('/api/finalp/users', users);
 app.use('/api/finalp/resep', resep);
-app.use('/api/finalp/likeAndComment', likeAndComment);
+app.use('/api/finalp/likeandcomment', likeandcomment);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

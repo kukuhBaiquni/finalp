@@ -1,8 +1,7 @@
 import request from 'superagent'
 import moment from 'moment'
 import {SERVER_URL} from '../../config'
-
-const TARGET = SERVER_URL + 'api/finalp/'
+const TARGET = SERVER_URL + 'api/finalp/likeandcomment/'
 
 export function liking(userid, resepid){
   return dispatch => {

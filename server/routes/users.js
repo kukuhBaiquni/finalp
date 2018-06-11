@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken')
+var Comment = require('../models/comment')
+var Resep = require('../models/resep')
 var jwtDecode = require('jwt-decode');
 var path = require('path');
 var User = require('../models/user')
@@ -68,7 +70,7 @@ router.post('/uploadfp', function(req, res){
               })
             }else{
               res.json({
-                status: 'Done!',
+                status: 'Success',
                 data : user
               })
             }
@@ -99,6 +101,7 @@ router.get('/alluser', function(req, res){
   })
 })
 
+//LOAD SPECIFIC USER
 router.get('/:token', function(req, res){
   let token = req.params.token;
   jwt.verify(token, 'gabonlatoz', function(err, decoded){

@@ -5,10 +5,14 @@ import {connect} from 'react-redux'
 import * as AppActions from './actions'
 
 class TulisResepPage extends Component {
+  componentDidMount(){
+    let token = localStorage.getItem('token')
+    this.props.actions.loadUser(token)
+  }
   render(){
     return(
       <div>
-        <TulisResepForm utility={this.props.utility} actions={this.props.actions} />
+        <TulisResepForm user={this.props.user} utility={this.props.utility} actions={this.props.actions} />
       </div>
     )
   }
@@ -17,7 +21,8 @@ class TulisResepPage extends Component {
 function mapStateToProps(state){
   return{
     data: state.data,
-    utility: state.utility
+    utility: state.utility,
+    user: state.user
   }
 }
 

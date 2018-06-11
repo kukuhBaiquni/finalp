@@ -88,8 +88,8 @@ export default function data(state = initialState, action){
     case 'asc-date':
     let cloneascdate = [...state]
     let sortascdate = cloneascdate.sort(function(x, y){
-      let c = x.created
-      let d = y.created
+      let c = x.actualdate
+      let d = y.actualdate
       return (c < d) ? -1 : (c > d) ? 1 : 0
     })
     return sortascdate
@@ -124,8 +124,8 @@ export default function data(state = initialState, action){
     case 'desc-date':
     let clonedescdate = [...state]
     let sortdescdate = clonedescdate.sort(function(x, y){
-      let c = x.created
-      let d = y.created
+      let c = x.actualdate
+      let d = y.actualdate
       return (c < d) ? -1 : (c > d) ? 1 : 0
     })
     return sortdescdate.reverse()
