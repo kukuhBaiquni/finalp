@@ -6,8 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 const fileUpload = require('express-fileupload');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+var resep = require('./routes/resep');
+var likeAndComment = require('./routes/likeAndComment');
 
 var app = express();
 var mongoose = require('mongoose')
@@ -34,7 +37,9 @@ app.use(cors())
 
 app.use(fileUpload());
 app.use('/', index);
-app.use('/users', users);
+app.use('/api/finalp/users', users);
+app.use('/api/finalp/resep', resep);
+app.use('/api/finalp/likeAndComment', likeAndComment);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,7 +2,7 @@ import request from 'superagent'
 import moment from 'moment'
 import {SERVER_URL} from '../../config'
 
-const TARGET = SERVER_URL + 'api/finalp/'
+const TARGET = SERVER_URL + 'api/finalp/resep/'
 
 export function resepDetail(resepid){
   return dispatch => {
@@ -75,7 +75,7 @@ export function deletefilter(resepid){
 export function loadResep(){
   return dispatch => {
     return request
-    .get(`${TARGET}resep`)
+    .get(`${TARGET}allresep`)
     .set('Accept', 'application/json')
     .end((err, res)=>{
       if (err) {
@@ -140,7 +140,7 @@ export function uploadFotoResep(resepid ,images, index){
       data.append('file', x)
       data.append('index', index[i])
       return request
-      .put(`${TARGET}${resepid}`)
+      .put(`${TARGET}fotolangkah/${resepid}`)
       .send(data)
       .end((err, res)=>{
         if (err) {

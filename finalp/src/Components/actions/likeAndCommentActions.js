@@ -7,7 +7,7 @@ const TARGET = SERVER_URL + 'api/finalp/'
 export function liking(userid, resepid){
   return dispatch => {
     return request
-    .post(`${TARGET}liking`)
+    .post(`${TARGET}submitlike`)
     .type('form')
     .send({userid: userid})
     .send({resepid: resepid})

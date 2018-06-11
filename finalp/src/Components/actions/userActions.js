@@ -2,7 +2,7 @@ import request from 'superagent'
 import moment from 'moment'
 import {SERVER_URL} from '../../config'
 
-const TARGET = SERVER_URL + 'api/finalp/'
+const TARGET = SERVER_URL + 'api/finalp/users/'
 
 export function addUser(namadepan, namabelakang, email, password){
   let userid = Date.now()
