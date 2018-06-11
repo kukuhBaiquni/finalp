@@ -70,6 +70,7 @@ class ResepDetailPage extends Component {
             </div>
             <CommentSection data={this.props.data[0]} user={this.props.user} actions={this.props.actions} />
             <div className='spacercomment'></div>
+            <div className='commentinfo'>Total komentar : {this.props.comment.length}</div>
             <CommentList comment={this.props.comment} actions={this.props.actions} />
           </Animated>
           <div className='footer'></div>

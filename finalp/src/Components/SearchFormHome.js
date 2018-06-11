@@ -10,7 +10,7 @@ export default class SearchFormHome extends Component {
       handleSearch: '',
       sortmode: false,
       alertmode: false,
-      sorthandler: ''
+      sorthandler: '',
     }
     this.sortType = this.sortType.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -41,8 +41,7 @@ export default class SearchFormHome extends Component {
 
   sortModeOff(){
     this.setState({
-      sortmode: false,
-      abjad: false,
+      sortmode: false
     })
   }
 
@@ -115,7 +114,16 @@ export default class SearchFormHome extends Component {
   asc(){
     let sortType = this.state.sorthandler
     if (sortType.length !== 0) {
+      window.scrollTo(0, window.scrollY - 0)
       this.props.actions.sortasc(sortType)
+    }
+  }
+
+  desc(){
+    let sortType = this.state.sorthandler
+    if (sortType.length !== 0) {
+      window.scrollTo(0, window.scrollY - 0)
+      this.props.actions.sortdesc(sortType)
     }
   }
 
@@ -161,7 +169,7 @@ export default class SearchFormHome extends Component {
               &nbsp;&nbsp;Urutkan berdasarkan jumlah komentar
             </div>
             <abbr onClick={this.asc.bind(this)} title='Naik'><div className='asc'><span className='glyphicon glyphicon-arrow-up'></span></div></abbr>
-            <abbr onClick={this.asc.bind(this)} title='Turun'><div className='desc'><span className='glyphicon glyphicon-arrow-down'></span></div></abbr>
+            <abbr onClick={this.desc.bind(this)} title='Turun'><div className='desc'><span className='glyphicon glyphicon-arrow-down'></span></div></abbr>
 
 
             <div className='sortabjad'><span className='glyphicon glyphicon-sort-by-alphabet'></span></div>

@@ -55,7 +55,7 @@ class HomePage extends Component {
         showme: false
       })
     }
-    if (scroll > 600) {
+    if (scroll > 900) {
       this.setState({
         jumper: true
       })

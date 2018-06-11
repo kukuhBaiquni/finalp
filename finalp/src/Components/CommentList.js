@@ -51,9 +51,9 @@ export default class CommentList extends Component {
           </Animated>
         </div>
       )
-    })
+    }).reverse()
     let limit = this.state.limit
-    let dataPartials = comment.slice(0, limit).reverse()
+    let dataPartials = comment.slice(0, limit)
     return(
       <div>
         {dataPartials}

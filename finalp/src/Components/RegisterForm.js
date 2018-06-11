@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import FlashMessage from 'react-flash-message'
 import {Redirect} from 'react-router'
 import {Animated} from "react-animated-css"
 
@@ -8,23 +7,16 @@ export default class RegisterForm extends Component {
     super(props)
 
     this.state = {
-      userid: '',
       namadepan: '',
       namabelakang: '',
       email: '',
       password: '',
       ulangipassword: '',
-      created: '',
-      token: '',
-      foto: '',
-      ulangivalid : false,
-      passwordvalid: false,
-      namadepanvalid: false,
-      namabelakangvalid: false,
-      emailvalid: false,
-      formvalid: false,
+      formInvalid: false,
       redirect: false,
-      emailalert: false,
+      emailalreadyused: false,
+      openalert: false,
+      passwordnotmatch: false
     }
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -42,145 +34,35 @@ export default class RegisterForm extends Component {
     this.setState({
       namadepan: e.target.value
     })
-
-    if (e.target.value.length > 0) {
-      this.setState({
-        namadepanvalid: false
-      })
-    }else{
-      this.setState({
-        namadepanvalid: true
-      })
-    }
   }
 
   handleNamaBelakang(e){
     this.setState({
       namabelakang: e.target.value
     })
-
-    if (e.target.value.length > 0) {
-      this.setState({
-        namabelakangvalid: false
-      })
-    }else{
-      this.setState({
-        namabelakangvalid: true
-      })
-    }
   }
 
   handleEmail(e){
     this.setState({
       email: e.target.value,
     })
-
-    if (e.target.value.length !== 0) {
-      this.setState({
-        emailvalid: false
-      })
-    }else{
-      this.setState({
-        emailvalid: true
-      })
-    }
   }
 
   handlePassword(e){
     this.setState({
       password: e.target.value
     })
-
-    if (e.target.value.length > 5) {
-      this.setState({
-        passwordvalid: false
-      })
-    }else{
-      this.setState({
-        passwordvalid: true
-      })
-    }
   }
 
   handleRetypePassword(e){
     this.setState({
       ulangipassword: e.target.value
     })
-
-    if (this.state.password === e.target.value) {
-      this.setState({
-        ulangivalid: false
-      })
-    }else{
-      this.setState({
-        ulangivalid: true
-      })
-    }
-  }
-
-  namaDepanValid(){
-    if(this.state.namadepan.length !== 0){
-      this.setState({
-        namadepanvalid: false
-      })
-    }else{
-      this.setState({
-        namadepanvalid: true
-      })
-    }
-  }
-
-  namaBelakangValid(){
-    if(this.state.namabelakang.length !== 0){
-      this.setState({
-        namabelakangvalid: false
-      })
-    }else{
-      this.setState({
-        namabelakangvalid: true
-      })
-    }
-  }
-
-  emailValid(){
-    if(this.state.email.length !== 0){
-      this.setState({
-        emailvalid: false
-      })
-    }else{
-      this.setState({
-        emailvalid: true
-      })
-    }
-  }
-
-  passwordValid(){
-    if(this.state.email.length > 5){
-      this.setState({
-        passwordvalid: true
-      })
-    }else{
-      this.setState({
-        passwordvalid: false
-      })
-    }
-  }
-
-  ulangiValid(){
-    if(this.state.password === this.state.ulangipassword){
-      this.setState({
-        ulangivalid: false
-      })
-    }else{
-      this.setState({
-        ulangivalid: true
-      })
-    }
   }
 
   onSubmit(e){
     e.preventDefault();
-    if (this.state.password === this.state.ulangipassword && this.state.namadepan && this.state.namabelakang
+    if (this.state.namadepan && this.state.namabelakang
       && this.state.email && this.state.password && this.state.ulangipassword) {
 
         var namadepan = this.state.namadepan.trim();
@@ -195,32 +77,52 @@ export default class RegisterForm extends Component {
           }
           return x
         })
-
-        if (emailvalidation.length !== 0) {
-          this.setState({
-            emailalert: true
-          })
+        if (this.state.password === this.state.ulangipassword) {
+          if (emailvalidation.length !== 0) {
+            this.setState({
+              emailalreadyused: true
+            })
+          }else{
+            this.setState({
+              namadepan: '',
+              namabelakang: '',
+              email: '',
+              password: '',
+              ulangipassword: '',
+              redirect: true
+            })
+            this.props.actions.addUser(namadepan, namabelakang, email, password)
+          }
         }else{
           this.setState({
-            namadepan: '',
-            namabelakang: '',
-            email: '',
-            password: '',
-            ulangipassword: '',
-            formvalid: false,
-            register: false,
-            registersukses: true,
-            redirect: true,
-            emailalert: false,
+            passwordnotmatch: true
           })
-          this.props.actions.addUser(namadepan, namabelakang, email, password)
         }
 
       }else{
         this.setState({
-          formvalid:true
+          formInvalid:true,
+          openalert: true
         })
       }
+    }
+
+    closealert(){
+      this.setState({
+        openalert: false
+      })
+    }
+
+    close1(){
+      this.setState({
+        emailalreadyused: false
+      })
+    }
+
+    close2(){
+      this.setState({
+        passwordnotmatch: false
+      })
     }
 
     render(){
@@ -229,41 +131,44 @@ export default class RegisterForm extends Component {
       }else{
         return(
           <Animated animationInDelay={200} animationIn="bounceInDown" animationOut='bounceOutUp' isVisible={this.props.mode}>
-          <div className='bgform'>
+            <div className='bgform'>
+              {
+                this.state.openalert &&
+                <div id="overlay">
+                  <Animated animationIn="bounceInDown" animationOut='flipOutX' isVisible={this.state.formInvalid}>
+                  <div className='popup'>
+                    <div className='notice2'>Data yang anda berikan kurang lengkap.<br/>Silahkan periksa kembali form registrasi anda!</div>
+                    <div onClick={this.closealert.bind(this)} id='text' className='modalbutton3'>Mengerti</div>
+                  </div>
+                </Animated>
+                </div>
+              }
               <br/><br/>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                  <label className='labelf'>Nama Depan {this.state.namadepanvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                  <input type="text" className="form-control" placeholder="Nama Depan" onFocus={this.namaDepanValid.bind(this)} value={this.state.namadepan} onChange={this.handleNamaDepan.bind(this)} />
+                  <label className='labelf'>Nama Depan</label>
+                  <input type="text" className="form-control" placeholder="Nama Depan" value={this.state.namadepan} onChange={this.handleNamaDepan.bind(this)} />
                 </div>
                 <div className="form-group">
-                  <label className='labelf'>Nama Belakang {this.state.namabelakangvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                  <input type="text" className="form-control" placeholder="Nama Belakang" onFocus={this.namaBelakangValid.bind(this)} value={this.state.namabelakang} onChange={this.handleNamaBelakang.bind(this)} />
+                  <label className='labelf'>Nama Belakang</label>
+                  <input type="text" className="form-control" placeholder="Nama Belakang" value={this.state.namabelakang} onChange={this.handleNamaBelakang.bind(this)} />
                 </div>
                 <div className="form-group">
-                  <label className='labelf'>Email {this.state.emailvalid ? <b className='alert'>tidak boleh kosong</b> : ''}</label>
-                  <input type="email" className="form-control" placeholder="Email" onFocus={this.emailValid.bind(this)} value={this.state.email} onChange={this.handleEmail.bind(this)} />
+                  <label className='labelf'>Email</label>{this.state.emailalreadyused ?<span className='emailused'>Email sudah digunakan</span> : ''}
+                  <input onFocus={this.close1.bind(this)} type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleEmail.bind(this)} />
                 </div>
                 <div className="form-group">
-                  <label className='labelf'>Password {this.state.passwordvalid ? <b className='alert'>minimal 6 karakter</b> : ''}</label>
-                  <input type="password" className="form-control" placeholder="Password" onFocus={this.passwordValid.bind(this)} value={this.state.password} onChange={this.handlePassword.bind(this)} />
+                  <label className='labelf'>Password</label>
+                  <input type="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.handlePassword.bind(this)} />
                 </div>
                 <div className="form-group">
-                  <label className='labelf'>Ulangi Password {this.state.ulangivalid ? <b className='alert'>password tidak cocok</b> : ''}</label>
-                  <input type="password" className="form-control" placeholder="Ulangi Password" onFocus={this.ulangiValid.bind(this)} value={this.state.ulangipassword} onChange={this.handleRetypePassword.bind(this)} />
+                  <label className='labelf'>Ulangi Password</label>{this.state.passwordnotmatch ?<span className='passwordnotmatch'>Password tidak cocok</span> : ''}
+                  <input onFocus={this.close2.bind(this)} type="password" className="form-control" placeholder="Ulangi Password" value={this.state.ulangipassword} onChange={this.handleRetypePassword.bind(this)} />
                 </div>
                 <button className='dft'>Daftar</button>
               </form>
-              {
-                this.state.formvalid &&
-                <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Mohon isi form dengan benar!!</div></FlashMessage>
-              }
-              {
-                this.state.emailalert &&
-                <FlashMessage duration={4950}><div id='noteinvalid' className='regsu'>Email yang anda masukan sudah digunakan</div></FlashMessage>
-              }
-          </div>
-        </Animated>
+            </div>
+          </Animated>
         )
       }
     }

@@ -164,7 +164,7 @@ export default class BahanPartials extends Component {
         <div className="form-group">
           <input onFocus={this.alertprepare.bind(this)} maxLength='35' ref={input => this.input = input} autoComplete='off' disabled={this.state.editing} type='text' style={styleListBahan} className="form-control" placeholder="Tambah Bahan" />
           <p style={styleNote}>Tips: Tekan 'Enter' untuk menambah</p>
-        </div>{}
+        </div>
       </form>
 
       <LangkahPartials
@@ -175,7 +175,8 @@ export default class BahanPartials extends Component {
         pseudo1={this.props.pseudo1}
         pseudo2={this.pseudo2}
         actions={this.props.actions}
-        utility={this.props.utility}/>      
+        utility={this.props.utility}
+        />
   </div>
 
   )

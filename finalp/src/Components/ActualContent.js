@@ -33,7 +33,7 @@ export default class ActualContent extends Component {
             <p>{this.props.data.namaresep}<sup className='kategorititle'> <abbr title={'kategori: ' + this.props.data.kategori}> {this.props.data.kategori}</abbr></sup></p>
             <div style={identity}>
               <p style={{color: '#c5a3ff'}}>oleh : <strong style={{color: '#4d2e9b'}}>{this.props.data.namapenulis}</strong></p>
-              <p style={{color: '#c5a3ff'}}><span style={{color: '#c5a3ff'}} className='glyphicon glyphicon-time'></span> {this.props.data.created}</p>
+              <p style={{color: '#4d2e9b'}}><span style={{color: '#c5a3ff'}} className='glyphicon glyphicon-time'></span> {this.props.data.created}</p>
             </div>
             <div style={spacer}></div>
 
