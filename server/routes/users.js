@@ -48,42 +48,50 @@ router.post('/uploadfp', function(req, res){
   let imageFile = req.files.file
   let destination = path.join(__dirname, '../public/images')
   let filename = `${Date.now()}img`
-  var decode = jwtDecode(req.body.token)
-  var luser = decode.userid
-
-  imageFile.mv(`${destination}/${filename}.jpg`, function(err){
+  var token = req.body.token
+  jwt.verify(token, 'gabonlatoz', function(err, decoded){
     if (err) {
-      return res.status(500).send(err);
+      res.json({
+        status: 'Tercyduk'
+      })
+    }else{
+      var luser = decoded.userid
+      imageFile.mv(`${destination}/${filename}.jpg`, function(err){
+        if (err) {
+          return res.status(500).send(err);
+        }
+        User.findOne({userid: luser}, function(err, user){
+          if (err) {
+            res.json({
+              status: 'Failed',
+              message: 'error when updated to database'
+            })
+          }else if(user){
+            user.update({$set: {fotoprofil: `${filename}.jpg`}}).exec(function(err, gabon){
+              user.save(function(err){
+                if (err) {
+                  res.json({
+                    status: 'Tercyduk'
+                  })
+                }else{
+                  res.json({
+                    status: 'Success',
+                    data : user
+                  })
+                }
+              })
+            })
+          }else{
+            res.json({
+              status: 'Failed',
+              message: 'cannot found the specified data'
+            })
+          }
+        })
+      })
     }
-    User.findOne({userid: luser}, function(err, user){
-      if (err) {
-        res.json({
-          status: 'Failed',
-          message: 'error when updated to database'
-        })
-      }else if(user){
-        user.update({$set: {fotoprofil: `${filename}.jpg`}}).exec(function(err, gabon){
-          user.save(function(err){
-            if (err) {
-              res.json({
-                status: 'Tercyduk'
-              })
-            }else{
-              res.json({
-                status: 'Success',
-                data : user
-              })
-            }
-          })
-        })
-      }else{
-        res.json({
-          status: 'Failed',
-          message: 'cannot found the specified data'
-        })
-      }
-    })
   })
+
 })
 
 router.get('/alluser', function(req, res){

@@ -4,7 +4,6 @@ import Dropzone from 'react-dropzone'
 import BahanPartials from './BahanPartials'
 import {Link} from 'react-router-dom';
 import {Animated} from "react-animated-css"
-import {SERVER_URL} from '../config'
 
 var thumbnailfoto = ''
 var namaresep = 'Nama Resep'
@@ -114,7 +113,6 @@ export default class TulisResepForm extends Component {
 
   render(){
 
-    var path = SERVER_URL + 'images/'
     var customize = {
       wordWrap: 'break-word',
       width: '700px',
@@ -127,14 +125,8 @@ export default class TulisResepForm extends Component {
     var visibility = {
       display: this.props.utility.modal ? 'block' : 'none'
     }
-    console.log(this.props.user);
     return(
       <div>
-        {
-          this.props.user.map(function(x, i){
-            return (<img key={i} className='topimgtr' src={path + x.fotoprofil} alt='user' />)
-          })
-        }
         {
           this.props.utility.modal &&
           <div id="overlay">

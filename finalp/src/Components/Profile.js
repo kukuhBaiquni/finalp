@@ -96,11 +96,6 @@ class Profile extends Component {
     }else{
       return(
         <div>
-          {
-            this.props.user.map(function(x, i){
-              return (<img key={i} className='topimgp' src={path + x.fotoprofil} alt='user' />)
-            })
-          }
           <Navbar user={this.props.user} actions={this.props.actions} utility={this.props.utility}/>
           <Animated animationIn="fadeInDown" isVisible={true}>
             <div className='propage'>
@@ -108,6 +103,7 @@ class Profile extends Component {
               {
                 this.state.preview
                 ?
+                this.props.user.length === 1 &&
                 <div>
                   <img className='fotobox' src={this.state.foto.preview} alt='preview'/>
                   <div style={vanish} onClick={this.save.bind(this)} className='simpanfoto'>Simpan</div>
@@ -120,9 +116,6 @@ class Profile extends Component {
               }
               {
                 this.state.alertsuccess &&
-
-
-
                 <Animated animationIn="bounceIn" isVisible={true}>
                   <div className='savesuccess'>Perubahan berhasil disimpan</div>
                 </Animated>

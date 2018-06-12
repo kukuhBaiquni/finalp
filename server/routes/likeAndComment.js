@@ -52,7 +52,7 @@ router.get('/loadcomment/:resepid', function(req, res){
       })
     }else if(comment){
       res.json({
-        status: 'Data found',
+        status: 'Success',
         comment: comment
       })
     }else{
